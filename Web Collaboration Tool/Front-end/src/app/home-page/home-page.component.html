@@ -1,5 +1,9 @@
-<p>
-  home-page works!
-</p>
+<form [formGroup] = "signUpFormGroup" (ngSubmit) = "onSubmit()">
+  <label>Username: </label>
+  <input type = "text" name = "userName" formControlName = "userName">
 
-<button (click) = "click()">Click</button>
+  <label>Password: </label>
+  <input type = "password" name = "password" formControlName = "password">
+
+  <button type = "submit" [disabled] = "!signUpFormGroup.valid">Submit</button>
+</form>

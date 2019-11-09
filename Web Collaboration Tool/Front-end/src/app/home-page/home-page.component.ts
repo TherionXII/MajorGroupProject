@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../services/user.service';
+import {RedirectService} from '../services/redirect.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-home-page',
@@ -7,11 +9,20 @@ import {UserService} from '../services/user.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  constructor(private userService: UserService) { }
+  public signUpFormGroup: FormGroup;
 
-  ngOnInit() {}
+  constructor(private userService: UserService,
+              private redirectService: RedirectService) {}
 
-  public click(): void {
-    this.userService.create().subscribe(next => console.log(next), error => console.log(error));
+  ngOnInit() {
+    this.signUpFormGroup = new FormGroup({
+      userName: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+  }
+
+  public onSubmit(): void {
+    this.userService.create(this.signUpFormGroup.getRawValue())
+      .subscribe(next => this.redirectService.redirect('/user'), error => console.log(error));
   }
 }

@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 export class UserService {
   constructor(private httpClient: HttpClient) {}
 
-  public create(): Observable<any> {
-    return this.httpClient.post('http://localhost:8080/createUser', 'string', { responseType: 'text' });
+  public create(user: any): Observable<any> {
+    return this.httpClient.post('http://localhost:8080/createUser', user, { responseType: 'text' });
   }
 }
