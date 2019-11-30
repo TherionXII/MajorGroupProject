@@ -17,8 +17,11 @@ public class User
     @Id
     @NotNull
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @NotNull
     private String password;
+
+    @NotNull
+    private String email;
 }
