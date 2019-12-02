@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.Entities.User;
 import project.webcollaborationtool.Entities.UserInformation;
+import project.webcollaborationtool.Exceptions.UserExistsException;
 import project.webcollaborationtool.Repositories.UserInformationRepository;
 import project.webcollaborationtool.Repositories.UserRepository;
 
@@ -18,8 +19,10 @@ public class UserService
     @Autowired
     private UserInformationRepository userInformationRepository;
 
-    public void createUser(@NotNull User user)
+    public void createUser(@NotNull User user) throws UserExistsException
     {
+        if(this.userRepository.existsById(user.getUsername())) throw new UserExistsException(user.getUsername());
+
         this.userRepository.save(user);
     }
 
