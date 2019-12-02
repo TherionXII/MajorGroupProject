@@ -2,7 +2,6 @@ package project.webcollaborationtool.Entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,6 @@ public class User
 {
     @Id
     @NotNull
-    @Column(name = "username")
     private String username;
 
     @NotNull
