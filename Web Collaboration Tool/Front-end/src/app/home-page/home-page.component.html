@@ -1,9 +1,12 @@
-<form [formGroup] = "signUpFormGroup" (ngSubmit) = "onSubmit()">
+<form [formGroup] = "loginForm" (ngSubmit) = "onSubmit()">
   <label>Username: </label>
-  <input type = "text" name = "userName" formControlName = "userName">
+  <input type = "text" name = "username" formControlName = "username">
 
   <label>Password: </label>
   <input type = "password" name = "password" formControlName = "password">
 
-  <button type = "submit" [disabled] = "!signUpFormGroup.valid">Submit</button>
+  <button type = "submit" [disabled] = "!loginForm.valid">Login</button>
+
+  <label>Don't have an account?</label>
+  <input type = "button" value = "Sign up" (click) = "onSignUp()">
 </form>
