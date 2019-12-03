@@ -38,11 +38,13 @@ public class UserService
         this.userRepository.save(user);
     }
 
-    public void changeUserInformation(@NotNull User username, @NotNull UserInformation userInformation)
+    public void changeUserInformation(@NotNull String username, @NotNull UserInformation userInformation)
     {
-        var updatedUserInformation = userInformationRepository.findByUsername(username);
-        updatedUserInformation.setName(userInformation.getName());
-        this.userInformationRepository.save(userInformation);
-    }
+        var existingUserInformation = userInformationRepository.findByUser(userRepository.findByUsername(username));
 
+        if(!existingUserInformation.getName().equals(userInformation.getName()))
+            existingUserInformation.setName(userInformation.getName());
+
+        userInformationRepository.save(existingUserInformation);
+    }
 }

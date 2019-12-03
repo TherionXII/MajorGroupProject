@@ -49,7 +49,7 @@ public class UserController
 
     @PostMapping(path = "/{username}/changeUserInformation")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> changeUserInformation(@PathVariable User username,
+    public ResponseEntity<String> changeUserInformation(@PathVariable String username,
                                                         @RequestBody UserInformation userInformation)
     {
         this.userService.changeUserInformation(username, userInformation);

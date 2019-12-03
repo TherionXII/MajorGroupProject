@@ -19,7 +19,7 @@ public class UserInformation
 
     @NotNull
     @OneToOne
-    private User username;
+    private User user;
 
     @Nullable
     private String name;

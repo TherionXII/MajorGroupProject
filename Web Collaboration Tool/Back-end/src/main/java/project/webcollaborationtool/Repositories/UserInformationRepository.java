@@ -10,5 +10,5 @@ import javax.validation.constraints.NotNull;
 @Repository
 public interface UserInformationRepository extends CrudRepository<UserInformation, Integer>
 {
-    UserInformation findByUsername(@NotNull User username);
+    UserInformation findByUser(@NotNull User user);
 }
