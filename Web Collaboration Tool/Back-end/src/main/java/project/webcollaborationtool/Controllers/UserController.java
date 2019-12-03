@@ -1,6 +1,7 @@
 package project.webcollaborationtool.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.Entities.User;
@@ -26,7 +27,7 @@ public class UserController
         }
         catch(UserExistsException userExistsException)
         {
-            return ResponseEntity.badRequest().body(userExistsException.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(userExistsException.getMessage());
         }
     }
 

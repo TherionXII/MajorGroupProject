@@ -1,6 +1,7 @@
 package project.webcollaborationtool.Entities;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,6 +21,6 @@ public class User
     @NotNull
     private String password;
 
-    @NotNull
+    @Nullable
     private String email;
 }
