@@ -9,17 +9,20 @@ import { UserPageComponent } from './user-page/user-page.component';
 import {RouterModule, Routes} from '@angular/router';
 import {RedirectService} from './services/redirect.service';
 import {ReactiveFormsModule} from '@angular/forms';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'user', component: UserPageComponent }
+  { path: 'user', component: UserPageComponent },
+  { path: 'signUp', component: SignUpComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    UserPageComponent
+    UserPageComponent,
+    SignUpComponent
   ],
   imports: [
     ReactiveFormsModule,

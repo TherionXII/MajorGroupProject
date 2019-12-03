@@ -1,0 +1,15 @@
+<form [formGroup] = "signUpForm" (ngSubmit) = "onSubmit()">
+  <label>Choose your username: </label>
+  <input type = "text" name = "username" formControlName = "username"><br>
+
+  <label>Choose your password: </label>
+  <input type = "password" name = "password" formControlName = "password"><br>
+
+  <label>Repeat your password</label>
+  <input type = "password" name = "repeatPassword" formControlName = "repeatPassword"><br>
+
+  <label>Enter your email address: </label>
+  <input type = "email" name = "email" formControlName = "email"><br>
+
+  <button type = "submit" [disabled] = "!signUpForm.valid">Submit</button>
+</form>
