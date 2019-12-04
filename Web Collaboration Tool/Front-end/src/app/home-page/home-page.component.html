@@ -1,16 +1,23 @@
-<form [formGroup] = "loginForm" (ngSubmit) = "onSubmit()">
-  <mat-form-field>
-    <input matInput placeholder = "Username" name = "username" formControlName = "username">
-    <mat-error *ngIf = "!loginForm.get('username').valid">Please enter a valid username</mat-error>
-  </mat-form-field><br>
+<mat-card>
+  <mat-card-title>Welcome to the preview of the Web Collaboration Tool</mat-card-title>
+  <mat-card-subtitle>Please login or sign up to avail of advanced functionality, or browse public forum instead</mat-card-subtitle>
 
-  <mat-form-field>
-    <input matInput placeholder = "Password: " type = "password" name = "password" formControlName = "password">
-    <mat-error *ngIf = "!loginForm.get('password').valid">Please enter a valid password</mat-error>
-  </mat-form-field><br>
+  <mat-card-content>
+    <form [formGroup] = "loginForm" (ngSubmit) = "onSubmit()">
+      <mat-form-field>
+        <input matInput placeholder = "Username" name = "username" formControlName = "username">
+        <mat-error *ngIf = "!loginForm.get('username').valid">Please enter a valid username</mat-error>
+      </mat-form-field><br>
 
-  <button mat-raised-button type = "submit" color = "accent" [disabled] = "!loginForm.valid">Login</button><br>
+      <mat-form-field>
+        <input matInput placeholder = "Password: " type = "password" name = "password" formControlName = "password">
+        <mat-error *ngIf = "!loginForm.get('password').valid">Please enter a valid password</mat-error>
+      </mat-form-field><br>
 
-  <label>Don't have an account?</label>
-  <button mat-raised-button type = "button" color = "primary" (click) = "onSignUp()">Sign up</button>
-</form>
+      <button mat-raised-button type = "submit" color = "accent" [disabled] = "!loginForm.valid">Login</button><br>
+
+      <label>Don't have an account?</label>
+      <button mat-raised-button type = "button" color = "primary" (click) = "onSignUp()">Sign up</button>
+    </form>
+  </mat-card-content>
+</mat-card>

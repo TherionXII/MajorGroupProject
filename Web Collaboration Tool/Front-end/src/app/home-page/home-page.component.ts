@@ -23,7 +23,10 @@ export class HomePageComponent implements OnInit {
 
   public onSubmit(): void {
     this.userService.login(this.loginForm.getRawValue())
-      .subscribe(next => this.redirectService.redirect('/user'), error => console.log(error));
+      .subscribe(() => {
+        localStorage.setItem('username', this.loginForm.get('username').value);
+        this.redirectService.redirect('/user');
+      }, error => console.log(error));
   }
 
   public onSignUp(): void {
