@@ -1,12 +1,16 @@
 <form [formGroup] = "loginForm" (ngSubmit) = "onSubmit()">
-  <label>Username: </label>
-  <input type = "text" name = "username" formControlName = "username">
+  <mat-form-field>
+    <input matInput placeholder = "Username" name = "username" formControlName = "username">
+    <mat-error *ngIf = "!loginForm.get('username').valid">Please enter a valid username</mat-error>
+  </mat-form-field><br>
 
-  <label>Password: </label>
-  <input type = "password" name = "password" formControlName = "password">
+  <mat-form-field>
+    <input matInput placeholder = "Password: " type = "password" name = "password" formControlName = "password">
+    <mat-error *ngIf = "!loginForm.get('password').valid">Please enter a valid password</mat-error>
+  </mat-form-field><br>
 
-  <button type = "submit" [disabled] = "!loginForm.valid">Login</button>
+  <button mat-raised-button type = "submit" color = "accent" [disabled] = "!loginForm.valid">Login</button><br>
 
   <label>Don't have an account?</label>
-  <input type = "button" value = "Sign up" (click) = "onSignUp()">
+  <button mat-raised-button type = "button" color = "primary" (click) = "onSignUp()">Sign up</button>
 </form>
