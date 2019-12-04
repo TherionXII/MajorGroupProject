@@ -23,4 +23,13 @@ public class UserInformation
 
     @Nullable
     private String name;
+
+    @Nullable
+    private String surname;
+
+    @Nullable
+    private String gender;
+
+    @Nullable
+    private String institution;
 }

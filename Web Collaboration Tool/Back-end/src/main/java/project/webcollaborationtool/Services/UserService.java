@@ -26,8 +26,9 @@ public class UserService
         this.userRepository.save(user);
     }
 
-    public void createUserInformation(@NotNull UserInformation userInformation)
+    public void createUserInformation(@NotNull String username, @NotNull UserInformation userInformation)
     {
+        userInformation.setUser(this.userRepository.findByUsername(username));
         this.userInformationRepository.save(userInformation);
     }
 
@@ -46,5 +47,10 @@ public class UserService
             existingUserInformation.setName(userInformation.getName());
 
         userInformationRepository.save(existingUserInformation);
+    }
+
+    public User getUser(@NotNull String username)
+    {
+        return this.userRepository.findByUsername(username);
     }
 }

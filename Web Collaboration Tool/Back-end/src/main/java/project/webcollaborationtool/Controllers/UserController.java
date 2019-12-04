@@ -31,11 +31,11 @@ public class UserController
         }
     }
 
-    @PostMapping(path = "/createUserInformation")
+    @PostMapping(path = "/{username}/createUserInformation")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> createUserInformation(@RequestBody UserInformation userInformation)
+    public ResponseEntity<String> createUserInformation(@PathVariable String username, @RequestBody UserInformation userInformation)
     {
-        this.userService.createUserInformation(userInformation);
+        this.userService.createUserInformation(username, userInformation);
 
         return ResponseEntity.ok().build();
     }
@@ -55,5 +55,12 @@ public class UserController
     {
         this.userService.changeUserInformation(username, userInformation);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(path = "/getUser/{username}")
+    @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
+    public ResponseEntity<User> getUser(@PathVariable String username)
+    {
+        return ResponseEntity.ok().body(this.userService.getUser(username));
     }
 }
