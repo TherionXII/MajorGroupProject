@@ -57,10 +57,10 @@ public class UserController
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(path = "/getUser/{username}")
+    @GetMapping(path = "/getUserInformation/{username}")
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
-    public ResponseEntity<User> getUser(@PathVariable String username)
+    public ResponseEntity<UserInformation> getUserInformation(@PathVariable String username)
     {
-        return ResponseEntity.ok().body(this.userService.getUser(username));
+        return ResponseEntity.ok().body(this.userService.getUserInformation(username));
     }
 }

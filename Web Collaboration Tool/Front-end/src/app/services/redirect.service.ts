@@ -8,7 +8,6 @@ export class RedirectService {
   constructor(private router: Router) { }
 
   public redirect(url: string) {
-    console.log('gkjfkgf');
     return this.router.navigate([url]);
   }
 }

@@ -49,8 +49,8 @@ public class UserService
         userInformationRepository.save(existingUserInformation);
     }
 
-    public User getUser(@NotNull String username)
+    public UserInformation getUserInformation(@NotNull String username)
     {
-        return this.userRepository.findByUsername(username);
+        return this.userInformationRepository.findByUser(this.userRepository.findByUsername(username));
     }
 }

@@ -1,3 +1,9 @@
-<p>
-  user-page works!
-</p>
+<mat-card>
+  <mat-card-title>{{ userInformation.name ? userInformation.name : username }}</mat-card-title>
+  <mat-card-content>
+    <p>Your latest queries: </p>
+    <p>Your most upvoted response: </p>
+    <p>Your latest responses: </p>
+    <p>Private collab activities: </p>
+  </mat-card-content>
+</mat-card>
