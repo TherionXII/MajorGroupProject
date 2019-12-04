@@ -11,7 +11,16 @@ import {RedirectService} from './services/redirect.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule} from '@angular/material';
+import {
+  MatButtonModule, MatCardModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatToolbarModule
+} from '@angular/material';
+import { FooterComponent } from './partialComponents/footer/footer.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -24,7 +33,8 @@ const routes: Routes = [
     AppComponent,
     HomePageComponent,
     UserPageComponent,
-    SignUpComponent
+    SignUpComponent,
+    FooterComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -35,7 +45,12 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule
   ],
   providers: [
     RedirectService,

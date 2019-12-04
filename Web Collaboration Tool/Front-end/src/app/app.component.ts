@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {RedirectService} from './services/redirect.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Front-end';
+
+  constructor(private redirectService: RedirectService) {
+  }
+
+  public getLocalStorage(): Storage {
+    return localStorage;
+  }
+
+  public logout() {
+    localStorage.clear();
+    this.redirectService.redirect('/');
+  }
 }
