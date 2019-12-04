@@ -11,7 +11,16 @@ export class UserService {
   public login(user: any): Observable<string> {
     return this.httpClient.post('http://localhost:8080/login', user, { responseType: 'text' });
   }
-  public create(user: any): Observable<any> {
+
+  public createUser(user: any): Observable<any> {
     return this.httpClient.post('http://localhost:8080/createUser', user, { responseType: 'text' });
+  }
+
+  public createUserInformation(username: string, userInformation: any): Observable<any> {
+    return this.httpClient.post('http://localhost:8080/' + username + '/createUserInformation', userInformation);
+  }
+
+  public getUser(username: string): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/getUser/' + username);
   }
 }
