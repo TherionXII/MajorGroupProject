@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Entities;
+package project.webcollaborationtool.Entities.User;
 
 import lombok.*;
 import org.springframework.lang.Nullable;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInformation
+public class Profile
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
