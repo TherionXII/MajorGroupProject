@@ -25,7 +25,7 @@ export class HomePageComponent implements OnInit {
     this.userService.login(this.loginForm.getRawValue())
       .subscribe(() => {
         localStorage.setItem('username', this.loginForm.get('username').value);
-        this.redirectService.redirect('/user');
+        this.redirectService.redirect('/user/' + localStorage.getItem('username'));
       }, error => console.log(error));
   }
 

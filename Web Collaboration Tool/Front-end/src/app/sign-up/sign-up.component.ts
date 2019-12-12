@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {RedirectService} from '../services/redirect.service';
+import {ValidatorService} from '../services/validator.service';
+import {IUser} from '../Interfaces/IUser';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +17,8 @@ export class SignUpComponent implements OnInit {
   public isInOptionalPart = false;
 
   constructor(private userService: UserService,
-              private redirectService: RedirectService) { }
+              private redirectService: RedirectService,
+              private validatorService: ValidatorService) { }
 
   ngOnInit() {
     this.signUpFormRequiredData = new FormGroup({
@@ -23,7 +26,7 @@ export class SignUpComponent implements OnInit {
       password: new FormControl('', [ Validators.required, Validators.minLength(8) ]),
       repeatPassword: new FormControl('', [ Validators.required, Validators.minLength(8) ]),
       email: new FormControl('', [ Validators.required, Validators.email ])
-    }, this.validatePassword);
+    }, this.validatorService.validatePassword);
 
     this.signUpFormOptionalData = new FormGroup({
       name: new FormControl(''),
@@ -34,24 +37,18 @@ export class SignUpComponent implements OnInit {
   }
 
   public onRequiredDataSubmit() {
-    this.userService.createUser(this.signUpFormRequiredData.getRawValue())
-      .subscribe(() => this.isInOptionalPart = true, error => console.log(error));
-  }
-
-  public onOptionalDataSubmit() {
-    this.userService.createUserInformation(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
+    this.userService.createUser(this.signUpFormRequiredData.value as IUser)
       .subscribe(() => {
-        localStorage.setItem('username', this.signUpFormRequiredData.get('username').value);
-        this.redirectService.redirect('/user');
+        this.userService.createUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
+          .subscribe(() => this.isInOptionalPart = true);
       }, error => console.log(error));
   }
 
-  public validatePassword(formGroup: FormGroup) {
-    return formGroup.get('password').value === formGroup.get('repeatPassword').value
-      ? null : {
-        validatePassword: {
-            valid: false
-        }
-    };
+  public onOptionalDataSubmit() {
+    this.userService.updateUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
+      .subscribe(() => {
+        localStorage.setItem('username', this.signUpFormRequiredData.get('username').value);
+        this.redirectService.redirect('/user/' + localStorage.getItem('username'));
+      }, error => console.log(error));
   }
 }
