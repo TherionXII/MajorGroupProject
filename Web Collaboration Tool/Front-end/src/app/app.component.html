@@ -10,12 +10,14 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode = "side" role = "navigation">
     <mat-nav-list *ngIf = "getLocalStorage().getItem('username')">
-      <a mat-list-item routerLink = "/user">Home</a>
+      <a mat-list-item [routerLink] = "['/user', getLocalStorage().getItem('username')]">Profile</a>
       <a mat-list-item routerLink = "/settings">Settings</a>
+      <a mat-list-item routerLink = "/forum">Forum</a>
       <a mat-list-item (click) = "logout()">Log Out</a>
     </mat-nav-list>
     <mat-nav-list *ngIf = "!getLocalStorage().getItem('username')">
-      <a mat-list-item routerLink = "#">Public forum</a>
+      <a mat-list-item routerLink = "/">Home</a>
+      <a mat-list-item routerLink = "/forum">Public forum</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>

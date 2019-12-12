@@ -17,15 +17,22 @@ import {
   MatIconModule,
   MatInputModule, MatListModule,
   MatSelectModule,
-  MatSidenavModule,
+  MatSidenavModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 import { FooterComponent } from './partialComponents/footer/footer.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import {ValidatorService} from './services/validator.service';
+import { ForumComponent } from './forum/forum.component';
+import { QueryComponent } from './query/query.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'user', component: UserPageComponent },
-  { path: 'signUp', component: SignUpComponent }
+  { path: 'user/:username', component: UserPageComponent },
+  { path: 'signUp', component: SignUpComponent },
+  { path: 'settings', component: UserSettingsComponent },
+  { path: 'forum', component: ForumComponent },
+  { path: 'query/:id', component: QueryComponent }
 ];
 
 @NgModule({
@@ -34,7 +41,10 @@ const routes: Routes = [
     HomePageComponent,
     UserPageComponent,
     SignUpComponent,
-    FooterComponent
+    FooterComponent,
+    UserSettingsComponent,
+    ForumComponent,
+    QueryComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -50,11 +60,13 @@ const routes: Routes = [
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ],
   providers: [
     RedirectService,
     UserService,
+    ValidatorService,
     HttpClient
   ],
   bootstrap: [AppComponent]
