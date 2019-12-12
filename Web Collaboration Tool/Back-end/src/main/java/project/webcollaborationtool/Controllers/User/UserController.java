@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.webcollaborationtool.Entities.User.Profile;
 import project.webcollaborationtool.Entities.User.User;
 import project.webcollaborationtool.Exceptions.UserExistsException;
 import project.webcollaborationtool.Services.User.UserService;
@@ -31,13 +30,19 @@ public class UserController
         }
     }
 
-    @PostMapping(path = "/{username}/changePassword")
+    @PostMapping(path = "/{username}/updatePassword")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> changePassword(@PathVariable String username, @RequestBody String password)
+    public ResponseEntity<String> updatePassword(@PathVariable String username, @RequestBody String password)
     {
-        this.userService.changePassword(username, password);
+        this.userService.updatePassword(username, password);
         return ResponseEntity.ok().build();
     }
 
-
+    @PostMapping(path = "/{username}/updateEmail")
+    @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
+    public ResponseEntity<String> updateEmail(@PathVariable String username, @RequestBody String email)
+    {
+        this.userService.updateEmail(username, email);
+        return ResponseEntity.ok().build();
+    }
 }

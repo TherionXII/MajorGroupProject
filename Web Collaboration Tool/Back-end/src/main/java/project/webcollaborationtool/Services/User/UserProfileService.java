@@ -23,12 +23,21 @@ public class UserProfileService
         this.userProfileRepository.save(profile);
     }
 
-    public void changeUserProfile(@NotNull String username, @NotNull Profile profile)
+    public void updateUserProfile(@NotNull String username, @NotNull Profile profile)
     {
         var existingUserInformation = userProfileRepository.findByUser(userRepository.findByUsername(username));
 
-        if(!existingUserInformation.getName().equals(profile.getName()))
+        if(existingUserInformation.getName() == null || !existingUserInformation.getName().equals(profile.getName()))
             existingUserInformation.setName(profile.getName());
+
+        if(existingUserInformation.getSurname() == null || !existingUserInformation.getSurname().equals(profile.getSurname()))
+            existingUserInformation.setSurname(profile.getSurname());
+
+        if(existingUserInformation.getGender() == null || !existingUserInformation.getGender().equals(profile.getGender()))
+            existingUserInformation.setGender(profile.getGender());
+
+        if(existingUserInformation.getInstitution() == null || !existingUserInformation.getInstitution().equals(profile.getInstitution()))
+            existingUserInformation.setInstitution(profile.getInstitution());
 
         userProfileRepository.save(existingUserInformation);
     }

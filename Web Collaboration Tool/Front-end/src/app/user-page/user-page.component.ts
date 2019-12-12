@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../services/user.service';
-import {IUserInformation} from '../Interfaces/IUserInformation';
+import {IUserProfile} from '../Interfaces/IUserProfile';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-user-page',
@@ -9,12 +10,18 @@ import {IUserInformation} from '../Interfaces/IUserInformation';
 })
 export class UserPageComponent implements OnInit {
   public username: string;
-  public userInformation: IUserInformation;
+  public userInformation: IUserProfile = {
+    name: '',
+    surname: '',
+    gender: '',
+    institution: ''
+  };
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.userService.getUserInformation(localStorage.getItem('username'))
+    this.userService.getUserProfile(this.route.snapshot.paramMap.get('username'))
       .subscribe(response => this.userInformation = response, error => console.log(error));
     this.username = localStorage.getItem('username');
   }

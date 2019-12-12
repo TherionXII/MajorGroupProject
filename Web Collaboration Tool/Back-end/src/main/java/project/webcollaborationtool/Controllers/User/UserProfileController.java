@@ -14,25 +14,24 @@ public class UserProfileController
 
     @PostMapping(path = "/{username}/createUserProfile")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> createUserInformation(@PathVariable String username, @RequestBody Profile profile)
+    public ResponseEntity<String> createUserProfile(@PathVariable String username, @RequestBody Profile profile)
     {
         this.userProfileService.createUserProfile(username, profile);
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/{username}/changeUserProfile")
+    @PostMapping(path = "/{username}/updateProfile")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> changeUserInformation(@PathVariable String username,
-                                                        @RequestBody Profile profile)
+    public ResponseEntity<String> updateUserProfile(@PathVariable String username, @RequestBody Profile profile)
     {
-        this.userProfileService.changeUserProfile(username, profile);
+        this.userProfileService.updateUserProfile(username, profile);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/{username}/getUserProfile")
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
-    public ResponseEntity<Profile> getUserInformation(@PathVariable String username)
+    public ResponseEntity<Profile> getUserProfile(@PathVariable String username)
     {
         return ResponseEntity.ok().body(this.userProfileService.getUserProfile(username));
     }
