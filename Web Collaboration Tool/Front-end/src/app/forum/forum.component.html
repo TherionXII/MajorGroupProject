@@ -1,0 +1,31 @@
+<mat-tab-group>
+  <mat-tab label = "Queries">
+    <mat-list>
+      <mat-list-item *ngFor = "let query of queries">
+        <h3 mat-line>{{ query.title }}</h3>
+        <p mat-line>
+          <span>Created by: {{ query.user.username }}</span>
+          <span>{{ query.subtitle }}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+  <mat-tab *ngIf = "isCreateVisible" label = "New Query">
+    <h1>Create a new query: </h1>
+    <form [formGroup] = "queryFormGroup" (ngSubmit) = "onSubmit()">
+      <mat-form-field>
+        <input matInput placeholder = "Enter the title:" name = "title" formControlName = "title">
+      </mat-form-field><br>
+
+      <mat-form-field>
+        <input matInput placeholder = "Enter a short description of your query: " name = "subtitle" formControlName = "subtitle">
+      </mat-form-field><br>
+
+      <mat-form-field>
+        <textarea matInput placeholder = "Enter your query: " name = "contents" formControlName = "contents"></textarea>
+      </mat-form-field><br>
+
+      <button mat-raised-button type = "submit" color = "accent" [disabled] = "!queryFormGroup.valid">Create a query</button><br>
+    </form>
+  </mat-tab>
+</mat-tab-group>
