@@ -1,3 +1,25 @@
-<p>
-  {{ query ? query.contents : null }}
-</p>
+<mat-card>
+  <mat-card-header> Created by: <a [routerLink] = "['/user', username]"> {{username}} </a></mat-card-header>
+  <mat-card-title> {{ query ? query.parentQueryData.title : null }} </mat-card-title>
+  <mat-card-subtitle> {{ query ? query.parentQueryData.subtitle : null }} </mat-card-subtitle>
+  <mat-card-content>
+    {{ query ? query.queryData.contents : null }}
+
+    <section id = "ratingSection">
+      <button>
+        <i class = "material-icons">arrow_upward</i>
+      </button><br>
+      {{ query ? query.queryData.rating : null }}<br>
+      <button>
+        <i class = "material-icons">arrow_downward</i>
+      </button>
+    </section>
+  </mat-card-content>
+  <mat-card-footer>
+    <button (click) = "onRespond()">Respond</button>
+
+<!--    <mat-form-field>-->
+<!--      <textarea *ngIf = "isReplyVisible" matInput placeholder = "Enter your response..."></textarea>-->
+<!--    </mat-form-field>-->
+  </mat-card-footer>
+</mat-card>

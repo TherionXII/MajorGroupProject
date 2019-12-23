@@ -1,0 +1,9 @@
+#ratingSection
+{
+  float: right;
+}
+
+.mat-card-content
+{
+  min-height: 150px;
+}
