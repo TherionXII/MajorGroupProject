@@ -1,8 +1,7 @@
 package project.webcollaborationtool.Entities.Queries;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.Nullable;
@@ -12,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @ToString
@@ -24,15 +24,15 @@ public class Query
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @NotNull
-    private String title;
+    @Nullable
+    @JsonManagedReference
+    @OneToOne(mappedBy = "query", cascade = CascadeType.ALL)
+    private ParentQueryData parentQueryData;
 
     @NotNull
-    private String subtitle;
-
-    @Lob
-    @NotNull
-    private String contents;
+    @JsonManagedReference
+    @OneToOne(mappedBy = "query", cascade = CascadeType.ALL)
+    private QueryData queryData;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -41,15 +41,16 @@ public class Query
     private Timestamp updatedAt;
 
     @Nullable
-    @ManyToOne
-    @Cascade(value = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Query parent;
 
     @Nullable
-    @OneToMany(mappedBy = "parent")
-    @Cascade(value = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Collection<Query> children;
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "query")
+    private Set<QueryVote> votes;
 }
