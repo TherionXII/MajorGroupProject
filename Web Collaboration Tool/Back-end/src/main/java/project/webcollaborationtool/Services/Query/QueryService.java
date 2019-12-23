@@ -2,14 +2,14 @@ package project.webcollaborationtool.Services.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.webcollaborationtool.Entities.Queries.ParentQueryData;
 import project.webcollaborationtool.Entities.Queries.Query;
+import project.webcollaborationtool.Entities.Queries.QueryData;
 import project.webcollaborationtool.Repositories.Query.QueryRepository;
 import project.webcollaborationtool.Repositories.User.UserRepository;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 
 @Service
 public class QueryService
@@ -20,28 +20,32 @@ public class QueryService
     @Autowired
     private UserRepository userRepository;
 
-    public Collection<Query> getAllParentQueries()
+    public Collection<Query> getRecentQueries()
     {
-        var queries = new ArrayList<Query>();
-
-        this.queryRepository.findAll().forEach(query ->
-        {
-            if(query.getParent() == null)
-                queries.add(query);
-        });
-
-        queries.sort(Comparator.comparing(Query::getCreatedAt));
-
-        return queries;
+        return this.queryRepository.findFirst10ByParentOrderByCreatedAtDesc(null);
     }
 
-    public void createParentQuery(@NotNull Query query, @NotNull String username)
+    public int createParentQuery(@NotNull QueryData queryData, @NotNull String username)
     {
+        var query = new Query();
         query.setUser(this.userRepository.findByUsername(username));
         query.setParent(null);
         query.setChildren(null);
+        query.setQueryData(queryData);
 
-        this.queryRepository.save(query);
+        queryData.setQuery(query);
+
+        return this.queryRepository.save(query).getId();
+    }
+
+    public int createParentQueryData(@NotNull ParentQueryData parentQueryData, @NotNull Integer id)
+    {
+        var query = this.queryRepository.findById(id).orElseThrow();
+
+        query.setParentQueryData(parentQueryData);
+        parentQueryData.setQuery(query);
+
+        return this.queryRepository.save(query).getId();
     }
 
     public Query getLastQueryForUser(@NotNull String username)

@@ -3,7 +3,9 @@ package project.webcollaborationtool.Controllers.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.webcollaborationtool.Entities.Queries.ParentQueryData;
 import project.webcollaborationtool.Entities.Queries.Query;
+import project.webcollaborationtool.Entities.Queries.QueryData;
 import project.webcollaborationtool.Services.Query.QueryService;
 
 @RestController
@@ -16,16 +18,21 @@ public class QueryController
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
     public ResponseEntity<Query[]> getRecentQueries()
     {
-        return ResponseEntity.ok().body(queryService.getAllParentQueries().toArray(Query[]::new));
+        return ResponseEntity.ok().body(queryService.getRecentQueries().toArray(Query[]::new));
     }
 
-    @PostMapping(path = "/{username}/createQuery")
+    @PostMapping(path = "/{username}/createParentQuery")
     @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
-    public ResponseEntity<String> createParentQuery(@RequestBody Query query, @PathVariable String username)
+    public ResponseEntity<Integer> createParentQueryData(@RequestBody QueryData queryData, @PathVariable String username)
     {
-        this.queryService.createParentQuery(query, username);
+        return ResponseEntity.ok().body(this.queryService.createParentQuery(queryData, username));
+    }
 
-        return ResponseEntity.ok().build();
+    @PostMapping(path = "/{id}/createParentQueryData")
+    @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
+    public ResponseEntity<Integer> createParentQuery(@RequestBody ParentQueryData parentQueryData, @PathVariable Integer id)
+    {
+        return ResponseEntity.ok().body(this.queryService.createParentQueryData(parentQueryData, id));
     }
 
     @GetMapping(path = "/{username}/getLastQuery")
