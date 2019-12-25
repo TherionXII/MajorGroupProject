@@ -1,5 +1,6 @@
 package project.webcollaborationtool.Entities.Queries;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,10 +42,12 @@ public class Query
     private Timestamp updatedAt;
 
     @Nullable
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     private Query parent;
 
     @Nullable
+    @JsonManagedReference
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Collection<Query> children;
 

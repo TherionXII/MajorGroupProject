@@ -48,13 +48,25 @@ public class QueryService
         return this.queryRepository.save(query).getId();
     }
 
-    public Query getLastQueryForUser(@NotNull String username)
-    {
-        return this.queryRepository.findTopByUser(this.userRepository.findByUsername(username));
-    }
-
     public Query getQueryById(@NotNull int id)
     {
         return this.queryRepository.findById(id).orElseThrow();
+    }
+
+    public void submitResponse(String response, String username, Integer queryId)
+    {
+        var query = new Query();
+        query.setUser(this.userRepository.findByUsername(username));
+        query.setParent(this.queryRepository.findById(queryId).orElseThrow());
+        query.setChildren(null);
+
+        var queryData = new QueryData();
+        queryData.setContents(response);
+        queryData.setRating(0);
+        queryData.setQuery(query);
+
+        query.setQueryData(queryData);
+
+        this.queryRepository.save(query);
     }
 }

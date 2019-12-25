@@ -35,17 +35,19 @@ public class QueryController
         return ResponseEntity.ok().body(this.queryService.createParentQueryData(parentQueryData, id));
     }
 
-    @GetMapping(path = "/{username}/getLastQuery")
-    @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
-    public ResponseEntity<Query> getLastQueryForUser(@PathVariable String username)
-    {
-        return ResponseEntity.ok().body(this.queryService.getLastQueryForUser(username));
-    }
-
     @GetMapping(path = "/getQuery/{id}")
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
     public ResponseEntity<Query> getQueryById(@PathVariable int id)
     {
         return ResponseEntity.ok().body(this.queryService.getQueryById(id));
+    }
+
+    @PostMapping(path = "{username}/{queryId}/submitResponse")
+    @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
+    public ResponseEntity<String> submitResponse(@RequestBody String response, @PathVariable String username, @PathVariable Integer queryId)
+    {
+        this.queryService.submitResponse(response, username, queryId);
+
+        return ResponseEntity.ok().build();
     }
 }
