@@ -23,11 +23,11 @@ export class QueryService {
     return this.httpClient.post<string>('http://localhost:8080/' + id + '/createParentQueryData', parentQueryData);
   }
 
-  public getLastQueryForUser(username: string): Observable<IQuery> {
-    return this.httpClient.get<IQuery>('http://localhost:8080/' + username + '/getLastQuery');
+  public getQueryById(id: number): Observable<IQuery> {
+    return this.httpClient.get<IQuery>('http://localhost:8080/getQuery/' + id);
   }
 
-  getQueryById(id: number): Observable<IQuery> {
-    return this.httpClient.get<IQuery>('http://localhost:8080/getQuery/' + id);
+  public submitResponse(response: string, username: string, id: number): Observable<string> {
+    return this.httpClient.post<string>('http://localhost:8080/' + username + '/' + id + '/submitResponse', response);
   }
 }
