@@ -25,6 +25,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import {ValidatorService} from './services/validator.service';
 import { ForumComponent } from './forum/forum.component';
 import { QueryComponent } from './query/query.component';
+import { QueryContainerComponent } from './query-container/query-container.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -44,7 +45,8 @@ const routes: Routes = [
     FooterComponent,
     UserSettingsComponent,
     ForumComponent,
-    QueryComponent
+    QueryComponent,
+    QueryContainerComponent
   ],
   imports: [
     ReactiveFormsModule,
