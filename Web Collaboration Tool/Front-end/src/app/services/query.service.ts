@@ -30,4 +30,8 @@ export class QueryService {
   public submitResponse(response: string, username: string, id: number): Observable<string> {
     return this.httpClient.post<string>('http://localhost:8080/' + username + '/' + id + '/submitResponse', response);
   }
+
+  public submitVote(vote: boolean, username: string, id: number): Observable<IQuery> {
+    return this.httpClient.post<IQuery>('http://localhost:8080/' + username + '/' + id + '/vote', vote);
+  }
 }
