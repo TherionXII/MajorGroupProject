@@ -36,4 +36,14 @@ export class QueryContainerComponent implements OnInit {
 
     this.onRespond();
   }
+
+  public onUpvote(id: number): void {
+    this.queryService.submitVote(true, localStorage.getItem('username'), id)
+      .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
+  }
+
+  public onDownvote(id: number): void {
+    this.queryService.submitVote(false, localStorage.getItem('username'), id)
+      .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
+  }
 }

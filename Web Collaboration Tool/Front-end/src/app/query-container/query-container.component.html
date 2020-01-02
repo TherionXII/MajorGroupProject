@@ -1,11 +1,11 @@
 <mat-card-content>
   {{ query ? query.queryData.contents : null }}
    <section id = "ratingSection">
-      <button mat-raised-button>
+      <button mat-raised-button (click) = "onUpvote(query.id)">
         <i class = "material-icons">arrow_upward</i>
       </button><br>
       {{ query ? query.queryData.rating : null }}<br>
-      <button mat-raised-button>
+      <button mat-raised-button (click) = "onDownvote(query.id)">
         <i class = "material-icons">arrow_downward</i>
       </button>
     </section>
