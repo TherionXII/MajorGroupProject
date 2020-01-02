@@ -1,13 +1,15 @@
 <mat-tab-group>
   <mat-tab label = "Queries">
     <mat-list>
-      <mat-list-item *ngFor = "let query of queries">
+      <a *ngFor = "let query of queries" [routerLink] = "['/query', query.id]">
+      <mat-list-item>
         <h3 mat-line>{{ query.parentQueryData.title }}</h3>
         <p mat-line>
           <span>Created by: {{ query.user.username }}</span>
           <span>{{ query.parentQueryData.subtitle }}</span>
         </p>
       </mat-list-item>
+      </a>
     </mat-list>
   </mat-tab>
   <mat-tab *ngIf = "isCreateVisible" label = "New Query">
