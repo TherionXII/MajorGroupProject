@@ -21,7 +21,7 @@ public class ParentQueryData
     @MapsId
     @OneToOne
     @JoinColumn
-    @JsonBackReference
+    @JsonBackReference(value = "parent_query_data-query")
     private Query query;
 
     @NotNull

@@ -3,7 +3,6 @@ package project.webcollaborationtool.Entities.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.Entities.Queries.Query;
 import project.webcollaborationtool.Entities.Queries.QueryVote;
 
 import javax.persistence.*;
@@ -28,6 +27,6 @@ public class User
     private String email;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonManagedReference(value = "query_vote-user")
     private Set<QueryVote> votes;
 }

@@ -21,7 +21,7 @@ public class QueryData
     @MapsId
     @OneToOne
     @JoinColumn
-    @JsonBackReference
+    @JsonBackReference(value = "query_data-query")
     private Query query;
 
     @Lob

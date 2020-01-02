@@ -22,12 +22,12 @@ public class QueryVote
 
     @ManyToOne
     @JoinColumn(name = "user_username")
-    @JsonBackReference
+    @JsonBackReference(value = "query_vote-user")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "query_id")
-    @JsonBackReference
+    @JsonBackReference(value = "query_vote-query")
     private Query query;
 
     @Nullable

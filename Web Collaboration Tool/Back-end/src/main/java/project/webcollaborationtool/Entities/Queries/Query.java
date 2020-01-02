@@ -26,12 +26,12 @@ public class Query
     private Integer id;
 
     @Nullable
-    @JsonManagedReference
+    @JsonManagedReference(value = "parent_query_data-query")
     @OneToOne(mappedBy = "query", cascade = CascadeType.ALL)
     private ParentQueryData parentQueryData;
 
     @NotNull
-    @JsonManagedReference
+    @JsonManagedReference(value = "query_data-query")
     @OneToOne(mappedBy = "query", cascade = CascadeType.ALL)
     private QueryData queryData;
 
@@ -42,12 +42,12 @@ public class Query
     private Timestamp updatedAt;
 
     @Nullable
-    @JsonBackReference
+    @JsonBackReference(value = "query_child-query_parent")
     @ManyToOne(cascade = CascadeType.ALL)
     private Query parent;
 
     @Nullable
-    @JsonManagedReference
+    @JsonManagedReference(value = "query_child-query_parent")
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Collection<Query> children;
 
@@ -55,6 +55,6 @@ public class Query
     private User user;
 
     @OneToMany(mappedBy = "query")
-    @JsonManagedReference
+    @JsonManagedReference(value = "query_vote-query")
     private Set<QueryVote> votes;
 }
