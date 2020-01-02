@@ -55,5 +55,6 @@ public class Query
     private User user;
 
     @OneToMany(mappedBy = "query")
+    @JsonManagedReference
     private Set<QueryVote> votes;
 }
