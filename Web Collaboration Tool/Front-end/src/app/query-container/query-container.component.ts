@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IQuery} from '../Interfaces/IQuery';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MatInput} from '@angular/material';
 import {QueryService} from '../services/query.service';
 
 @Component({
