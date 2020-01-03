@@ -1,6 +1,8 @@
 package project.webcollaborationtool.Entities.User;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.lang.Nullable;
 import project.webcollaborationtool.Entities.Queries.QueryVote;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 public class User
 {
     @Id
@@ -27,6 +30,6 @@ public class User
     private String email;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value = "query_vote-user")
+    @JsonIgnore
     private Set<QueryVote> votes;
 }

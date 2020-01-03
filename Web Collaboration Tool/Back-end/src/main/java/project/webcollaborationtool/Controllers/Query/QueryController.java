@@ -18,7 +18,21 @@ public class QueryController
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
     public ResponseEntity<Query[]> getRecentQueries()
     {
-        return ResponseEntity.ok().body(queryService.getRecentQueries().toArray(Query[]::new));
+        return ResponseEntity.ok().body(this.queryService.getRecentQueries().toArray(Query[]::new));
+    }
+
+    @GetMapping(path = "/{username}/getRecentQueries")
+    @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
+    public ResponseEntity<Query[]> getRecentQueriesForUser(@PathVariable String username)
+    {
+        return ResponseEntity.ok().body(this.queryService.getRecentQueriesForUser(username).toArray(Query[]::new));
+    }
+
+    @GetMapping(path = "/{username}/getRecentResponses")
+    @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
+    public ResponseEntity<Integer[]> getRecentResponsesForUser(@PathVariable String username)
+    {
+        return ResponseEntity.ok().body(this.queryService.getRecentResponsesForUser(username).toArray(Integer[]::new));
     }
 
     @PostMapping(path = "/{username}/createParentQuery")

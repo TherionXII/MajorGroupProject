@@ -1,6 +1,7 @@
 package project.webcollaborationtool.Entities.Queries;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,10 @@ public class QueryVote
 
     @ManyToOne
     @JoinColumn(name = "user_username")
-    @JsonBackReference(value = "query_vote-user")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "query_id")
-    @JsonBackReference(value = "query_vote-query")
     private Query query;
 
     @Nullable

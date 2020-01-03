@@ -1,7 +1,6 @@
 package project.webcollaborationtool.Entities.Queries;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +18,7 @@ import java.util.Set;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Query
 {
     @Id
@@ -42,12 +42,12 @@ public class Query
     private Timestamp updatedAt;
 
     @Nullable
-    @JsonBackReference(value = "query_child-query_parent")
+//    @JsonBackReference(value = "query_child-query_parent")
     @ManyToOne(cascade = CascadeType.ALL)
     private Query parent;
 
     @Nullable
-    @JsonManagedReference(value = "query_child-query_parent")
+//    @JsonManagedReference(value = "query_child-query_parent")
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Collection<Query> children;
 
@@ -55,6 +55,6 @@ public class Query
     private User user;
 
     @OneToMany(mappedBy = "query")
-    @JsonManagedReference(value = "query_vote-query")
+    @JsonIgnore
     private Set<QueryVote> votes;
 }

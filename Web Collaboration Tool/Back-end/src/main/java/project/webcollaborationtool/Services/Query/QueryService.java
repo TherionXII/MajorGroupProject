@@ -11,6 +11,7 @@ import project.webcollaborationtool.Repositories.Query.QueryVoteRepository;
 import project.webcollaborationtool.Repositories.User.UserRepository;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -27,7 +28,23 @@ public class QueryService
 
     public Collection<Query> getRecentQueries()
     {
-        return this.queryRepository.findFirst10ByParentOrderByCreatedAtDesc(null);
+        return this.queryRepository.findTop10ByParentOrderByCreatedAtDesc(null);
+    }
+
+    public Collection<Query> getRecentQueriesForUser(@NotNull String username)
+    {
+        return this.queryRepository.findTop10ByUserAndParentOrderByCreatedAtDesc(this.userRepository.findByUsername(username), null);
+    }
+
+    public Collection<Integer> getRecentResponsesForUser(@NotNull String username)
+    {
+        var responses = new ArrayList<Integer>();
+        this.queryRepository.findTop10ByUserOrderByCreatedAtDesc(this.userRepository.findByUsername(username))
+                            .forEach(query ->
+                            {
+                                if(query.getParent() != null) responses.add(query.getId());
+                            });
+        return responses;
     }
 
     public int createParentQuery(@NotNull QueryData queryData, @NotNull String username)
