@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../services/query.service';
 import {IQuery} from '../Interfaces/IQuery';
-import {RedirectService} from '../services/redirect.service';
+import {RedirectService} from '../../auxiliary-module/services/redirect.service';
 
 @Component({
   selector: 'app-forum',

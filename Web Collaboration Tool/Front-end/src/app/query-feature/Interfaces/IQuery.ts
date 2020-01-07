@@ -1,6 +1,6 @@
-import {IUser} from './IUser';
+import {IUser} from '../../user-feature/Interfaces/IUser';
 import {IParentQueryData} from './IParentQueryData';
-import {IQueryData} from './IQueryData';
+import {IQueryData} from '../query/IQueryData';
 
 export interface IQuery {
   id: number;

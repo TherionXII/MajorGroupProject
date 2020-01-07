@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IQuery} from '../Interfaces/IQuery';
 import {IParentQueryData} from '../Interfaces/IParentQueryData';
-import {IQueryData} from '../Interfaces/IQueryData';
+import {IQueryData} from '../query/IQueryData';
 
 @Injectable({
   providedIn: 'root'
