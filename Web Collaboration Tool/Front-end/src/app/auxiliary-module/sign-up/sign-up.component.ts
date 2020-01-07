@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../services/user.service';
+import {UserService} from '../../user-feature/Services/user.service';
 import {RedirectService} from '../services/redirect.service';
 import {ValidatorService} from '../services/validator.service';
-import {IUser} from '../Interfaces/IUser';
+import {IUser} from '../../user-feature/Interfaces/IUser';
+import {SignUpService} from '../services/sign-up.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,7 +17,8 @@ export class SignUpComponent implements OnInit {
 
   public isInOptionalPart = false;
 
-  constructor(private userService: UserService,
+  constructor(private signUpService: SignUpService,
+              private userService: UserService,
               private redirectService: RedirectService,
               private validatorService: ValidatorService) { }
 
@@ -37,11 +39,10 @@ export class SignUpComponent implements OnInit {
   }
 
   public onRequiredDataSubmit() {
-    this.userService.createUser(this.signUpFormRequiredData.value as IUser)
-      .subscribe(() => {
-        this.userService.createUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
-          .subscribe(() => this.isInOptionalPart = true);
-      }, error => console.log(error));
+    this.signUpService.createUser(this.signUpFormRequiredData.value as IUser)
+      .subscribe(() => this.signUpService.createUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
+          .subscribe(() => this.isInOptionalPart = true)
+      , error => console.log(error));
   }
 
   public onOptionalDataSubmit() {

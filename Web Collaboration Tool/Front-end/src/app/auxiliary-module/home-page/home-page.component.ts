@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../services/user.service';
 import {RedirectService} from '../services/redirect.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {LoginService} from '../services/login.service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,7 +11,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class HomePageComponent implements OnInit {
   public loginForm: FormGroup;
 
-  constructor(private userService: UserService,
+  constructor(private loginService: LoginService,
               private redirectService: RedirectService) {}
 
   ngOnInit() {
@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.userService.login(this.loginForm.getRawValue())
+    this.loginService.login(this.loginForm.getRawValue())
       .subscribe(() => {
         localStorage.setItem('username', this.loginForm.get('username').value);
         this.redirectService.redirect('/user/' + localStorage.getItem('username'));
