@@ -1,76 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import {UserService} from './services/user.service';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import { UserPageComponent } from './user-page/user-page.component';
-import {RouterModule, Routes} from '@angular/router';
-import {RedirectService} from './services/redirect.service';
-import {ReactiveFormsModule} from '@angular/forms';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { AuxiliaryModuleModule } from './auxiliary-module/auxiliary-module.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatButtonModule, MatCardModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule, MatListModule,
-  MatSelectModule,
-  MatSidenavModule, MatTabsModule,
-  MatToolbarModule
-} from '@angular/material';
-import { FooterComponent } from './partialComponents/footer/footer.component';
-import { UserSettingsComponent } from './user-settings/user-settings.component';
-import {ValidatorService} from './services/validator.service';
-import { ForumComponent } from './forum/forum.component';
-import { QueryComponent } from './query/query.component';
-import { QueryContainerComponent } from './query-container/query-container.component';
+import { MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+import { RouterModule, Routes } from '@angular/router';
+import { QueryFeatureModule } from './query-feature/query-feature.module';
+import { UserFeatureModule } from './user-feature/user-feature.module';
+
+import { AppComponent } from './app.component';
+import { HomePageComponent } from './auxiliary-module/home-page/home-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'user/:username', component: UserPageComponent },
-  { path: 'signUp', component: SignUpComponent },
-  { path: 'settings', component: UserSettingsComponent },
-  { path: 'forum', component: ForumComponent },
-  { path: 'query/:id', component: QueryComponent }
+  { path: '', component: HomePageComponent }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomePageComponent,
-    UserPageComponent,
-    SignUpComponent,
-    FooterComponent,
-    UserSettingsComponent,
-    ForumComponent,
-    QueryComponent,
-    QueryContainerComponent
+    AppComponent
   ],
   imports: [
-    ReactiveFormsModule,
-    RouterModule.forRoot(routes),
-    BrowserModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatCardModule,
-    MatTabsModule
+    AuxiliaryModuleModule,
+    UserFeatureModule,
+    QueryFeatureModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [
-    RedirectService,
-    UserService,
-    ValidatorService,
-    HttpClient
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
