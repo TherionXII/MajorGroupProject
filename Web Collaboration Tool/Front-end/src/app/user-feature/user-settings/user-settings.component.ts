@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ValidatorService} from '../services/validator.service';
-import {UserService} from '../services/user.service';
+import {ValidatorService} from '../../auxiliary-module/services/validator.service';
+import {UserService} from '../Services/user.service';
 import {IUserProfile} from '../Interfaces/IUserProfile';
 
 @Component({

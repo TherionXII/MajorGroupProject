@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../services/user.service';
+import {UserService} from '../Services/user.service';
 import {IUserProfile} from '../Interfaces/IUserProfile';
 import {ActivatedRoute} from '@angular/router';
-import {QueryService} from '../services/query.service';
-import {IQuery} from '../Interfaces/IQuery';
+import {QueryService} from '../../query-feature/services/query.service';
+import {IQuery} from '../../query-feature/Interfaces/IQuery';
 
 @Component({
   selector: 'app-user-page',

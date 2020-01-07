@@ -10,17 +10,7 @@ import {IUser} from '../Interfaces/IUser';
 export class UserService {
   constructor(private httpClient: HttpClient) {}
 
-  public login(user: IUser): Observable<string> {
-    return this.httpClient.post('http://localhost:8080/login', user, { responseType: 'text' });
-  }
 
-  public createUser(user: IUser): Observable<string> {
-    return this.httpClient.post('http://localhost:8080/createUser', user, { responseType: 'text' });
-  }
-
-  public createUserProfile(username: string, userInformation: IUserProfile): Observable<string> {
-    return this.httpClient.post<string>('http://localhost:8080/' + username + '/createUserProfile', userInformation);
-  }
 
   public getUserProfile(username: string): Observable<IUserProfile> {
     return this.httpClient.get<IUserProfile>('http://localhost:8080/' + username + '/getUserProfile');
