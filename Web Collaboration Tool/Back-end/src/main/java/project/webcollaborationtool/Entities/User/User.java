@@ -14,8 +14,8 @@ import java.util.Set;
 @Entity
 @ToString
 @Getter @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 public class User
 {
@@ -29,7 +29,8 @@ public class User
     @Nullable
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @Nullable
     @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private Set<QueryVote> votes;
 }

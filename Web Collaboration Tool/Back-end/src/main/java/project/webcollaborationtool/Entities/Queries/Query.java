@@ -42,12 +42,10 @@ public class Query
     private Timestamp updatedAt;
 
     @Nullable
-//    @JsonBackReference(value = "query_child-query_parent")
     @ManyToOne(cascade = CascadeType.ALL)
     private Query parent;
 
     @Nullable
-//    @JsonManagedReference(value = "query_child-query_parent")
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Collection<Query> children;
 
