@@ -1,12 +1,12 @@
-package project.webcollaborationtool.Controllers.Query;
+package project.webcollaborationtool.Query.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.webcollaborationtool.Entities.Queries.ParentQueryData;
-import project.webcollaborationtool.Entities.Queries.Query;
-import project.webcollaborationtool.Entities.Queries.QueryData;
-import project.webcollaborationtool.Services.Query.QueryService;
+import project.webcollaborationtool.Query.Entities.ParentQueryData;
+import project.webcollaborationtool.Query.Entities.Query;
+import project.webcollaborationtool.Query.Entities.QueryData;
+import project.webcollaborationtool.Query.Services.QueryService;
 
 @RestController
 public class QueryController

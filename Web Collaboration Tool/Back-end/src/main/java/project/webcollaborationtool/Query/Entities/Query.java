@@ -1,11 +1,11 @@
-package project.webcollaborationtool.Entities.Queries;
+package project.webcollaborationtool.Query.Entities;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.Entities.User.User;
+import project.webcollaborationtool.User.Entities.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,12 +1,10 @@
-package project.webcollaborationtool.Repositories.Query;
+package project.webcollaborationtool.Query.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
-import project.webcollaborationtool.Entities.Queries.Query;
-import project.webcollaborationtool.Entities.User.User;
+import project.webcollaborationtool.Query.Entities.Query;
+import project.webcollaborationtool.User.Entities.User;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Repository

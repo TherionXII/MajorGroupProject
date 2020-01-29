@@ -1,14 +1,14 @@
-package project.webcollaborationtool.Services.Query;
+package project.webcollaborationtool.Query.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Entities.Queries.ParentQueryData;
-import project.webcollaborationtool.Entities.Queries.Query;
-import project.webcollaborationtool.Entities.Queries.QueryData;
-import project.webcollaborationtool.Entities.Queries.QueryVote;
-import project.webcollaborationtool.Repositories.Query.QueryRepository;
-import project.webcollaborationtool.Repositories.Query.QueryVoteRepository;
-import project.webcollaborationtool.Repositories.User.UserRepository;
+import project.webcollaborationtool.Query.Entities.ParentQueryData;
+import project.webcollaborationtool.Query.Entities.Query;
+import project.webcollaborationtool.Query.Entities.QueryData;
+import project.webcollaborationtool.Query.Entities.QueryVote;
+import project.webcollaborationtool.Query.Repositories.QueryRepository;
+import project.webcollaborationtool.Query.Repositories.QueryVoteRepository;
+import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;

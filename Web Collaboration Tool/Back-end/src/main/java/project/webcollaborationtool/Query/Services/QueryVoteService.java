@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Services.Query;
+package project.webcollaborationtool.Query.Services;
 
 import org.springframework.stereotype.Service;
 

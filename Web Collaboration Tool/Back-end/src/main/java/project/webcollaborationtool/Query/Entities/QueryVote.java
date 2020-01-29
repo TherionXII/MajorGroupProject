@@ -1,13 +1,11 @@
-package project.webcollaborationtool.Entities.Queries;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package project.webcollaborationtool.Query.Entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.Entities.User.User;
+import project.webcollaborationtool.User.Entities.User;
 
 import javax.persistence.*;
 

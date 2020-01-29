@@ -1,10 +1,10 @@
-package project.webcollaborationtool.Repositories.Query;
+package project.webcollaborationtool.Query.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import project.webcollaborationtool.Entities.Queries.Query;
-import project.webcollaborationtool.Entities.Queries.QueryVote;
-import project.webcollaborationtool.Entities.User.User;
+import project.webcollaborationtool.Query.Entities.Query;
+import project.webcollaborationtool.Query.Entities.QueryVote;
+import project.webcollaborationtool.User.Entities.User;
 
 import java.util.Collection;
 

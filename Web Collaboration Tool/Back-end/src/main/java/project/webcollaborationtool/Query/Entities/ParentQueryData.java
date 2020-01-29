@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Entities.Queries;
+package project.webcollaborationtool.Query.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QueryData
+public class ParentQueryData
 {
     @Id
     private Integer id;
@@ -21,13 +21,12 @@ public class QueryData
     @MapsId
     @OneToOne
     @JoinColumn
-    @JsonBackReference(value = "query_data-query")
+    @JsonBackReference(value = "parent_query_data-query")
     private Query query;
 
-    @Lob
     @NotNull
-    private String contents;
+    private String title;
 
     @NotNull
-    private Integer rating;
+    private String subtitle;
 }
