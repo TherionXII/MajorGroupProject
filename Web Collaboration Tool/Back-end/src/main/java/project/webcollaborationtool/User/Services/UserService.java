@@ -22,6 +22,9 @@ public class UserService
         if(StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword()) || StringUtils.isEmpty(user.getEmail()))
             throw new InvalidUserDataException();
 
+        if(user.getPassword().length() < 8 || !EmailValidator.getInstance().isValid(user.getEmail()))
+            throw new InvalidUserDataException();
+
         if(this.userRepository.existsById(user.getUsername()))
             throw new UserExistsException(user.getUsername());
 

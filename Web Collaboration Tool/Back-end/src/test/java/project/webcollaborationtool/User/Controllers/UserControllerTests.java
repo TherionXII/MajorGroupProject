@@ -105,7 +105,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWhenUserExists() throws Exception
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "a@a.com", null);
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/createUser")

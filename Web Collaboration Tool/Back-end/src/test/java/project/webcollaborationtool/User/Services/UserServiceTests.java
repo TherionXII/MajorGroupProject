@@ -26,7 +26,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWithValidData()
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "a@a.com", null);
 
         assertThatCode(() -> this.userService.createUser(user)).doesNotThrowAnyException();
     }
@@ -34,7 +34,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWhenAnotherUserExists()
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "a@a.com", null);
 
         when(userRepository.save(user)).thenThrow(UserExistsException.class);
 
