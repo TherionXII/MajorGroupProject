@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Entities.User;
+package project.webcollaborationtool.User.Entities;
 
 import lombok.*;
 import org.springframework.lang.Nullable;

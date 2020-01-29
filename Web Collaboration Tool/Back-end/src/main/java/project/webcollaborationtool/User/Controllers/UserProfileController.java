@@ -1,10 +1,10 @@
-package project.webcollaborationtool.Controllers.User;
+package project.webcollaborationtool.User.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.webcollaborationtool.Entities.User.Profile;
-import project.webcollaborationtool.Services.User.UserProfileService;
+import project.webcollaborationtool.User.Entities.Profile;
+import project.webcollaborationtool.User.Services.UserProfileService;
 
 @RestController
 public class UserProfileController

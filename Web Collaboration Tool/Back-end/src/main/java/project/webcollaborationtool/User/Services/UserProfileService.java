@@ -1,10 +1,10 @@
-package project.webcollaborationtool.Services.User;
+package project.webcollaborationtool.User.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Entities.User.Profile;
-import project.webcollaborationtool.Repositories.User.UserProfileRepository;
-import project.webcollaborationtool.Repositories.User.UserRepository;
+import project.webcollaborationtool.User.Entities.Profile;
+import project.webcollaborationtool.User.Repositories.UserProfileRepository;
+import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
 

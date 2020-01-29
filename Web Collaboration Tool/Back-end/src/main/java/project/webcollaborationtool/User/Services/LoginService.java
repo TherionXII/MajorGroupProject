@@ -1,10 +1,10 @@
-package project.webcollaborationtool.Services.User;
+package project.webcollaborationtool.User.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Entities.User.User;
-import project.webcollaborationtool.Exceptions.InvalidCredentialsException;
-import project.webcollaborationtool.Repositories.User.UserRepository;
+import project.webcollaborationtool.User.Entities.User;
+import project.webcollaborationtool.User.Exceptions.InvalidCredentialsException;
+import project.webcollaborationtool.User.Repositories.UserRepository;
 
 @Service
 public class LoginService

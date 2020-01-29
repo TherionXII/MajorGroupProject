@@ -1,9 +1,9 @@
-package project.webcollaborationtool.Repositories.User;
+package project.webcollaborationtool.User.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import project.webcollaborationtool.Entities.User.Profile;
-import project.webcollaborationtool.Entities.User.User;
+import project.webcollaborationtool.User.Entities.Profile;
+import project.webcollaborationtool.User.Entities.User;
 
 import javax.validation.constraints.NotNull;
 

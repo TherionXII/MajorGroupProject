@@ -1,12 +1,12 @@
-package project.webcollaborationtool.Controllers.User;
+package project.webcollaborationtool.User.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.webcollaborationtool.Entities.User.User;
-import project.webcollaborationtool.Exceptions.InvalidCredentialsException;
-import project.webcollaborationtool.Services.User.LoginService;
+import project.webcollaborationtool.User.Entities.User;
+import project.webcollaborationtool.User.Exceptions.InvalidCredentialsException;
+import project.webcollaborationtool.User.Services.LoginService;
 
 @RestController
 public class LoginController

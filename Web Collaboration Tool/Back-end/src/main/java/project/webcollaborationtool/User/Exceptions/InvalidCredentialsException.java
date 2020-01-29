@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Exceptions;
+package project.webcollaborationtool.User.Exceptions;
 
 public class InvalidCredentialsException extends Exception
 {
