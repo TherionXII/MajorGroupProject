@@ -1,17 +1,15 @@
-package project.webcollaborationtool.Entities.User;
+package project.webcollaborationtool.User.Entities;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.opentest4j.AssertionFailedError;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import project.webcollaborationtool.Repositories.User.UserRepository;
+import project.webcollaborationtool.User.Repositories.UserRepository;
+import project.webcollaborationtool.User.Entities.User;
 
 import javax.validation.ConstraintViolationException;
 
@@ -20,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
-public class UserEntityTest
+public class UserEntityTests
 {
     @Autowired
     private UserRepository userRepository;
