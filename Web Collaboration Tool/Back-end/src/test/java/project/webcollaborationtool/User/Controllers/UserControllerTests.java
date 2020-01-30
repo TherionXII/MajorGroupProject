@@ -4,24 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
@@ -35,13 +32,6 @@ public class UserControllerTests
 
     @Autowired
     private UserRepository userRepository;
-
-    @BeforeEach
-    public void cleanUp()
-    {
-        if(this.userRepository.existsById("username"))
-            this.userRepository.deleteById("username");
-    }
 
     @Test
     public void testCreateUserWithValidData() throws Exception
@@ -145,24 +135,6 @@ public class UserControllerTests
     }
 
     @Test
-    public void testUpdateUserPasswordWithInvalidUsername()
-    {
-        var user = new User("username", "password", "email", null);
-        this.userRepository.save(user);
-
-        try
-        {
-            this.mockMvc.perform(post("/ /updatePassword")
-                                 .content("updatedPassword")
-                                 .contentType(MediaType.APPLICATION_JSON));
-        }
-        catch(Exception exception)
-        {
-            assertThat(this.userRepository.findByUsername(user.getUsername()).getPassword()).isNotEqualTo("updatedPassword");
-        }
-    }
-
-    @Test
     public void testUpdateUserPasswordWithNonExistentUser() throws Exception
     {
         this.mockMvc.perform(post("/user1/updatePassword")
@@ -199,24 +171,6 @@ public class UserControllerTests
                     .andExpect(content().string("Invalid user data provided"));
 
         assertThat(this.userRepository.findByUsername(user.getUsername()).getEmail()).isNotEqualTo(" ");
-    }
-
-    @Test
-    public void testUpdateUserEmailWithInvalidUsername()
-    {
-        var user = new User("username", "password", "email", null);
-        this.userRepository.save(user);
-
-        try
-        {
-            this.mockMvc.perform(post("/ /updateEmail")
-                                 .content("updatedEmail")
-                                 .contentType(MediaType.APPLICATION_JSON));
-        }
-        catch(Exception exception)
-        {
-            assertThat(this.userRepository.findByUsername(user.getUsername()).getEmail()).isNotEqualTo("updatedEmail");
-        }
     }
 
     @Test
