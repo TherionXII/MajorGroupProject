@@ -6,13 +6,15 @@ import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidCredentialsException;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
+import javax.validation.constraints.NotNull;
+
 @Service
 public class LoginService
 {
     @Autowired
     private UserRepository userRepository;
 
-    public void Login(User user) throws InvalidCredentialsException
+    public void login(@NotNull User user) throws InvalidCredentialsException
     {
         if(!this.userRepository.existsById(user.getUsername()))
             throw new InvalidCredentialsException();

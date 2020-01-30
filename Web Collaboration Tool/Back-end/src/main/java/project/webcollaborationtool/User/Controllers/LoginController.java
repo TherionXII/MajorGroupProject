@@ -20,13 +20,13 @@ public class LoginController
     {
         try
         {
-            this.loginService.Login(user);
+            this.loginService.login(user);
 
             return ResponseEntity.ok().build();
         }
         catch(InvalidCredentialsException invalidCredentialsException)
         {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(invalidCredentialsException.getMessage());
+            return ResponseEntity.badRequest().body(invalidCredentialsException.getMessage());
         }
     }
 }
