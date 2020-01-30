@@ -4,35 +4,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.User.Entities.Profile;
-import project.webcollaborationtool.User.Services.UserProfileService;
+import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
+import project.webcollaborationtool.User.Services.ProfileService;
 
 @RestController
 public class UserProfileController
 {
     @Autowired
-    UserProfileService userProfileService;
+    ProfileService profileService;
 
     @PostMapping(path = "/{username}/createUserProfile")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> createUserProfile(@PathVariable String username, @RequestBody Profile profile)
+    public ResponseEntity<String> createProfile(@PathVariable String username, @RequestBody Profile profile)
     {
-        this.userProfileService.createUserProfile(username, profile);
+        try
+        {
+            this.profileService.createProfile(username, profile);
 
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
+        }
+        catch(InvalidUserDataException invalidUserDataException)
+        {
+            return ResponseEntity.badRequest().body(invalidUserDataException.getMessage());
+        }
     }
 
     @PostMapping(path = "/{username}/updateProfile")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> updateUserProfile(@PathVariable String username, @RequestBody Profile profile)
+    public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody Profile profile)
     {
-        this.userProfileService.updateUserProfile(username, profile);
-        return ResponseEntity.ok().build();
+        try
+        {
+            this.profileService.updateProfile(username, profile);
+
+            return ResponseEntity.ok().build();
+        }
+        catch(InvalidUserDataException invalidUserDataException)
+        {
+            return ResponseEntity.badRequest().body(invalidUserDataException.getMessage());
+        }
     }
 
     @GetMapping(path = "/{username}/getUserProfile")
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
-    public ResponseEntity<Profile> getUserProfile(@PathVariable String username)
+    public ResponseEntity<?> getProfile(@PathVariable String username)
     {
-        return ResponseEntity.ok().body(this.userProfileService.getUserProfile(username));
+        try
+        {
+            return ResponseEntity.ok().body(this.profileService.getProfile(username));
+        }
+        catch(InvalidUserDataException invalidUserDataException)
+        {
+            return ResponseEntity.badRequest().body(invalidUserDataException.getMessage());
+        }
     }
 }

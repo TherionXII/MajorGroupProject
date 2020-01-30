@@ -2,30 +2,38 @@ package project.webcollaborationtool.User.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import project.webcollaborationtool.User.Entities.Profile;
-import project.webcollaborationtool.User.Repositories.UserProfileRepository;
+import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
+import project.webcollaborationtool.User.Repositories.ProfileRepository;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
 
 @Service
-public class UserProfileService
+public class ProfileService
 {
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
+    private ProfileRepository profileRepository;
 
-    public void createUserProfile(@NotNull String username, @NotNull Profile profile)
+    public void createProfile(@NotNull String username, @NotNull Profile profile)
     {
+        if(StringUtils.isEmpty(username) || !this.userRepository.existsById(username))
+            throw new InvalidUserDataException();
+
         profile.setUser(this.userRepository.findByUsername(username));
-        this.userProfileRepository.save(profile);
+        this.profileRepository.save(profile);
     }
 
-    public void updateUserProfile(@NotNull String username, @NotNull Profile profile)
+    public void updateProfile(@NotNull String username, @NotNull Profile profile)
     {
-        var existingUserInformation = userProfileRepository.findByUser(userRepository.findByUsername(username));
+        if(!this.userRepository.existsById(username))
+            throw new InvalidUserDataException();
+
+        var existingUserInformation = profileRepository.findByUser(userRepository.findByUsername(username));
 
         if(existingUserInformation.getName() == null || !existingUserInformation.getName().equals(profile.getName()))
             existingUserInformation.setName(profile.getName());
@@ -39,11 +47,14 @@ public class UserProfileService
         if(existingUserInformation.getInstitution() == null || !existingUserInformation.getInstitution().equals(profile.getInstitution()))
             existingUserInformation.setInstitution(profile.getInstitution());
 
-        userProfileRepository.save(existingUserInformation);
+        profileRepository.save(existingUserInformation);
     }
 
-    public Profile getUserProfile(@NotNull String username)
+    public Profile getProfile(@NotNull String username)
     {
-        return this.userProfileRepository.findByUser(this.userRepository.findByUsername(username));
+        if(!this.userRepository.existsById(username))
+            throw new InvalidUserDataException();
+
+        return this.profileRepository.findByUser(this.userRepository.findByUsername(username));
     }
 }

@@ -1,5 +1,6 @@
 package project.webcollaborationtool.User.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
@@ -14,11 +15,12 @@ import javax.validation.constraints.NotNull;
 public class Profile
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    private String id;
 
+    @MapsId
     @NotNull
     @OneToOne
+    @JsonIgnore
     private User user;
 
     @Nullable
