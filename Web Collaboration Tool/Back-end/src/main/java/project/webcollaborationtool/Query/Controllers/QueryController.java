@@ -64,11 +64,4 @@ public class QueryController
 
         return ResponseEntity.ok().build();
     }
-
-    @PostMapping(path = "{username}/{queryId}/vote")
-    @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
-    public ResponseEntity<Query> vote(@RequestBody String vote, @PathVariable String username, @PathVariable Integer queryId)
-    {
-        return ResponseEntity.ok().body(this.queryService.vote(Boolean.valueOf(vote), username, queryId));
-    }
 }
