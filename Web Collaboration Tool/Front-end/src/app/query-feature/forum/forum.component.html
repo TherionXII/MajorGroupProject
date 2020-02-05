@@ -3,10 +3,10 @@
     <mat-list>
       <a *ngFor = "let query of queries" [routerLink] = "['/query', query.id]">
       <mat-list-item>
-        <h3 mat-line>{{ query.parentQueryData.title }}</h3>
+        <h3 mat-line>{{ query.title }}</h3>
         <p mat-line>
           <span>Created by: {{ query.user.username }}</span>
-          <span>{{ query.parentQueryData.subtitle }}</span>
+          <span>{{ query.subtitle }}</span>
         </p>
       </mat-list-item>
       </a>

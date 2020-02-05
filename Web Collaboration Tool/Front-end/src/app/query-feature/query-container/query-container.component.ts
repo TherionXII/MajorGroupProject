@@ -20,7 +20,7 @@ export class QueryContainerComponent implements OnInit {
 
   ngOnInit() {
     this.queryResponse = new FormGroup({
-      response: new FormControl('', Validators.required)
+      contents: new FormControl('', Validators.required)
     });
   }
 
@@ -29,20 +29,20 @@ export class QueryContainerComponent implements OnInit {
   }
 
   public onSubmit(id: number): void {
-    this.queryService.submitResponse(this.queryResponse.get('response').value, localStorage.getItem('username'), id)
+    this.queryService.createResponse(this.queryResponse.getRawValue() as IQuery, localStorage.getItem('username'), id)
       .subscribe(() => this.queryService.getQueryById(id)
         .subscribe(query => this.query = query));
 
     this.onRespond();
   }
 
-  public onUpvote(id: number): void {
-    this.queryService.submitVote(true, localStorage.getItem('username'), id)
+  public onUpvote(query: IQuery): void {
+    this.queryService.submitVote(true, localStorage.getItem('username'), query)
       .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
   }
 
-  public onDownvote(id: number): void {
-    this.queryService.submitVote(false, localStorage.getItem('username'), id)
+  public onDownvote(query: IQuery): void {
+    this.queryService.submitVote(false, localStorage.getItem('username'), query)
       .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
   }
 }

@@ -8,8 +8,6 @@ import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
 import project.webcollaborationtool.User.Services.UserService;
 
-import javax.validation.ConstraintViolationException;
-
 @RestController
 public class UserController
 {

@@ -1,12 +1,13 @@
-import {IUser} from '../../user-feature/Interfaces/IUser';
-import {IParentQueryData} from './IParentQueryData';
-import {IQueryData} from '../query/IQueryData';
+import { IUser } from '../../user-feature/Interfaces/IUser';
 
 export interface IQuery {
-  id: number;
+  id?: number;
 
-  parentQueryData?: IParentQueryData;
-  queryData: IQueryData;
+  title?: string;
+  subtitle?: string;
+
+  contents: string;
+  rating: number;
 
   user?: IUser;
   parent?: IQuery;

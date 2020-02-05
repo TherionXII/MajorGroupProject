@@ -1,15 +1,12 @@
 package project.webcollaborationtool.User.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.Query.Entities.QueryVote;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Entity
 @ToString
@@ -28,9 +25,4 @@ public class User
 
     @Nullable
     private String email;
-
-    @Nullable
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Set<QueryVote> votes;
 }

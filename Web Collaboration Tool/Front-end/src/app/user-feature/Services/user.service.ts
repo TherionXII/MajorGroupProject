@@ -10,8 +10,6 @@ import {IUser} from '../Interfaces/IUser';
 export class UserService {
   constructor(private httpClient: HttpClient) {}
 
-
-
   public getUserProfile(username: string): Observable<IUserProfile> {
     return this.httpClient.get<IUserProfile>('http://localhost:8080/' + username + '/getUserProfile');
   }

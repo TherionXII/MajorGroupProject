@@ -2,9 +2,7 @@ package project.webcollaborationtool.Query.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Query.Entities.ParentQueryData;
 import project.webcollaborationtool.Query.Entities.Query;
-import project.webcollaborationtool.Query.Entities.QueryData;
 import project.webcollaborationtool.Query.Repositories.QueryRepository;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
@@ -42,48 +40,28 @@ public class QueryService
         return responses;
     }
 
-    public int createParentQuery(@NotNull QueryData queryData, @NotNull String username)
-    {
-        var query = new Query();
-        query.setUser(this.userRepository.findByUsername(username));
-        query.setParent(null);
-        query.setChildren(null);
-        query.setQueryData(queryData);
-
-        queryData.setQuery(query);
-
-        return this.queryRepository.save(query).getId();
-    }
-
-    public int createParentQueryData(@NotNull ParentQueryData parentQueryData, @NotNull Integer id)
-    {
-        var query = this.queryRepository.findById(id).orElseThrow();
-
-        query.setParentQueryData(parentQueryData);
-        parentQueryData.setQuery(query);
-
-        return this.queryRepository.save(query).getId();
-    }
-
     public Query getQueryById(@NotNull int id)
     {
         return this.queryRepository.findById(id).orElseThrow();
     }
 
-    public void submitResponse(@NotNull String response, @NotNull String username, @NotNull Integer queryId)
+    public Query createQuery(@NotNull Query query, @NotNull String username)
     {
-        var query = new Query();
         query.setUser(this.userRepository.findByUsername(username));
-        query.setParent(this.queryRepository.findById(queryId).orElseThrow());
+        query.setParent(null);
         query.setChildren(null);
+        query.setRating(0);
 
-        var queryData = new QueryData();
-        queryData.setContents(response);
-        queryData.setRating(0);
-        queryData.setQuery(query);
+        return this.queryRepository.save(query);
+    }
 
-        query.setQueryData(queryData);
+    public void createResponse(@NotNull Query response, @NotNull String username, @NotNull Integer parentId)
+    {
+        response.setUser(this.userRepository.findByUsername(username));
+        response.setParent(this.queryRepository.findById(parentId).orElseThrow());
+        response.setChildren(null);
+        response.setRating(0);
 
-        this.queryRepository.save(query);
+        this.queryRepository.save(response);
     }
 }

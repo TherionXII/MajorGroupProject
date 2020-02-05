@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { AuxiliaryModuleModule } from './auxiliary-module/auxiliary-module.module';
+import { AuxiliaryModule } from './auxiliary-module/auxiliary.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
@@ -24,7 +24,7 @@ const routes: Routes = [
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    AuxiliaryModuleModule,
+    AuxiliaryModule,
     UserFeatureModule,
     QueryFeatureModule,
     RouterModule.forRoot(routes)
