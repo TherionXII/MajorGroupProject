@@ -36,7 +36,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithValidData() throws Exception
     {
-        var user = new User("username", "password", "a@a.com", null);
+        var user = new User("username", "password", "a@a.com");
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -53,13 +53,13 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithInvalidUsername() throws Exception
     {
-        var user = new User(null, "password", "email", null);
+        var user = new User(null, "password", "email");
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
 
         assertThat(this.userRepository.findByUsername(null)).isEqualTo(null);
     }
@@ -67,13 +67,13 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithInvalidPassword() throws Exception
     {
-        var user = new User("username", null, "email", null);
+        var user = new User("username", null, "email");
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
 
         assertThat(this.userRepository.existsById(user.getUsername())).isEqualTo(false);
     }
@@ -81,13 +81,13 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithInvalidEmail() throws Exception
     {
-        var user = new User("username", "password", null, null);
+        var user = new User("username", "password", null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
 
         assertThat(this.userRepository.existsById(user.getUsername())).isEqualTo(false);
     }
@@ -95,7 +95,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWhenUserExists() throws Exception
     {
-        var user = new User("username", "password", "a@a.com", null);
+        var user = new User("username", "password", "a@a.com");
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/createUser")
@@ -108,7 +108,7 @@ public class UserControllerTests
     @Test
     public void testUpdateUserPassword() throws Exception
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email");
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updatePassword")
@@ -122,14 +122,14 @@ public class UserControllerTests
     @Test
     public void testUpdateUserPasswordWithInvalidPassword() throws Exception
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email");
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updatePassword")
                              .content(" ")
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
 
         assertThat(this.userRepository.findByUsername(user.getUsername()).getPassword()).isNotEqualTo(" ");
     }
@@ -141,13 +141,13 @@ public class UserControllerTests
                              .content(" ")
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
     }
 
     @Test
     public void testUpdateUserEmail() throws Exception
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email");
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updateEmail")
@@ -161,14 +161,14 @@ public class UserControllerTests
     @Test
     public void testUpdateUserEmailWithInvalidEmail() throws Exception
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email");
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updateEmail")
                              .content(" ")
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
 
         assertThat(this.userRepository.findByUsername(user.getUsername()).getEmail()).isNotEqualTo(" ");
     }
@@ -180,6 +180,6 @@ public class UserControllerTests
                              .content("a@a.com")
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
     }
 }

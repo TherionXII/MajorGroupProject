@@ -47,7 +47,7 @@ public class UserProfileControllerTests
     @BeforeEach
     public void setUp()
     {
-        this.user = this.userRepository.save(new User("username", "password", "email", null));
+        this.user = this.userRepository.save(new User("username", "password", "email"));
 
         this.profile = new Profile();
         this.profile.setName("name");
@@ -79,7 +79,7 @@ public class UserProfileControllerTests
                              .content(this.objectMapper.writeValueAsString(this.profile))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
 
         assertThat(this.profileRepository.findByUser(this.userRepository.findByUsername("username"))).isEqualTo(null);
     }
@@ -127,7 +127,7 @@ public class UserProfileControllerTests
                              .content(this.objectMapper.writeValueAsString(updatedProfile))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
     }
 
     @Test
@@ -157,6 +157,6 @@ public class UserProfileControllerTests
         this.mockMvc.perform(get("/nonExistentUser/getUserProfile")
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid user data provided"));
+                    .andExpect(content().string("Internal server error: invalid user data provided."));
     }
 }

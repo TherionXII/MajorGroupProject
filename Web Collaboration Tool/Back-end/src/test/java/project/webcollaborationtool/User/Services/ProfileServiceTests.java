@@ -33,7 +33,7 @@ public class ProfileServiceTests
         var profile = new Profile();
 
         when(this.userRepository.existsById("username")).thenReturn(true);
-        when(this.userRepository.findByUsername("username")).thenReturn(new User("username", "p", "e", null));
+        when(this.userRepository.findByUsername("username")).thenReturn(new User("username", "p", "e"));
         when(this.profileRepository.save(profile)).thenReturn(profile);
 
         assertThatCode(() -> this.profileService.createProfile("username", profile)).doesNotThrowAnyException();
@@ -62,7 +62,7 @@ public class ProfileServiceTests
     public void testUpdateProfileWithValidData()
     {
         var profile = new Profile();
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email");
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.userRepository.findByUsername("username")).thenReturn(user);
@@ -92,7 +92,7 @@ public class ProfileServiceTests
     @Test
     public void testGetProfileWithValidData()
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email");
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.userRepository.findByUsername("username")).thenReturn(user);
