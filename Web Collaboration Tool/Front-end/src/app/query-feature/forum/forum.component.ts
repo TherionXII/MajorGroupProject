@@ -32,8 +32,7 @@ export class ForumComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.queryService.createParentQuery({ contents: this.queryFormGroup.get('contents').value, rating: 0 }, localStorage.getItem('username'))
-      .subscribe( id => this.queryService.createParentQueryData({ title: this.queryFormGroup.get('title').value, subtitle: this.queryFormGroup.get('subtitle').value }, id)
-          .subscribe(() => this.redirectService.redirect('/query/' + id), error => console.log(error)), error => console.log(error));
+    this.queryService.createQuery(this.queryFormGroup.getRawValue() as IQuery, localStorage.getItem('username'))
+      .subscribe(response => this.redirectService.redirect('/query/' + response.id), error => console.log(error));
   }
 }
