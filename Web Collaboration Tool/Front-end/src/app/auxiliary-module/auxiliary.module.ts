@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuxiliaryModuleRoutingModule } from './auxiliary-module-routing.module';
+import { AuxiliaryRoutingModule } from './auxiliary-routing.module';
 import {HomePageComponent} from './home-page/home-page.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {FooterComponent} from './footer/footer.component';
@@ -20,7 +20,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HttpClientModule,
     BrowserAnimationsModule,
     CommonModule,
-    AuxiliaryModuleRoutingModule,
+    AuxiliaryRoutingModule,
     MatCardModule,
     MatInputModule,
     MatSelectModule,
@@ -35,4 +35,4 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FooterComponent
   ]
 })
-export class AuxiliaryModuleModule { }
+export class AuxiliaryModule { }
