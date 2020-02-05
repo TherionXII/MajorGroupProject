@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.Query.Entities.Query;
 import project.webcollaborationtool.Query.Entities.QueryVote;
+import project.webcollaborationtool.Query.Exceptions.InvalidQueryDataException;
+import project.webcollaborationtool.Query.Exceptions.UnexpectedQueryVoteNullPointerException;
 import project.webcollaborationtool.Query.Repositories.QueryRepository;
 import project.webcollaborationtool.Query.Repositories.QueryVoteRepository;
-import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,39 +20,36 @@ public class QueryVoteService
     @Autowired
     private QueryRepository queryRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    public Query vote(@NotNull Boolean vote, @NotNull String username, @NotNull Integer queryId)
+    public Query vote(@NotNull QueryVote queryVote, @NotNull Integer queryId)
     {
-        var queryVote = this.queryVoteRepository.findByUserAndQuery(this.userRepository.findByUsername(username), this.queryRepository.findById(queryId).orElseThrow());
+        var query = this.queryRepository.findById(queryId).orElseThrow(InvalidQueryDataException::new);
 
-        if (queryVote == null)
+        if(!this.queryVoteRepository.existsByUsernameAndQuery(queryVote.getUsername(), query) ||
+            this.queryVoteRepository.findByUsernameAndQuery(queryVote.getUsername(), query).getVote() != queryVote.getVote())
         {
-            queryVote = new QueryVote();
-            queryVote.setUser(this.userRepository.findByUsername(username));
-            queryVote.setQuery(this.queryRepository.findById(queryId).orElseThrow());
+            queryVote.setQuery(query);
+            this.queryVoteRepository.save(queryVote);
+
+            query.setRating(0);
+            return this.updateQueryRating(query);
         }
 
-        queryVote.setVote(vote);
-        this.queryVoteRepository.save(queryVote);
-
-        return this.updateQueryRating(queryId);
+        return query;
     }
 
-    private Query updateQueryRating(Integer queryId)
+    private Query updateQueryRating(Query query)
     {
-        var query = this.queryRepository.findById(queryId).orElseThrow();
-        var queryVotes = this.queryVoteRepository.findAllByQuery(query);
+        this.queryVoteRepository.findAllByQuery(query)
+                                .forEach(queryVote ->
+                                {
+                                    if(queryVote.getVote() == null)
+                                        throw new UnexpectedQueryVoteNullPointerException();
+                                    else if(queryVote.getVote())
+                                        query.setRating(query.getRating() + 1);
+                                    else
+                                        query.setRating(query.getRating() - 1);
+                                });
 
-        var rating = 0;
-
-        for(var queryVote : queryVotes)
-            if(queryVote.getVote()) query.getQueryData().setRating(++rating);
-            else query.getQueryData().setRating(--rating);
-
-        this.queryRepository.save(query);
-
-        return query;
+        return this.queryRepository.save(query);
     }
 }

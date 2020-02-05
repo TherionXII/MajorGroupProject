@@ -1,11 +1,12 @@
 package project.webcollaborationtool.Query.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.User.Entities.User;
+import project.webcollaborationtool.Utility.CompositeKeys.QueryVoteId;
 
 import javax.persistence.*;
 
@@ -13,18 +14,18 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(QueryVoteId.class)
 public class QueryVote
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
+    private String username;
+
+    @Id
+    private Integer queryId;
 
     @ManyToOne
-    @JoinColumn(name = "user_username")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "query_id")
+    @MapsId("queryId")
+    @JoinColumn(name = "queryId", referencedColumnName = "id")
     private Query query;
 
     @Nullable
