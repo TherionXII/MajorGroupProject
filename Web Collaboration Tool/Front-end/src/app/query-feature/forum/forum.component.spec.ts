@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForumComponent } from './forum.component';
+import {QueryFeatureModule} from '../query-feature.module';
 
 describe('ForumComponent', () => {
   let component: ForumComponent;
@@ -8,7 +9,7 @@ describe('ForumComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForumComponent ]
+      imports: [ QueryFeatureModule ]
     })
     .compileComponents();
   }));
