@@ -26,14 +26,17 @@ public class Query
     private Integer id;
 
     @Nullable
-    @JsonManagedReference(value = "parent_query_data-query")
-    @OneToOne(mappedBy = "query", cascade = CascadeType.ALL)
-    private ParentQueryData parentQueryData;
+    private String title;
+
+    @Nullable
+    private String subtitle;
+
+    @Lob
+    @NotNull
+    private String contents;
 
     @NotNull
-    @JsonManagedReference(value = "query_data-query")
-    @OneToOne(mappedBy = "query", cascade = CascadeType.ALL)
-    private QueryData queryData;
+    private Integer rating;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -52,7 +55,7 @@ public class Query
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "query")
     @JsonIgnore
+    @OneToMany(mappedBy = "query")
     private Set<QueryVote> votes;
 }
