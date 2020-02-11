@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../user-feature/Services/user.service';
-import {RedirectService} from '../services/redirect.service';
-import {ValidatorService} from '../services/validator.service';
-import {IUser} from '../../user-feature/Interfaces/IUser';
-import {SignUpService} from '../services/sign-up.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { SignUpService } from '../services/sign-up.service';
+import { UserService } from '../../user-feature/Services/user.service';
+
+import { IUser } from '../../user-feature/Interfaces/IUser';
+
+import { ValidatorMethods } from '../../../Utility/ValidatorMethods';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,10 +20,11 @@ export class SignUpComponent implements OnInit {
 
   public isInOptionalPart = false;
 
+  public signUpError: string;
+
   constructor(private signUpService: SignUpService,
               private userService: UserService,
-              private redirectService: RedirectService,
-              private validatorService: ValidatorService) { }
+              private router: Router) { }
 
   ngOnInit() {
     this.signUpFormRequiredData = new FormGroup({
@@ -28,7 +32,7 @@ export class SignUpComponent implements OnInit {
       password: new FormControl('', [ Validators.required, Validators.minLength(8) ]),
       repeatPassword: new FormControl('', [ Validators.required, Validators.minLength(8) ]),
       email: new FormControl('', [ Validators.required, Validators.email ])
-    }, this.validatorService.validatePassword);
+    }, ValidatorMethods.getPasswordEqualValidator);
 
     this.signUpFormOptionalData = new FormGroup({
       name: new FormControl(''),
@@ -40,16 +44,18 @@ export class SignUpComponent implements OnInit {
 
   public onRequiredDataSubmit() {
     this.signUpService.createUser(this.signUpFormRequiredData.value as IUser)
-      .subscribe(() => this.signUpService.createUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
-          .subscribe(() => this.isInOptionalPart = true)
-      , error => console.log(error));
+                      .subscribe(() => this.isInOptionalPart = true, error => this.signUpError = error.error);
   }
 
-  public onOptionalDataSubmit() {
-    this.userService.updateUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue())
-      .subscribe(() => {
-        localStorage.setItem('username', this.signUpFormRequiredData.get('username').value);
-        this.redirectService.redirect('/user/' + localStorage.getItem('username'));
-      }, error => console.log(error));
+  public async onOptionalDataSubmit(): Promise<void> {
+    try {
+      await this.userService.updateUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue()).toPromise();
+
+      localStorage.setItem('username', this.signUpFormRequiredData.get('username').value);
+      this.router.navigateByUrl('/user/' + localStorage.getItem('username'));
+    } catch (error) {
+      localStorage.clear();
+      this.signUpError = error.error;
+    }
   }
 }
