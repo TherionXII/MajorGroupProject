@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {IQuery} from '../Interfaces/IQuery';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../services/query.service';
+import {IQueryVote} from '../Interfaces/IQueryVote';
 
 @Component({
   selector: 'app-query-container',
@@ -37,12 +38,12 @@ export class QueryContainerComponent implements OnInit {
   }
 
   public onUpvote(query: IQuery): void {
-    this.queryService.submitVote(true, localStorage.getItem('username'), query)
+    this.queryService.submitVote({ vote: true, username: localStorage.getItem('username'), query } as IQueryVote)
       .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
   }
 
   public onDownvote(query: IQuery): void {
-    this.queryService.submitVote(false, localStorage.getItem('username'), query)
+    this.queryService.submitVote({ vote: false, username: localStorage.getItem('username'), query } as IQueryVote)
       .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
   }
 }
