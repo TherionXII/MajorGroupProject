@@ -1,11 +1,9 @@
 package project.webcollaborationtool.User.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @ToString
@@ -15,13 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Profile
 {
     @Id
-    private String id;
-
-    @MapsId
-    @NotNull
-    @OneToOne
-    @JsonIgnore
-    private User user;
+    private String username;
 
     @Nullable
     private String name;

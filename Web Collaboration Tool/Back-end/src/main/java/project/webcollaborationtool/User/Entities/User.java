@@ -1,6 +1,7 @@
 package project.webcollaborationtool.User.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.lang.Nullable;
@@ -25,4 +26,8 @@ public class User
 
     @Nullable
     private String email;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Profile profile;
 }
