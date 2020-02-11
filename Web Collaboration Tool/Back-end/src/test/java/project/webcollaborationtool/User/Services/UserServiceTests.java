@@ -6,9 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
+import project.webcollaborationtool.User.Repositories.ProfileRepository;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,13 +22,16 @@ public class UserServiceTests
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private ProfileRepository profileRepository;
+
     @InjectMocks
     private UserService userService;
 
     @Test
     public void testCreateUserWithValidData()
     {
-        var user = new User("username", "password", "a@a.com");
+        var user = new User("username", "password", "a@a.com", null);
 
         assertThatCode(() -> this.userService.createUser(user)).doesNotThrowAnyException();
     }
@@ -34,7 +39,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWhenAnotherUserExists()
     {
-        var user = new User("username", "password", "a@a.com");
+        var user = new User("username", "password", "a@a.com", null);
 
         when(userRepository.save(user)).thenThrow(UserExistsException.class);
 
@@ -50,7 +55,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWithInvalidPrimaryKey()
     {
-        var user = new User(null, null, null);
+        var user = new User(null, null, null, null);
 
         assertThatThrownBy(() -> this.userService.createUser(user)).isInstanceOf(InvalidUserDataException.class);
     }
@@ -58,7 +63,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWithInvalidData()
     {
-        var user = new User("user", null, null);
+        var user = new User("user", null, null, null);
 
         assertThatThrownBy(() -> this.userService.createUser(user)).isInstanceOf(InvalidUserDataException.class);
     }
@@ -66,7 +71,7 @@ public class UserServiceTests
     @Test
     public void updateUserPassword()
     {
-        var user = new User("username", "password1", null);
+        var user = new User("username", "password1", null, null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.userRepository.findByUsername("username")).thenReturn(user);
@@ -84,7 +89,7 @@ public class UserServiceTests
     @Test
     public void updateUserEmail()
     {
-        var user = new User("username", "password", "email@email.com");
+        var user = new User("username", "password", "email@email.com", null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.userRepository.findByUsername("username")).thenReturn(user);

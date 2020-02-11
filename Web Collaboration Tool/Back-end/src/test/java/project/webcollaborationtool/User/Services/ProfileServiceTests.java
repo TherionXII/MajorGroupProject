@@ -28,45 +28,14 @@ public class ProfileServiceTests
     private ProfileService profileService;
 
     @Test
-    public void testCreateProfileWithValidData()
-    {
-        var profile = new Profile();
-
-        when(this.userRepository.existsById("username")).thenReturn(true);
-        when(this.userRepository.findByUsername("username")).thenReturn(new User("username", "p", "e"));
-        when(this.profileRepository.save(profile)).thenReturn(profile);
-
-        assertThatCode(() -> this.profileService.createProfile("username", profile)).doesNotThrowAnyException();
-    }
-
-    @Test
-    public void testCreateProfileWithNonExistentUser()
-    {
-        var profile = new Profile();
-
-        when(this.userRepository.existsById("username")).thenReturn(false);
-
-        assertThatThrownBy(() -> this.profileService.createProfile("username", profile)).isInstanceOf(InvalidUserDataException.class);
-    }
-
-    @Test
-    public void testCreateProfileWithInvalidData()
-    {
-        assertThatThrownBy(() -> this.profileService.createProfile(null, new Profile())).isInstanceOf(InvalidUserDataException.class);
-
-        when(this.userRepository.existsById("username")).thenReturn(true);
-        assertThatThrownBy(() -> this.profileService.createProfile("username", null)).isInstanceOf(NullPointerException.class);
-    }
-
-    @Test
     public void testUpdateProfileWithValidData()
     {
         var profile = new Profile();
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
-        when(this.userRepository.findByUsername("username")).thenReturn(user);
-        when(this.profileRepository.findByUser(user)).thenReturn(profile);
+        when(this.profileRepository.existsById("username")).thenReturn(true);
+        when(this.profileRepository.findByUsername(user.getUsername())).thenReturn(profile);
         when(this.profileRepository.save(profile)).thenReturn(profile);
 
         assertThatCode(() -> this.profileService.updateProfile("username", profile)).doesNotThrowAnyException();
@@ -86,17 +55,17 @@ public class ProfileServiceTests
         assertThatThrownBy(() -> this.profileService.updateProfile(null, new Profile())).isInstanceOf(InvalidUserDataException.class);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
-        assertThatThrownBy(() -> this.profileService.updateProfile("username", null)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> this.profileService.updateProfile("username", null)).isInstanceOf(InvalidUserDataException.class);
     }
 
     @Test
     public void testGetProfileWithValidData()
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", new Profile());
 
         when(this.userRepository.existsById("username")).thenReturn(true);
-        when(this.userRepository.findByUsername("username")).thenReturn(user);
-        when(this.profileRepository.findByUser(user)).thenReturn(new Profile());
+        when(this.profileRepository.existsById("username")).thenReturn(true);
+        when(this.profileRepository.findByUsername(user.getUsername())).thenReturn(new Profile());
 
         assertThatCode(() -> this.profileService.getProfile("username")).doesNotThrowAnyException();
     }

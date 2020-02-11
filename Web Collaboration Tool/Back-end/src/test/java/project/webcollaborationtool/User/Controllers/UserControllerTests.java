@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
@@ -36,7 +37,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithValidData() throws Exception
     {
-        var user = new User("username", "password", "a@a.com");
+        var user = new User("username", "password", "a@a.com", null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -53,7 +54,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithInvalidUsername() throws Exception
     {
-        var user = new User(null, "password", "email");
+        var user = new User(null, "password", "email", null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -67,7 +68,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithInvalidPassword() throws Exception
     {
-        var user = new User("username", null, "email");
+        var user = new User("username", null, "email", null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -81,7 +82,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWithInvalidEmail() throws Exception
     {
-        var user = new User("username", "password", null);
+        var user = new User("username", "password", null, null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -95,7 +96,7 @@ public class UserControllerTests
     @Test
     public void testCreateUserWhenUserExists() throws Exception
     {
-        var user = new User("username", "password", "a@a.com");
+        var user = new User("username", "password", "a@a.com", null);
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/createUser")
@@ -108,7 +109,7 @@ public class UserControllerTests
     @Test
     public void testUpdateUserPassword() throws Exception
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updatePassword")
@@ -122,7 +123,7 @@ public class UserControllerTests
     @Test
     public void testUpdateUserPasswordWithInvalidPassword() throws Exception
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updatePassword")
@@ -147,7 +148,7 @@ public class UserControllerTests
     @Test
     public void testUpdateUserEmail() throws Exception
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updateEmail")
@@ -161,7 +162,7 @@ public class UserControllerTests
     @Test
     public void testUpdateUserEmailWithInvalidEmail() throws Exception
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
         this.userRepository.save(user);
 
         this.mockMvc.perform(post("/" + user.getUsername() + "/updateEmail")

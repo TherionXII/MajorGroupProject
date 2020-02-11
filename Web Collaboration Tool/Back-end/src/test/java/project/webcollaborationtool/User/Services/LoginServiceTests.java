@@ -25,7 +25,7 @@ public class LoginServiceTests
     @Test
     public void testLoginUserWithValidData()
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
 
         when(this.userRepository.existsById(user.getUsername())).thenReturn(true);
         when(this.userRepository.findByUsername(user.getUsername())).thenReturn(user);
@@ -36,7 +36,7 @@ public class LoginServiceTests
     @Test
     public void testLoginUserWithNonExistentUser()
     {
-        var user = new User("username", "password", "email");
+        var user = new User("username", "password", "email", null);
 
         when(this.userRepository.existsById(user.getUsername())).thenReturn(false);
 
@@ -46,8 +46,8 @@ public class LoginServiceTests
     @Test
     public void testLoginUserWithInvalidPassword()
     {
-        var user = new User("username", "password", "email");
-        var userWithInvalidPassword = new User("username", "pass", "email");
+        var user = new User("username", "password", "email", null);
+        var userWithInvalidPassword = new User("username", "pass", "email", null);
 
         when(this.userRepository.existsById(userWithInvalidPassword.getUsername())).thenReturn(true);
         when(this.userRepository.findByUsername(userWithInvalidPassword.getUsername())).thenReturn(user);

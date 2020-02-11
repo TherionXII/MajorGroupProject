@@ -47,58 +47,17 @@ public class UserProfileControllerTests
     @BeforeEach
     public void setUp()
     {
-        this.user = this.userRepository.save(new User("username", "password", "email"));
+        this.user = new User("username", "password", "email", null);
 
-        this.profile = new Profile();
-        this.profile.setName("name");
-        this.profile.setSurname("surname");
-        this.profile.setGender("gender");
-        this.profile.setInstitution("institution");
-    }
+        this.profile = new Profile(user.getUsername(), "name", "surname", "gender", "institution");
+        this.user.setProfile(profile);
 
-    @Test
-    public void testCreateProfileWithValidData() throws Exception
-    {
-        this.mockMvc.perform(post("/" + user.getUsername() + "/createUserProfile")
-                             .content(this.objectMapper.writeValueAsString(this.profile))
-                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk());
-
-        var resultProfile = this.profileRepository.findByUser(this.userRepository.findByUsername("username"));
-        assertThat(resultProfile.getName()).isEqualTo(this.profile.getName());
-        assertThat(resultProfile.getSurname()).isEqualTo(this.profile.getSurname());
-        assertThat(resultProfile.getGender()).isEqualTo(this.profile.getGender());
-        assertThat(resultProfile.getInstitution()).isEqualTo(this.profile.getInstitution());
-        assertThat(resultProfile.getUser().getUsername()).isEqualTo(this.user.getUsername());
-    }
-
-    @Test
-    public void testCreateProfileWithNonExistentUser() throws Exception
-    {
-        this.mockMvc.perform(post("/nonExistentUser/createUserProfile")
-                             .content(this.objectMapper.writeValueAsString(this.profile))
-                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Internal server error: invalid user data provided."));
-
-        assertThat(this.profileRepository.findByUser(this.userRepository.findByUsername("username"))).isEqualTo(null);
-    }
-
-    @Test
-    public void testCreateProfileWithInvalidProfile() throws Exception
-    {
-        this.mockMvc.perform(post("/" + this.user.getUsername() + "/createUserProfile")
-                             .content("")
-                             .contentType(MediaType.APPLICATION_JSON))
-                     .andExpect(status().isBadRequest());
+        this.userRepository.save(user);
     }
 
     @Test
     public void testUpdateProfileWithValidData() throws Exception
     {
-        this.profile.setUser(this.user);
-        this.profileRepository.save(this.profile);
-
         var updatedProfile = new Profile();
         updatedProfile.setName("new name");
         updatedProfile.setSurname("new surname");
@@ -110,12 +69,11 @@ public class UserProfileControllerTests
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
 
-        var resultProfile = this.profileRepository.findByUser(this.userRepository.findByUsername(this.user.getUsername()));
+        var resultProfile = this.profileRepository.findById(this.user.getUsername()).orElseThrow();
         assertThat(resultProfile.getName()).isEqualTo(updatedProfile.getName());
         assertThat(resultProfile.getSurname()).isEqualTo(updatedProfile.getSurname());
         assertThat(resultProfile.getGender()).isEqualTo(updatedProfile.getGender());
         assertThat(resultProfile.getInstitution()).isEqualTo(updatedProfile.getInstitution());
-        assertThat(resultProfile.getUser().getUsername()).isEqualTo(this.user.getUsername());
     }
 
     @Test
@@ -142,9 +100,6 @@ public class UserProfileControllerTests
     @Test
     public void getProfileWithValidData() throws Exception
     {
-        this.profile.setUser(this.user);
-        this.profile = this.profileRepository.save(this.profile);
-
         this.mockMvc.perform(get("/" + this.user.getUsername() + "/getUserProfile")
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())

@@ -37,7 +37,7 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithValidData() throws Exception
     {
-        var user = this.userRepository.save(new User("username", "password", "email"));
+        var user = this.userRepository.save(new User("username", "password", "email", null));
 
         this.mockMvc.perform(post("/login")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -48,25 +48,25 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithNonExistentUser() throws Exception
     {
-        this.userRepository.save(new User("username", "password", "email"));
+        this.userRepository.save(new User("username", "password", "email", null));
 
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(new User("user", "password", "e")))
+                             .content(this.objectMapper.writeValueAsString(new User("user", "password", "e", null)))
                              .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid username or password"));
+                    .andExpect(status().is(401))
+                    .andExpect(content().string("Could not find user with the specified credentials"));
     }
 
     @Test
     public void testLoginUserWithInvalidPassword() throws Exception
     {
-        this.userRepository.save(new User("username", "password", "email"));
+        this.userRepository.save(new User("username", "password", "email", null));
 
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(new User("username", "pass", "email")))
+                             .content(this.objectMapper.writeValueAsString(new User("username", "pass", "email", null)))
                              .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(content().string("Invalid username or password"));
+                    .andExpect(status().is(401))
+                    .andExpect(content().string("Could not find user with the specified credentials"));
     }
 
     @Test
