@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RedirectService} from './auxiliary-module/services/redirect.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +9,14 @@ import {RedirectService} from './auxiliary-module/services/redirect.service';
 export class AppComponent {
   title = 'Front-end';
 
-  constructor(private redirectService: RedirectService) {
-  }
+  constructor(private router: Router) {}
 
   public getLocalStorage(): Storage {
     return localStorage;
   }
 
-  public logout() {
+  public logout(): void {
     localStorage.clear();
-    this.redirectService.redirect('/');
+    this.router.navigateByUrl('/logout');
   }
 }
