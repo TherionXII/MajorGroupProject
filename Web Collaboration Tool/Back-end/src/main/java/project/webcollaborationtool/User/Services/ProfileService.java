@@ -2,7 +2,6 @@ package project.webcollaborationtool.User.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Repositories.ProfileRepository;
@@ -19,21 +18,12 @@ public class ProfileService
     @Autowired
     private ProfileRepository profileRepository;
 
-    public void createProfile(@NotNull String username, @NotNull Profile profile)
-    {
-        if(StringUtils.isEmpty(username) || !this.userRepository.existsById(username))
-            throw new InvalidUserDataException();
-
-        profile.setUser(this.userRepository.findByUsername(username));
-        this.profileRepository.save(profile);
-    }
-
     public void updateProfile(@NotNull String username, @NotNull Profile profile)
     {
-        if(!this.userRepository.existsById(username))
+        if(!this.userRepository.existsById(username) || !this.profileRepository.existsById(username))
             throw new InvalidUserDataException();
 
-        var existingUserInformation = profileRepository.findByUser(userRepository.findByUsername(username));
+        var existingUserInformation = profileRepository.findByUsername(username);
 
         if(existingUserInformation.getName() == null || !existingUserInformation.getName().equals(profile.getName()))
             existingUserInformation.setName(profile.getName());
@@ -52,9 +42,9 @@ public class ProfileService
 
     public Profile getProfile(@NotNull String username)
     {
-        if(!this.userRepository.existsById(username))
+        if(!this.userRepository.existsById(username) || !this.profileRepository.existsById(username))
             throw new InvalidUserDataException();
 
-        return this.profileRepository.findByUser(this.userRepository.findByUsername(username));
+        return this.profileRepository.findByUsername(username);
     }
 }

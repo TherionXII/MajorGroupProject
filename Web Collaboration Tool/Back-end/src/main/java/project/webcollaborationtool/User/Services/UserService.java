@@ -4,9 +4,11 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
+import project.webcollaborationtool.User.Repositories.ProfileRepository;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,9 @@ public class UserService
 {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public User createUser(@NotNull User user) throws UserExistsException, InvalidUserDataException
     {
@@ -27,6 +32,8 @@ public class UserService
 
         if(this.userRepository.existsById(user.getUsername()))
             throw new UserExistsException(user.getUsername());
+
+        user.setProfile(this.profileRepository.save(new Profile(user.getUsername(), null, null, null, null)));
 
         return this.userRepository.save(user);
     }

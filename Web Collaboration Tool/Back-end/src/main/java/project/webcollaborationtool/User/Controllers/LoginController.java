@@ -1,6 +1,7 @@
 package project.webcollaborationtool.User.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class LoginController
         }
         catch(InvalidCredentialsException invalidCredentialsException)
         {
-            return ResponseEntity.badRequest().body(invalidCredentialsException.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header(HttpHeaders.WWW_AUTHENTICATE).body(invalidCredentialsException.getMessage());
         }
     }
 }

@@ -13,22 +13,6 @@ public class UserProfileController
     @Autowired
     ProfileService profileService;
 
-    @PostMapping(path = "/{username}/createUserProfile")
-    @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
-    public ResponseEntity<String> createProfile(@PathVariable String username, @RequestBody Profile profile)
-    {
-        try
-        {
-            this.profileService.createProfile(username, profile);
-
-            return ResponseEntity.ok().build();
-        }
-        catch(InvalidUserDataException invalidUserDataException)
-        {
-            return ResponseEntity.badRequest().body(invalidUserDataException.getMessage());
-        }
-    }
-
     @PostMapping(path = "/{username}/updateProfile")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
     public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody Profile profile)
