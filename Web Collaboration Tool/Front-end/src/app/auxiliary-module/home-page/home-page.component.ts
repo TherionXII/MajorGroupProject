@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {RedirectService} from '../services/redirect.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from '../services/login.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,8 +12,10 @@ import {LoginService} from '../services/login.service';
 export class HomePageComponent implements OnInit {
   public loginForm: FormGroup;
 
+  public loginError: string;
+
   constructor(private loginService: LoginService,
-              private redirectService: RedirectService) {}
+              private router: Router) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -23,13 +26,20 @@ export class HomePageComponent implements OnInit {
 
   public onSubmit(): void {
     this.loginService.login(this.loginForm.getRawValue())
-      .subscribe(() => {
-        localStorage.setItem('username', this.loginForm.get('username').value);
-        this.redirectService.redirect('/user/' + localStorage.getItem('username'));
-      }, error => console.log(error));
+                     .subscribe(() => this.onLoginSuccess(), error => this.onLoginFailure(error.error));
   }
 
   public onSignUp(): void {
-    this.redirectService.redirect('/signUp').catch(error => console.log(error));
+    this.router.navigateByUrl('/signUp');
+  }
+
+  private onLoginSuccess(): void {
+    localStorage.setItem('username', this.loginForm.get('username').value);
+    this.router.navigateByUrl(`/user/${localStorage.getItem('username')}`);
+  }
+
+  private onLoginFailure(error: string): void {
+    localStorage.clear();
+    this.loginError = error;
   }
 }
