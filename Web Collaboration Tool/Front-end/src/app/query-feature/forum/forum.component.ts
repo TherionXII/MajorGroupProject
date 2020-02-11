@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../services/query.service';
 import {IQuery} from '../Interfaces/IQuery';
-import {RedirectService} from '../../auxiliary-module/services/redirect.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-forum',
@@ -16,8 +16,11 @@ export class ForumComponent implements OnInit {
 
   public queries: Array<IQuery>;
 
+  public getQueriesError: string;
+  public createQueryError: string;
+
   constructor(private queryService: QueryService,
-              private redirectService: RedirectService) { }
+              private router: Router) { }
 
   ngOnInit() {
     localStorage.getItem('username') ? this.isCreateVisible = true : this.isCreateVisible = false;
@@ -28,11 +31,11 @@ export class ForumComponent implements OnInit {
       contents: new FormControl('', [Validators.required])
     });
 
-    this.queryService.getRecentQueries().subscribe(result => this.queries = result, error => console.log(error));
+    this.queryService.getRecentQueries().subscribe(result => this.queries = result, error => this.getQueriesError = error.error);
   }
 
   public onSubmit() {
     this.queryService.createQuery(this.queryFormGroup.getRawValue() as IQuery, localStorage.getItem('username'))
-      .subscribe(response => this.redirectService.redirect('/query/' + response.id), error => console.log(error));
+      .subscribe(response => this.router.navigateByUrl('/query/' + response.id), error => this.createQueryError = error.error);
   }
 }
