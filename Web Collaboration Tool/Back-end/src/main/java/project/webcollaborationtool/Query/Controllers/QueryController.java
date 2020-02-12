@@ -49,10 +49,8 @@ public class QueryController
 
     @PostMapping(path = "{username}/{queryId}/createResponse")
     @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
-    public ResponseEntity<String> createResponse(@RequestBody Query response, @PathVariable String username, @PathVariable Integer queryId)
+    public ResponseEntity<Query> createResponse(@RequestBody Query response, @PathVariable String username, @PathVariable Integer queryId)
     {
-        this.queryService.createResponse(response, username, queryId);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(this.queryService.createResponse(response, username, queryId));
     }
 }

@@ -55,7 +55,7 @@ public class QueryService
         return this.queryRepository.save(query);
     }
 
-    public void createResponse(@NotNull Query response, @NotNull String username, @NotNull Integer parentId)
+    public Query createResponse(@NotNull Query response, @NotNull String username, @NotNull Integer parentId)
     {
         response.setUser(this.userRepository.findByUsername(username));
         response.setParent(this.queryRepository.findById(parentId).orElseThrow());
@@ -63,5 +63,7 @@ public class QueryService
         response.setRating(0);
 
         this.queryRepository.save(response);
+
+        return this.queryRepository.findById(parentId).orElseThrow();
     }
 }
