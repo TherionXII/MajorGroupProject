@@ -29,15 +29,9 @@ public class QueryService
         return this.queryRepository.findTop10ByUserAndParentOrderByCreatedAtDesc(this.userRepository.findByUsername(username), null);
     }
 
-    public Collection<Integer> getRecentResponsesForUser(@NotNull String username)
+    public Collection<Query> getRecentResponsesForUser(@NotNull String username)
     {
-        var responses = new ArrayList<Integer>();
-        this.queryRepository.findTop10ByUserOrderByCreatedAtDesc(this.userRepository.findByUsername(username))
-                            .forEach(query ->
-                            {
-                                if(query.getParent() != null) responses.add(query.getId());
-                            });
-        return responses;
+        return this.queryRepository.findTop10ByUserAndParentIsNotNullOrderByCreatedAtDesc(this.userRepository.findByUsername(username));
     }
 
     public Query getQueryById(@NotNull int id)

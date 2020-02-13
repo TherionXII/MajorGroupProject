@@ -28,9 +28,9 @@ public class QueryController
 
     @GetMapping(path = "/{username}/getRecentResponses")
     @CrossOrigin(methods = RequestMethod.GET, origins = "http://localhost:4200")
-    public ResponseEntity<Integer[]> getRecentResponsesForUser(@PathVariable String username)
+    public ResponseEntity<Query[]> getRecentResponsesForUser(@PathVariable String username)
     {
-        return ResponseEntity.ok().body(this.queryService.getRecentResponsesForUser(username).toArray(Integer[]::new));
+        return ResponseEntity.ok().body(this.queryService.getRecentResponsesForUser(username).toArray(Query[]::new));
     }
 
     @GetMapping(path = "/getQuery/{id}")
