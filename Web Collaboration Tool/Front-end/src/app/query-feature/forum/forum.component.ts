@@ -20,7 +20,7 @@ export class ForumComponent implements OnInit {
   public createQueryError: string;
 
   constructor(private queryService: QueryService,
-              private router: Router) { }
+              private router: Router) {}
 
   ngOnInit() {
     localStorage.getItem('username') ? this.isCreateVisible = true : this.isCreateVisible = false;
@@ -31,11 +31,13 @@ export class ForumComponent implements OnInit {
       contents: new FormControl('', [Validators.required])
     });
 
-    this.queryService.getRecentQueries().subscribe(result => this.queries = result, error => this.getQueriesError = error.error);
+    this.queries = new Array<IQuery>();
+
+    this.queryService.getRecentQueries().subscribe(result => this.queries = result, error => this.getQueriesError = error.message);
   }
 
   public onSubmit() {
     this.queryService.createQuery(this.queryFormGroup.getRawValue() as IQuery, localStorage.getItem('username'))
-      .subscribe(response => this.router.navigateByUrl('/query/' + response.id), error => this.createQueryError = error.error);
+      .subscribe(response => this.router.navigateByUrl('/query/' + response.id), error => this.createQueryError = error.message);
   }
 }
