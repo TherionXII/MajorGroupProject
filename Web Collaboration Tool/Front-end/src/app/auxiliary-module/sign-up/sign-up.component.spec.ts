@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 import {of, throwError} from 'rxjs';
 import {IUser} from '../../user-feature/Interfaces/IUser';
 
-fdescribe('SignUpComponent', () => {
+describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
 

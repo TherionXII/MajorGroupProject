@@ -3,8 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { LoginService } from './login.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {IUser} from '../../user-feature/Interfaces/IUser';
+import {Type} from '@angular/core';
 
-fdescribe('LoginService', () => {
+describe('LoginService', () => {
   let service: LoginService;
   let httpTestingController: HttpTestingController;
 
@@ -16,8 +17,8 @@ fdescribe('LoginService', () => {
   }));
 
   beforeEach(() => {
-    service = TestBed.get(LoginService);
-    httpTestingController = TestBed.get(HttpTestingController);
+    service = TestBed.inject(LoginService as Type<LoginService>);
+    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>)
   });
 
   beforeEach(() => {
