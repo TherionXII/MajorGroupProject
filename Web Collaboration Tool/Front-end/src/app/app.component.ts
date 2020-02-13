@@ -7,16 +7,19 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Front-end';
+  public title = 'Front-end';
 
-  constructor(private router: Router) {}
+  public username: string;
 
-  public getLocalStorage(): Storage {
-    return localStorage;
+  constructor(private router: Router) {
+    this.username = localStorage.getItem('username');
   }
 
   public logout(): void {
     localStorage.clear();
+
+    this.username = null;
+
     this.router.navigateByUrl('/logout');
   }
 }
