@@ -9,19 +9,22 @@ import {ValidatorMethods} from '../../../Utility/ValidatorMethods';
   styleUrls: ['./user-settings.component.css']
 })
 export class UserSettingsComponent implements OnInit {
-  public accountSettingsFormGroup: FormGroup;
+  public emailSettingsForm: FormGroup;
+  public passwordSettingsForm: FormGroup;
   public profileSettingsFormGroup: FormGroup;
-  public privacySettingsFormGroup: FormGroup;
 
-  public resultMessage = '';
+  public resultMessage: string;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.accountSettingsFormGroup = new FormGroup({
-      password: new FormControl('', Validators.minLength(8)),
-      repeatPassword: new FormControl('', Validators.minLength(8)),
+    this.emailSettingsForm = new FormGroup({
       email: new FormControl('', Validators.email)
+    });
+
+    this.passwordSettingsForm = new FormGroup({
+      password: new FormControl('', Validators.minLength(8)),
+      repeatPassword: new FormControl('', Validators.minLength(8))
     }, ValidatorMethods.getPasswordEqualValidator);
 
     this.profileSettingsFormGroup = new FormGroup({
@@ -32,25 +35,20 @@ export class UserSettingsComponent implements OnInit {
     });
 
     this.userService.getUserProfile(localStorage.getItem('username'))
-      .subscribe(profile => {
-        this.profileSettingsFormGroup.get('name').setValue(profile.name);
-        this.profileSettingsFormGroup.get('surname').setValue(profile.surname);
-        this.profileSettingsFormGroup.get('gender').setValue(profile.gender);
-        this.profileSettingsFormGroup.get('institution').setValue(profile.institution);
-    });
+      .subscribe(profile => this.profileSettingsFormGroup.patchValue(profile), error => this.resultMessage = error.message);
   }
 
   public onTabChange() { this.resultMessage = ''; }
 
-  public isUpdatePasswordDisabled(): boolean {
-    return this.accountSettingsFormGroup.get('password').value === '';
+  public isUpdatePasswordButtonDisabled(): boolean {
+    return this.passwordSettingsForm.get('password').value === '';
   }
 
-  public isUpdateEmailDisabled(): boolean {
-    return this.accountSettingsFormGroup.get('email').value === '';
+  public isUpdateEmailButtonDisabled(): boolean {
+    return this.emailSettingsForm.get('email').value === '';
   }
 
-  public isUpdateProfileDisabled(): boolean {
+  public isUpdateProfileButtonDisabled(): boolean {
     return this.profileSettingsFormGroup.get('name').value === '' &&
            this.profileSettingsFormGroup.get('surname').value === '' &&
            this.profileSettingsFormGroup.get('gender').value === '' &&
@@ -58,17 +56,17 @@ export class UserSettingsComponent implements OnInit {
   }
 
   public onUpdatePassword(): void {
-    this.userService.updateUserPassword(localStorage.getItem('username'), this.accountSettingsFormGroup.get('password').value)
-      .subscribe(() => this.resultMessage = 'Password updated successfully!', error => console.log(error));
+    this.userService.updateUserPassword(localStorage.getItem('username'), this.passwordSettingsForm.get('password').value)
+      .subscribe(() => this.resultMessage = 'Password updated successfully!', error => this.resultMessage = error.message);
   }
 
   public onUpdateEmail(): void {
-    this.userService.updateUserEmail(localStorage.getItem('username'), this.accountSettingsFormGroup.get('email').value)
-      .subscribe(() => this.resultMessage = 'Email updated successfully!', error => console.log(error));
+    this.userService.updateUserEmail(localStorage.getItem('username'), this.emailSettingsForm.get('email').value)
+      .subscribe(() => this.resultMessage = 'Email updated successfully!', error => this.resultMessage = error.message);
   }
 
   public onUpdateProfile(): void {
     this.userService.updateUserProfile(localStorage.getItem('username'), this.profileSettingsFormGroup.getRawValue())
-      .subscribe(() => this.resultMessage = 'Profile updated successfully!', error => console.log(error));
+      .subscribe(() => this.resultMessage = 'Profile updated successfully!', error => this.resultMessage = error.message);
   }
 }

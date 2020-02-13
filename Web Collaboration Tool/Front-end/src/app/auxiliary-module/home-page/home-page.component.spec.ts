@@ -9,7 +9,7 @@ import { HomePageComponent } from './home-page.component';
 
 import { LoginService } from '../services/login.service';
 
-fdescribe('HomePageComponent', () => {
+describe('HomePageComponent', () => {
   let component: HomePageComponent;
   let fixture: ComponentFixture<HomePageComponent>;
 

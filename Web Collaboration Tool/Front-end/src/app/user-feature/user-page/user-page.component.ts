@@ -12,35 +12,35 @@ import {IQuery} from '../../query-feature/Interfaces/IQuery';
 })
 export class UserPageComponent implements OnInit {
   public username: string;
-  public userInformation: IUserProfile;
+  public userProfile: IUserProfile;
 
   public userQueries: Array<IQuery>;
   public userResponses: Array<IQuery>;
 
+  public initError: string;
+
   constructor(private userService: UserService,
               private queryService: QueryService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.userService.getUserProfile(this.route.snapshot.paramMap.get('username'))
-      .subscribe(response => this.userInformation = response, error => console.log(error));
-    this.username = localStorage.getItem('username');
+    this.username = this.route.snapshot.paramMap.get('username');
+
+    this.userService.getUserProfile(this.username)
+      .subscribe(userProfile => this.userProfile = userProfile, error => this.initError = error.message);
 
     this.queryService.getRecentQueriesForUser(this.username)
-      .subscribe(queries => this.userQueries = queries, error => console.log(error));
+      .subscribe(queries => this.userQueries = queries, error => this.initError = error.message);
 
-    this.userResponses = new Array<IQuery>();
     this.queryService.getRecentResponsesForUser(this.username)
-      .subscribe(responses => responses.forEach(id => this.queryService.getQueryById(id)
-        .subscribe(response => this.userResponses.push(response), error => console.log(error))),
-          error => console.log(error));
+      .subscribe(responses => this.userResponses = responses, error => this.initError = error.message);
   }
 
-  public getParent(response: IQuery): IQuery {
+  public getOwnerUsername(response: IQuery): string {
     while (response.parent != null) {
       response = response.parent;
     }
 
-    return response;
+    return response.user.username;
   }
 }

@@ -15,12 +15,14 @@ export class QueryContainerComponent implements OnInit {
 
   public isReplyVisible = false;
 
-  public queryResponse: FormGroup;
+  public queryResponseForm: FormGroup;
 
-  constructor(private queryService: QueryService) { }
+  public submissionError: string;
+
+  constructor(private queryService: QueryService) {}
 
   ngOnInit() {
-    this.queryResponse = new FormGroup({
+    this.queryResponseForm = new FormGroup({
       contents: new FormControl('', Validators.required)
     });
   }
@@ -30,20 +32,14 @@ export class QueryContainerComponent implements OnInit {
   }
 
   public onSubmit(id: number): void {
-    this.queryService.createResponse(this.queryResponse.getRawValue() as IQuery, localStorage.getItem('username'), id)
-      .subscribe(() => this.queryService.getQueryById(id)
-        .subscribe(query => this.query = query));
+    this.queryService.createResponse(this.queryResponseForm.getRawValue() as IQuery, localStorage.getItem('username'), id)
+      .subscribe(query => this.query = query, error => this.submissionError = error.message);
 
     this.onRespond();
   }
 
-  public onUpvote(query: IQuery): void {
-    this.queryService.submitVote({ vote: true, username: localStorage.getItem('username'), query } as IQueryVote)
-      .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
-  }
-
-  public onDownvote(query: IQuery): void {
-    this.queryService.submitVote({ vote: false, username: localStorage.getItem('username'), query } as IQueryVote)
-      .subscribe(updatedQuery => this.query = updatedQuery, error => console.log(error));
+  public onVote(query: IQuery, vote: boolean): void {
+    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), query } as IQueryVote)
+      .subscribe(updatedQuery => this.query = updatedQuery, error => this.submissionError = error.message);
   }
 }
