@@ -12,12 +12,13 @@ export class QueryComponent implements OnInit {
   public query: IQuery;
   public username: string;
 
+  public getQueryError: string;
+
   constructor(private queryService: QueryService,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.username = localStorage.getItem('username');
     this.queryService.getQueryById(this.activatedRoute.snapshot.paramMap.get('id') as unknown as number)
-      .subscribe(result => this.query = result, error => console.log(error));
+      .subscribe(result => this.query = result, error => this.getQueryError = error.message);
   }
 }

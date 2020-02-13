@@ -1,4 +1,5 @@
 <mat-card>
+  <mat-error>{{ getQueryError ? getQueryError : null }}</mat-error>
   <mat-card-header> Created by: <a [routerLink] = "['/user', query ? query.user.username : '']"> {{ query ? query.user.username : null }} </a></mat-card-header>
   <mat-card-title> {{ query ? query.title : null }} </mat-card-title>
   <mat-card-subtitle> {{ query ? query.subtitle : null }} </mat-card-subtitle>
