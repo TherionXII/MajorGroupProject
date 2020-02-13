@@ -1,30 +1,33 @@
 <mat-tab-group (selectedTabChange) = "onTabChange()">
   <mat-tab label = "Account Settings">
-    <h2>{{resultMessage}}</h2>
-    <form [formGroup] = "accountSettingsFormGroup">
+    <h2>{{ resultMessage }}</h2>
+    <form [formGroup] = "passwordSettingsForm">
       <mat-form-field>
         <input matInput placeholder = "Update your password: " type = "password" name = "password" formControlName = "password">
-        <mat-error *ngIf = "!accountSettingsFormGroup.get('password').valid">Please enter a valid password</mat-error>
+        <mat-error *ngIf = "!passwordSettingsForm.get('password').valid">Please enter a valid password</mat-error>
       </mat-form-field><br>
 
       <mat-form-field>
         <input matInput placeholder = "Repeat your new password: " type = "password" name = "repeatPassword" formControlName = "repeatPassword">
-        <mat-error *ngIf = "accountSettingsFormGroup.hasError('validatePassword')">Passwords do not match</mat-error>
-      </mat-form-field><br>
-
-      <mat-form-field>
-        <input matInput placeholder = "Update your email address: " type = "email" name = "email" formControlName = "email">
-        <mat-error *ngIf = "!accountSettingsFormGroup.get('email').valid">Please enter a valid email address</mat-error>
+        <mat-error *ngIf = "passwordSettingsForm.hasError('validatePassword')">Passwords do not match</mat-error>
       </mat-form-field><br>
 
       <button mat-raised-button color="primary" type = "reset" (click) = "onUpdatePassword()"
-              [disabled] = "isUpdatePasswordDisabled() || accountSettingsFormGroup.hasError('validatePassword')">Update Password</button>
+              [disabled] = "isUpdatePasswordButtonDisabled() || passwordSettingsForm.hasError('validatePassword')">Update Password</button>
+    </form>
+
+    <form [formGroup] = "emailSettingsForm">
+      <mat-form-field>
+        <input matInput placeholder = "Update your email address: " type = "email" name = "email" formControlName = "email">
+        <mat-error *ngIf = "!emailSettingsForm.get('email').valid">Please enter a valid email address</mat-error>
+      </mat-form-field><br>
+
       <button mat-raised-button color="primary" type = "reset" (click) = "onUpdateEmail()"
-              [disabled] = "isUpdateEmailDisabled() || !accountSettingsFormGroup.get('email').valid">Update Email</button>
+              [disabled] = "isUpdateEmailButtonDisabled() || !emailSettingsForm.get('email').valid">Update Email</button>
     </form>
   </mat-tab>
   <mat-tab label = "Profile Settings">
-    <h2>{{resultMessage}}</h2>
+    <h2>{{ resultMessage }}</h2>
     <form [formGroup] = "profileSettingsFormGroup" (ngSubmit) = "onUpdateProfile()">
       <mat-form-field>
         <input matInput placeholder = "You may enter your real name if you wish: " name = "name" formControlName = "name" style = "width: 350px;">
@@ -47,7 +50,7 @@
         <input matInput placeholder = "You may enter your institution's name if you wish: " name = "institution" formControlName = "institution" style = "width: 350px;">
       </mat-form-field><br>
 
-      <button mat-raised-button color="primary" type = "submit" [disabled] = "isUpdateProfileDisabled()">Save</button>
+      <button mat-raised-button color="primary" type = "submit" [disabled] = "isUpdateProfileButtonDisabled()">Save</button>
     </form>
   </mat-tab>
   <mat-tab label = "Privacy Settings"></mat-tab>
