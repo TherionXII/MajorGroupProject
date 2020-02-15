@@ -37,13 +37,6 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Front-end');
   });
 
-  it('should set username from local storage when created component', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-
-    expect(app.username).toEqual('username');
-  });
-
   it('should clear local storage and redirect to logout page when logged out', () => {
     const navigateByUrlSpy = spyOn(TestBed.inject(Router as Type<Router>), 'navigateByUrl');
 
@@ -51,8 +44,7 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
 
     app.logout();
-    expect(navigateByUrlSpy).toHaveBeenCalledWith('/logout');
+    expect(navigateByUrlSpy).toHaveBeenCalledWith('/');
     expect(localStorage.getItem('username')).toBeNull();
-    expect(app.username).toBeNull();
   })
 });

@@ -31,10 +31,6 @@ describe('ForumComponent', () => {
     .compileComponents();
   });
 
-  beforeEach(() => {
-
-  });
-
   beforeEach( () => {
     let store = {};
 

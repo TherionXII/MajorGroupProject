@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +9,15 @@ import {Router} from '@angular/router';
 export class AppComponent {
   public title = 'Front-end';
 
-  public username: string;
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) {
-    this.username = localStorage.getItem('username');
+  public getUsername(): string {
+    return localStorage.getItem('username');
   }
 
   public logout(): void {
     localStorage.clear();
 
-    this.username = null;
-
-    this.router.navigateByUrl('/logout');
+    this.router.navigateByUrl('/');
   }
 }
