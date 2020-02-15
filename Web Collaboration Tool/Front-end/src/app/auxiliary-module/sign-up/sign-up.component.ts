@@ -7,7 +7,7 @@ import { UserService } from '../../user-feature/Services/user.service';
 
 import { IUser } from '../../user-feature/Interfaces/IUser';
 
-import { ValidatorMethods } from '../../../Utility/ValidatorMethods';
+import { ValidatorMethods } from '../../Utility/ValidatorMethods';
 
 @Component({
   selector: 'app-sign-up',

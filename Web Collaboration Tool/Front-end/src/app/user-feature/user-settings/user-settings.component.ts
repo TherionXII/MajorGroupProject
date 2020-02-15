@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/user.service';
-import {ValidatorMethods} from '../../../Utility/ValidatorMethods';
+import {ValidatorMethods} from '../../Utility/ValidatorMethods';
 
 @Component({
   selector: 'app-user-settings',
