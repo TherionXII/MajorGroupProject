@@ -37,7 +37,7 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithValidData() throws Exception
     {
-        var user = this.userRepository.save(new User("username", "password", "email", null));
+        var user = this.userRepository.save(new User("username", "password", "email", null, null));
 
         this.mockMvc.perform(post("/login")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -48,10 +48,10 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithNonExistentUser() throws Exception
     {
-        this.userRepository.save(new User("username", "password", "email", null));
+        this.userRepository.save(new User("username", "password", "email", null, null));
 
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(new User("user", "password", "e", null)))
+                             .content(this.objectMapper.writeValueAsString(new User("user", "password", "e", null, null)))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(401))
                     .andExpect(content().string("Could not find user with the specified credentials"));
@@ -60,10 +60,10 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithInvalidPassword() throws Exception
     {
-        this.userRepository.save(new User("username", "password", "email", null));
+        this.userRepository.save(new User("username", "password", "email", null, null));
 
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(new User("username", "pass", "email", null)))
+                             .content(this.objectMapper.writeValueAsString(new User("username", "pass", "email", null, null)))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(401))
                     .andExpect(content().string("Could not find user with the specified credentials"));

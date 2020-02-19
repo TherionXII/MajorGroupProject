@@ -37,6 +37,21 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Front-end');
   });
 
+  it('should return a username or a null when invoked getUsername()', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+
+    localStorage.setItem('username', 'username');
+
+    let result = app.getUsername();
+    expect(result).toEqual('username');
+
+    localStorage.clear();
+
+    result = app.getUsername();
+    expect(result).toBeNull();
+  });
+
   it('should clear local storage and redirect to logout page when logged out', () => {
     const navigateByUrlSpy = spyOn(TestBed.inject(Router as Type<Router>), 'navigateByUrl');
 

@@ -31,7 +31,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWithValidData()
     {
-        var user = new User("username", "password", "a@a.com", null);
+        var user = new User("username", "password", "a@a.com", null, null);
 
         assertThatCode(() -> this.userService.createUser(user)).doesNotThrowAnyException();
     }
@@ -39,9 +39,9 @@ public class UserServiceTests
     @Test
     public void testCreateUserWhenAnotherUserExists()
     {
-        var user = new User("username", "password", "a@a.com", null);
+        var user = new User("username", "password", "a@a.com", null, null);
 
-        when(userRepository.save(user)).thenThrow(UserExistsException.class);
+        when(this.userRepository.existsById(user.getUsername())).thenReturn(true);
 
         assertThatThrownBy(() -> this.userService.createUser(user)).isInstanceOf(UserExistsException.class);
     }
@@ -55,7 +55,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWithInvalidPrimaryKey()
     {
-        var user = new User(null, null, null, null);
+        var user = new User(null, null, null, null, null);
 
         assertThatThrownBy(() -> this.userService.createUser(user)).isInstanceOf(InvalidUserDataException.class);
     }
@@ -63,7 +63,7 @@ public class UserServiceTests
     @Test
     public void testCreateUserWithInvalidData()
     {
-        var user = new User("user", null, null, null);
+        var user = new User("user", null, null, null, null);
 
         assertThatThrownBy(() -> this.userService.createUser(user)).isInstanceOf(InvalidUserDataException.class);
     }
@@ -71,7 +71,7 @@ public class UserServiceTests
     @Test
     public void updateUserPassword()
     {
-        var user = new User("username", "password1", null, null);
+        var user = new User("username", "password1", null, null, null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.userRepository.findByUsername("username")).thenReturn(user);
@@ -89,7 +89,7 @@ public class UserServiceTests
     @Test
     public void updateUserEmail()
     {
-        var user = new User("username", "password", "email@email.com", null);
+        var user = new User("username", "password", "email@email.com", null, null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.userRepository.findByUsername("username")).thenReturn(user);

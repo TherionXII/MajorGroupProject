@@ -29,7 +29,7 @@ public class UserEntityTests
         var user = new User();
         assertThat(user).isNotEqualTo(null);
 
-        user = new User("username", "password", "email", null);
+        user = new User("username", "password", "email", null, null);
         assertThat(user).isNotEqualTo(null);
     }
 
@@ -51,7 +51,7 @@ public class UserEntityTests
     @Test
     public void testUserModelPersistenceWithValidData()
     {
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email", null, null);
         this.userRepository.save(user);
 
         var databaseQueryResult = this.userRepository.findByUsername("username");
@@ -64,7 +64,7 @@ public class UserEntityTests
     @Test
     public void testUserModelPersistenceWithInvalidData()
     {
-        var user = new User(null, null, null, null);
+        var user = new User(null, null, null, null, null);
 
         var usernameException = Assertions.assertThrows(JpaSystemException.class, () -> this.userRepository.save(user));
         assertThat(usernameException.getMessage()).contains("ids for this class must be manually assigned before calling save()");
