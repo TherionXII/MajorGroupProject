@@ -3,6 +3,7 @@ package project.webcollaborationtool.User.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.User.Entities.Profile;
+import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Repositories.ProfileRepository;
 import project.webcollaborationtool.User.Repositories.UserRepository;
@@ -17,6 +18,13 @@ public class ProfileService
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    public User createProfile(@NotNull User user, @NotNull Profile profile)
+    {
+        user.setProfile(this.profileRepository.save(new Profile(user.getUsername(), null, null, null, null)));
+
+        return this.userRepository.save(user);
+    }
 
     public void updateProfile(@NotNull String username, @NotNull Profile profile)
     {

@@ -3,9 +3,11 @@ package project.webcollaborationtool.User.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
+import project.webcollaborationtool.User.Services.ProfileService;
 import project.webcollaborationtool.User.Services.UserService;
 
 @RestController
@@ -14,13 +16,16 @@ public class UserController
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ProfileService profileService;
+
     @PostMapping(path = "/createUser")
     @CrossOrigin(methods = { RequestMethod.POST }, origins = "http://localhost:4200")
     public ResponseEntity<?> createUser(@RequestBody User user)
     {
         try
         {
-            return ResponseEntity.ok(this.userService.createUser(user));
+            return ResponseEntity.ok(this.profileService.createProfile(this.userService.createUser(user), new Profile()));
         }
         catch(UserExistsException | InvalidUserDataException exception)
         {

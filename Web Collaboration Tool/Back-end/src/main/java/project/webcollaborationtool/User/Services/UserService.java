@@ -19,9 +19,6 @@ public class UserService
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ProfileRepository profileRepository;
-
     public User createUser(@NotNull User user) throws UserExistsException, InvalidUserDataException
     {
         if(StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword()) || StringUtils.isEmpty(user.getEmail()))
@@ -32,8 +29,6 @@ public class UserService
 
         if(this.userRepository.existsById(user.getUsername()))
             throw new UserExistsException(user.getUsername());
-
-        user.setProfile(this.profileRepository.save(new Profile(user.getUsername(), null, null, null, null)));
 
         return this.userRepository.save(user);
     }
