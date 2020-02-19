@@ -31,7 +31,7 @@ public class ProfileServiceTests
     public void testUpdateProfileWithValidData()
     {
         var profile = new Profile();
-        var user = new User("username", "password", "email", null);
+        var user = new User("username", "password", "email", null, null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.profileRepository.existsById("username")).thenReturn(true);
@@ -61,7 +61,7 @@ public class ProfileServiceTests
     @Test
     public void testGetProfileWithValidData()
     {
-        var user = new User("username", "password", "email", new Profile());
+        var user = new User("username", "password", "email", new Profile(), null);
 
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.profileRepository.existsById("username")).thenReturn(true);
