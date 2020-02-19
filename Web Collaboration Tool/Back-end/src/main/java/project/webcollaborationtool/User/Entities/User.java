@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.lang.Nullable;
+import project.webcollaborationtool.Collaboration.Entities.UserToUserCollaboration;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @Entity
 @ToString
@@ -30,4 +32,9 @@ public class User
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
+
+    @Nullable
+    @JsonIgnore
+    @OneToMany(mappedBy = "collaboratorOne")
+    private Collection<UserToUserCollaboration> collaborators;
 }
