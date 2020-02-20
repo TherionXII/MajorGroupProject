@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../Services/user.service';
 import {IUserProfile} from '../Interfaces/IUserProfile';
 import {ActivatedRoute} from '@angular/router';
-import {QueryService} from '../../query-feature/services/query.service';
 import {IQuery} from '../../query-feature/Interfaces/IQuery';
 
 @Component({
@@ -11,29 +9,19 @@ import {IQuery} from '../../query-feature/Interfaces/IQuery';
   styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent implements OnInit {
-  public username: string;
   public userProfile: IUserProfile;
 
   public userQueries: Array<IQuery>;
   public userResponses: Array<IQuery>;
 
-  public initError: string;
-
-  constructor(private userService: UserService,
-              private queryService: QueryService,
-              private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.username = this.route.snapshot.paramMap.get('username');
-
-    this.userService.getUserProfile(this.username)
-      .subscribe(userProfile => this.userProfile = userProfile, error => this.initError = error.message);
-
-    this.queryService.getRecentQueriesForUser(this.username)
-      .subscribe(queries => this.userQueries = queries, error => this.initError = error.message);
-
-    this.queryService.getRecentResponsesForUser(this.username)
-      .subscribe(responses => this.userResponses = responses, error => this.initError = error.message);
+    this.route.data.subscribe((data: { userProfile: IUserProfile, queries: Array<IQuery>, responses: Array<IQuery> }) => {
+      this.userProfile = data.userProfile;
+      this.userQueries = data.queries;
+      this.userResponses = data.responses;
+    });
   }
 
   public getOwnerUsername(response: IQuery): string {
