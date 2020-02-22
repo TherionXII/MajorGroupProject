@@ -1,6 +1,8 @@
 <mat-card>
-  <mat-card-title>{{ username }}</mat-card-title>
+  <mat-card-title>{{ userProfile.username }}</mat-card-title>
   <mat-card-content>
+<!--    <button mat-raised-button *ngIf = "isLoggedInUser() && !hasSentRequest()" (click) = "onCollaborationRequest()">Add as collaborator</button>-->
+<!--    <button mat-raised-button *ngIf = "hasReceivedRequest()">Accept request</button>-->
     <mat-tab-group>
       <mat-tab label = "Recent queries">
         <mat-list>
@@ -14,7 +16,7 @@
       <mat-tab label = "Most recent responses">
         <mat-list>
           <mat-list-item *ngFor = "let response of userResponses">
-            <h3>{{ getOwnerUsername(response).title }}&nbsp;</h3>
+            <h3>{{ getOwnerUsername(response) }}&nbsp;</h3>
             <h3>Created by: {{ getOwnerUsername(response) }}&nbsp;</h3>
             <h3>{{ response.contents }}&nbsp;</h3>
             <h3>{{ response.rating }}&nbsp;</h3>
