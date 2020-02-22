@@ -14,30 +14,35 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
+import { NotificationComponent } from './notification/notification.component';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 @NgModule({
   declarations: [
     HomePageComponent,
     SignUpComponent,
-    FooterComponent
+    FooterComponent,
+    NotificationComponent
   ],
-  imports: [
-    HttpClientModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    AuxiliaryRoutingModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule,
-    MatToolbarModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-  ],
+    imports: [
+        HttpClientModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        AuxiliaryRoutingModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        SimpleNotificationsModule,
+    ],
   exports: [
-    FooterComponent
+    FooterComponent,
+    NotificationComponent
   ]
 })
 export class AuxiliaryModule { }
