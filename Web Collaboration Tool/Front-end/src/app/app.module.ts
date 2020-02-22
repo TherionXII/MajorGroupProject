@@ -16,6 +16,9 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './auxiliary-module/home-page/home-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import {AuthenticationGuard} from './Utility/Guards/authentication.guard';
+import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
+import {SocketConfigurationConfig} from './Utility/SocketConfiguration.config';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, canActivate: [ AuthenticationGuard ] }
@@ -35,9 +38,13 @@ const routes: Routes = [
     UserFeatureModule,
     QueryFeatureModule,
     RouterModule.forRoot(routes),
-    MatButtonModule
+    MatButtonModule,
+    SimpleNotificationsModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: InjectableRxStompConfig, useValue: SocketConfigurationConfig },
+    { provide: RxStompService, useFactory: rxStompServiceFactory, deps: [ InjectableRxStompConfig ]}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
