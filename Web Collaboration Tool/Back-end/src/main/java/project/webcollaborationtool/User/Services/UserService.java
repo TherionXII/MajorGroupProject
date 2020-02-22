@@ -3,17 +3,18 @@ package project.webcollaborationtool.User.Services;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
-import project.webcollaborationtool.User.Repositories.ProfileRepository;
 import project.webcollaborationtool.User.Repositories.UserRepository;
+import project.webcollaborationtool.Utility.Entities.CollaborationMessage;
 
 import javax.validation.constraints.NotNull;
 
 @Service
+@Transactional
 public class UserService
 {
     @Autowired
@@ -52,6 +53,13 @@ public class UserService
         var user = this.userRepository.findByUsername(username);
         user.setEmail(email);
 
+        this.userRepository.save(user);
+    }
+
+    public void addNotification(@NotNull CollaborationMessage collaborationMessage)
+    {
+        var user = this.userRepository.findByUsername(collaborationMessage.getRecipient());
+        user.getNotifications().add(collaborationMessage);
         this.userRepository.save(user);
     }
 }

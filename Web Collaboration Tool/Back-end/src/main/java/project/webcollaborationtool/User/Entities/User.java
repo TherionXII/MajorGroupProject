@@ -1,11 +1,10 @@
 package project.webcollaborationtool.User.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.springframework.lang.Nullable;
 import project.webcollaborationtool.Collaboration.Entities.UserToUserCollaboration;
+import project.webcollaborationtool.Utility.Entities.CollaborationMessage;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,4 +36,11 @@ public class User
     @JsonIgnore
     @OneToMany(mappedBy = "collaboratorOne")
     private Collection<UserToUserCollaboration> collaborators;
+
+    @Nullable
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "notification", joinColumns = @JoinColumn(name = "user_username"),
+               inverseJoinColumns = @JoinColumn(name = "collaboration_message_id"))
+    private Collection<CollaborationMessage> notifications;
 }
