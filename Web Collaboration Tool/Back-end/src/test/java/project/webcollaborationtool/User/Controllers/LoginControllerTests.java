@@ -34,13 +34,23 @@ public class LoginControllerTests
     @Autowired
     private UserRepository userRepository;
 
+    private User validUser;
+    private User nonExistentUser;
+    private User userWithInvalidPassword;
+
+    @BeforeEach
+    public void setUp()
+    {
+        this.validUser = this.userRepository.save(new User("username", "password", "email", null, null, null));
+        this.nonExistentUser = new User("user", "password", "e", null, null, null);
+        this.userWithInvalidPassword = new User("username", "pass", "email", null, null, null);
+    }
+
     @Test
     public void testLoginUserWithValidData() throws Exception
     {
-        var user = this.userRepository.save(new User("username", "password", "email", null, null));
-
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(user))
+                             .content(this.objectMapper.writeValueAsString(this.validUser))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
     }
@@ -48,10 +58,8 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithNonExistentUser() throws Exception
     {
-        this.userRepository.save(new User("username", "password", "email", null, null));
-
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(new User("user", "password", "e", null, null)))
+                             .content(this.objectMapper.writeValueAsString(this.nonExistentUser))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(401))
                     .andExpect(content().string("Could not find user with the specified credentials"));
@@ -60,10 +68,8 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithInvalidPassword() throws Exception
     {
-        this.userRepository.save(new User("username", "password", "email", null, null));
-
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(new User("username", "pass", "email", null, null)))
+                             .content(this.objectMapper.writeValueAsString(this.userWithInvalidPassword))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(401))
                     .andExpect(content().string("Could not find user with the specified credentials"));
