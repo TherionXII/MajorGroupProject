@@ -11,6 +11,8 @@
   <mat-sidenav #sidenav mode = "side" role = "navigation">
     <mat-nav-list *ngIf = "getUsername()">
       <a mat-list-item [routerLink] = "['/user', getUsername()]">Profile</a>
+      <a mat-list-item routerLink = "/collaborations">Private collaborations</a>
+      <a mat-list-item routerLink = "/notifications">Notifications</a>
       <a mat-list-item routerLink = "/settings">Settings</a>
       <a mat-list-item routerLink = "/forum">Forum</a>
       <a mat-list-item (click) = "logout()">Log Out</a>
