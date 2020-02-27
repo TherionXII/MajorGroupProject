@@ -1,7 +1,6 @@
 package com.colm.pdf.PDFTextExtraction.controller;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -54,35 +53,5 @@ public class PDFPagesToImagesController
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-//    @CrossOrigin
-//    @RequestMapping("/pdf/getPagesAsImages")
-//    public ResponseEntity<List<String>> getPagesAsImages()
-//    {
-//        List<String> pageImages = new ArrayList<>();
-//        File imagesFolder = new File("Images");
-//
-//        for (final File file : imagesFolder.listFiles())
-//        {
-//            if (!file.isDirectory())
-//            {
-//                try
-//                {
-//                    String fileExtension = FilenameUtils.getExtension(file.getName());
-//                    byte[] fileContent = FileUtils.readFileToByteArray(file);
-//                    String encodedString = Base64.getEncoder().encodeToString(fileContent);
-//
-//                    pageImages.add("data:image/" + fileExtension + ";base64," + encodedString);
-//                }
-//                catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return new ResponseEntity<>(pageImages, HttpStatus.OK);
-//
-//    }
 
 }
