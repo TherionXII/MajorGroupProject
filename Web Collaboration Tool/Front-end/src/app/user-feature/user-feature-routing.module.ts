@@ -2,18 +2,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {UserPageComponent} from './user-page/user-page.component';
 import {UserSettingsComponent} from './user-settings/user-settings.component';
-import {ProfileResolverService} from '../Utility/Resolvers/profile-resolver.service';
-import {UserQueryResolverService} from '../Utility/Resolvers/user-query-resolver.service';
-import {UserResponseResolverService} from '../Utility/Resolvers/user-response-resolver.service';
+
+import {PrivateCollaborationStatusResolverService} from '../Utility/Resolvers/UserPageResolvers/private-collaboration-status-resolver.service';
+import {UserDataResolverService} from '../Utility/Resolvers/UserPageResolvers/user-data-resolver.service';
 
 const routes: Routes = [
   {
     path: 'user/:username',
     component: UserPageComponent,
     resolve: {
-        userProfile: ProfileResolverService,
-        queries: UserQueryResolverService,
-        responses: UserResponseResolverService
+        userData: UserDataResolverService,
+        collaborationStatus: PrivateCollaborationStatusResolverService
     }
   },
   { path: 'settings', component: UserSettingsComponent }

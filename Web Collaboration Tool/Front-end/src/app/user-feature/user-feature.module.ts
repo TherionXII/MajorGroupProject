@@ -16,12 +16,14 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { UserCollaborationPaneComponent } from './PartialComponents/user-collaboration-pane/user-collaboration-pane.component';
 
 
 @NgModule({
   declarations: [
     UserPageComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    UserCollaborationPaneComponent
   ],
   imports: [
     CommonModule,

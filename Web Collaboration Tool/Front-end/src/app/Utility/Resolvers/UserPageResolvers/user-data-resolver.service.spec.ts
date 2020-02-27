@@ -1,24 +1,24 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { UserResponseResolverService } from './user-response-resolver.service';
+import {UserDataResolverService} from './user-data-resolver.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {QueryService} from '../../query-feature/services/query.service';
+import {UserService} from '../../../user-feature/Services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Type} from '@angular/core';
 import {of} from 'rxjs';
-import {IQuery} from '../../query-feature/Interfaces/IQuery';
+import {IUserProfile} from '../../../user-feature/Interfaces/IUserProfile';
+import {Type} from '@angular/core';
 
-describe('UserResponseResolverService', () => {
-  let service: UserResponseResolverService;
+describe('ProfileResolverService', () => {
+  let service: UserDataResolverService;
 
-  const queryService = jasmine.createSpyObj('QueryService', [ 'getRecentResponsesForUser' ]);
+  const userService = jasmine.createSpyObj('UserService', [ 'getUserProfile' ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule.withRoutes([]) ],
-      providers: [ { provide: QueryService, useValue: queryService }]
+      providers: [ { provide: UserService, useValue: userService } ]
     });
-    service = TestBed.inject(UserResponseResolverService);
+    service = TestBed.inject(UserDataResolverService);
   });
 
   beforeEach( () => {
@@ -37,20 +37,20 @@ describe('UserResponseResolverService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return queries after successful API call', () => {
-    const getRecentQueriesSpy = queryService.getRecentResponsesForUser.and.returnValue(of([{} as IQuery, {} as IQuery]));
+  it('should return profile after successful API call', () => {
+    const getUserProfileSpy = userService.getUserProfile.and.returnValue(of({ name: 'name' } as IUserProfile));
 
     service.resolve(TestBed.inject(ActivatedRoute).snapshot, TestBed.inject(Router).routerState.snapshot)
-      .subscribe((queries: Array<IQuery>) => {
-        expect(getRecentQueriesSpy).toHaveBeenCalled();
-        expect(queries.length).toEqual(2);
-      }, () => fail('Should have succeeded'));
+           .subscribe((profile: IUserProfile) => {
+             expect(getUserProfileSpy).toHaveBeenCalled();
+             expect(profile.name).toEqual('name');
+           }, () => fail('Should have succeeded!'));
   });
 
   it('should return to the user page when username in local storage is different from the username in url', () => {
     localStorage.setItem('username', 'user');
 
-    queryService.getRecentResponsesForUser.and.returnValue(of(undefined));
+    userService.getUserProfile.and.returnValue(of(undefined));
     const navigateSpy = spyOn(TestBed.inject(Router), 'navigate');
 
     service.resolve(TestBed.inject(ActivatedRoute).snapshot, TestBed.inject(Router).routerState.snapshot).subscribe();
@@ -61,7 +61,7 @@ describe('UserResponseResolverService', () => {
   it('should return to the home page when user in local storage is same as the username in url', () => {
     localStorage.setItem('username', 'username');
 
-    queryService.getRecentResponsesForUser.and.returnValue(of(undefined));
+    userService.getUserProfile.and.returnValue(of(undefined));
     const navigateSpy = spyOn(TestBed.inject(Router), 'navigate');
 
     service.resolve(TestBed.inject(ActivatedRoute).snapshot, TestBed.inject(Router).routerState.snapshot).subscribe();
