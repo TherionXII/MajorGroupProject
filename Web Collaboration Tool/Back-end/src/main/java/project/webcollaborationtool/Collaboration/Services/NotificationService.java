@@ -12,19 +12,11 @@ public class NotificationService
 
     public boolean hasSentCollaborationRequest(String sender, String recipient)
     {
-        for(var message : this.userCollaborationMessageRepository.findAllBySender(sender))
-            if(message.getRecipient().equals(recipient))
-                return true;
-
-        return false;
+        return this.userCollaborationMessageRepository.existsBySenderAndRecipient(sender, recipient);
     }
 
     public boolean hasReceivedCollaborationRequest(String recipient, String sender)
     {
-        for(var message : this.userCollaborationMessageRepository.findAllBySender(sender))
-            if(message.getRecipient().equals(recipient))
-                return true;
-
-        return false;
+        return this.userCollaborationMessageRepository.existsByRecipientAndSender(recipient, sender);
     }
 }
