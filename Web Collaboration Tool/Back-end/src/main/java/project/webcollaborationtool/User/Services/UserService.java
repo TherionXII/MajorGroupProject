@@ -9,7 +9,7 @@ import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
 import project.webcollaborationtool.User.Repositories.UserRepository;
-import project.webcollaborationtool.Utility.Entities.CollaborationMessage;
+import project.webcollaborationtool.Utility.Entities.Notification;
 
 import javax.validation.constraints.NotNull;
 
@@ -56,10 +56,10 @@ public class UserService
         this.userRepository.save(user);
     }
 
-    public void addNotification(@NotNull CollaborationMessage collaborationMessage)
+    public void addNotification(@NotNull Notification notification)
     {
-        var user = this.userRepository.findByUsername(collaborationMessage.getRecipient());
-        user.getNotifications().add(collaborationMessage);
+        var user = this.userRepository.findByUsername(notification.getRecipient());
+        user.getNotifications().add(notification);
         this.userRepository.save(user);
     }
 }
