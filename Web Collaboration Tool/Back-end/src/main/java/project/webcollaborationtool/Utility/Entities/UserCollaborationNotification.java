@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCollaborationMessage extends CollaborationMessage
+public class UserCollaborationNotification extends Notification
 {
     @Nullable
     private String sender;
@@ -20,4 +20,10 @@ public class UserCollaborationMessage extends CollaborationMessage
 
     @Nullable
     private boolean accepted;
+
+    @Override
+    public String getRecipient()
+    {
+        return super.getRecipient();
+    }
 }

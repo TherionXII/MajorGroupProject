@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 import project.webcollaborationtool.User.Entities.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
@@ -16,16 +14,21 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class CollaborationMessage
+public class Notification
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @NotNull
     private String recipient;
 
-    @Nullable
-    @ManyToMany(mappedBy = "notifications")
+    @ManyToMany
+    @JoinTable(name = "notifications", joinColumns = @JoinColumn(name = "collaboration_message_id"),
+               inverseJoinColumns = @JoinColumn(name = "user_username"))
     private Collection<User> users;
+
+    public String getRecipient()
+    {
+        return this.recipient;
+    }
 }
