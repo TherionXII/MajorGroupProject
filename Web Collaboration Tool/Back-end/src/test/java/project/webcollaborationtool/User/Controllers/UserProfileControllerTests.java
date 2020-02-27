@@ -47,7 +47,7 @@ public class UserProfileControllerTests
     @BeforeEach
     public void setUp()
     {
-        this.user = new User("username", "password", "email", null, null);
+        this.user = new User("username", "password", "email", null, null, null);
 
         this.profile = new Profile(user.getUsername(), "name", "surname", "gender", "institution");
         this.user.setProfile(profile);
