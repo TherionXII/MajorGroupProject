@@ -11,7 +11,7 @@ import {of, pipe, throwError} from 'rxjs';
 import {IUserProfile} from '../Interfaces/IUserProfile';
 import {IQuery} from '../../query-feature/Interfaces/IQuery';
 import {mergeMap, take} from 'rxjs/operators';
-import {ProfileResolverService} from '../../Utility/Resolvers/profile-resolver.service';
+import {UserDataResolverService} from '../../Utility/Resolvers/UserPageResolvers/user-data-resolver.service';
 
 describe('UserPageComponent', () => {
   let component: UserPageComponent;

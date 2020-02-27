@@ -1,8 +1,7 @@
 <mat-card>
   <mat-card-title>{{ userProfile.username }}</mat-card-title>
   <mat-card-content>
-<!--    <button mat-raised-button *ngIf = "isLoggedInUser() && !hasSentRequest()" (click) = "onCollaborationRequest()">Add as collaborator</button>-->
-<!--    <button mat-raised-button *ngIf = "hasReceivedRequest()">Accept request</button>-->
+    <app-user-collaboration-pane></app-user-collaboration-pane>
     <mat-tab-group>
       <mat-tab label = "Recent queries">
         <mat-list>
