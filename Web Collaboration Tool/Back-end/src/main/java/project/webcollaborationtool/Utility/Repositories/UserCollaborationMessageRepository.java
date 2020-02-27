@@ -1,11 +1,11 @@
 package project.webcollaborationtool.Utility.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.webcollaborationtool.Utility.Entities.UserCollaborationMessage;
+import project.webcollaborationtool.Utility.Entities.UserCollaborationNotification;
 
-import java.util.Collection;
-
-public interface UserCollaborationMessageRepository extends JpaRepository<UserCollaborationMessage, Integer>
+public interface UserCollaborationMessageRepository extends JpaRepository<UserCollaborationNotification, Integer>
 {
-    Collection<UserCollaborationMessage> findAllBySender(String sender);
+    Boolean existsBySenderAndRecipient(String sender, String recipient);
+    Boolean existsByRecipientAndSender(String recipient, String sender);
+    void deleteBySenderAndRecipient(String sender, String recipient);
 }
