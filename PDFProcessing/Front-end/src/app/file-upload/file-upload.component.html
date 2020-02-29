@@ -1,75 +1,154 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h3>Choose File</h3>
-            <div class="form-group">
-                <input type="file" name="image" (change)="fileProgress($event)" />
-            </div>
-            <mat-spinner *ngIf="uploading"></mat-spinner>
-
-            <div class="mb-3" *ngIf="uploadedFilePath">
-                {{ uploadedFilePath }}
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-primary"  (click)="onSubmit()">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <h1 class="my-4 text-center text-lg-left">Select a page</h1>
-    <div class="row">
-        <div class="col-lg-6 col-md-4 col-xs-6" *ngFor="let image of images">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" [src]="image" style="height: 200px; width:
-                            140px;" (click)="selectPageToCrop(image, images.indexOf(image))">
-            </a>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row" style="margin-top: 5%;">
-        <div class="text-center col-md-8">
-            <h5>Crop Image</h5>
-            <image-cropper
-                [imageChangedEvent]="imageChangedEvent"
-                [imageBase64]="imageBase64"
-                [maintainAspectRatio]="false"
-                [aspectRatio]="1"
-                [resizeToWidth]="0"
-                format="png"
-                (imageCropped)="imageCropped($event)">
-            </image-cropper>
-        </div>
-        <div class="text-center col-md-4">
-            <h5>Preview</h5>
-            <img [src]="croppedImage"  alt="preview"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary"  (click)="cropImage()">Crop</button>
-    </div>
-    <div *ngIf="extractedText">
-        <br>
-            <p>
-                {{extractedText}}
-            </p>
-        <hr>
-        <p>If your question requires an image or diagram, please check the box!</p>
-        <mat-checkbox color="primary">Image required</mat-checkbox>
+<mat-horizontal-stepper labelPosition="bottom" linear>
+    <mat-step label="Choose File">
+        <mat-form-field>
+            <ngx-mat-file-input placeholder="PDF files only" required
+                                [accept]="'.pdf'" (change)="fileProgress($event)"></ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
         <div>
-            <div class="col-lg-6 col-md-4 col-xs-6" *ngFor="let extractedImage of extractedImages">
-                These images were found on the page. Please select the required image.
-                If the only image available is of the full page please select it and crop out the section required.
-                <a href="#" class="d-block mb-4 h-100">
-                    <img class="img-fluid img-thumbnail" [src]="extractedImage" style="height: 200px; width:
-                            140px;" (click)="selectImage(extractedImage, extractedImages.indexOf(extractedImage))">
-                </a>
-            </div>
+            <button mat-button matStepperNext color="primary" (click)="uploadPDF()">
+                Next
+            </button>
         </div>
+    </mat-step>
 
-    </div>
-</div>
+    <mat-step label="Choose page">
+        <mat-spinner *ngIf="uploading"></mat-spinner>
+        <mat-tab-group #tabPage *ngIf="!uploading">
+            <div *ngFor="let image of images">
+                <mat-tab label="Page {{images.indexOf(image) + 1}}">
+                    <img class="img-fluid img-thumbnail" [src]="image" style="height: 600px; width:420px;">
+                    <div>
+                        <button mat-button matStepperPrevious color="accent">
+                            Back
+                        </button>
+                        <button mat-button matStepperNext color="primary"
+                                (click)="selectPageToCrop(images[tabPage.selectedIndex], tabPage.selectedIndex)">
+                            Next
+                        </button>
+                    </div>
+                </mat-tab>
+            </div>
+        </mat-tab-group>
+    </mat-step>
+
+    <mat-step label="Crop Text">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Select only the text you need</mat-card-title>
+                <mat-card-subtitle>When you are ready click next</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content style="width: auto; height: auto">
+                <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [imageBase64]="imageBase64"
+                    [maintainAspectRatio]="false"
+                    [aspectRatio]="1"
+                    [resizeToWidth]="0"
+                    format="png"
+                    (imageCropped)="imageCropped($event)">
+                </image-cropper>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button matStepperPrevious color="accent">Back</button>
+                <button mat-button matStepperNext color="primary" (click)="cropImage()">Next</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-step>
+
+    <mat-step label="Preview Results">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>This is the text from the area you selected</mat-card-title>
+                <mat-card-subtitle>You can edit it here. Then when you are ready click next</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content style="display: flex">
+                <p id="extracted-text-result" contenteditable="true" style="width: auto">
+                    {{extractedText}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button matStepperPrevious color="accent">Back</button>
+                <button mat-button matStepperNext color="primary">Next</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-step>
+</mat-horizontal-stepper>
+
+
+<!--------------------------------------------------------------------------------------------------------------->
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-6 offset-md-3">-->
+<!--            <h3>Choose File</h3>-->
+<!--            <div class="form-group">-->
+<!--                <input type="file" name="image" (change)="fileProgress($event)" />-->
+<!--            </div>-->
+<!--            <mat-spinner *ngIf="uploading"></mat-spinner>-->
+
+<!--            <div class="mb-3" *ngIf="uploadedFilePath">-->
+<!--                {{ uploadedFilePath }}-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <button class="btn btn-primary"  (click)="uploadPDF()">Submit</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <h1 class="my-4 text-center text-lg-left">Select a page</h1>-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-6 col-md-4 col-xs-6" *ngFor="let image of images">-->
+<!--            <a href="#" class="d-block mb-4 h-100">-->
+<!--                <img class="img-fluid img-thumbnail" [src]="image" style="height: 200px; width:-->
+<!--                            140px;" (click)="selectPageToCrop(image, images.indexOf(image))">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <div class="row" style="margin-top: 5%;">-->
+<!--        <div class="text-center col-md-8">-->
+<!--            <h5>Crop Image</h5>-->
+<!--            <image-cropper-->
+<!--                [imageChangedEvent]="imageChangedEvent"-->
+<!--                [imageBase64]="imageBase64"-->
+<!--                [maintainAspectRatio]="false"-->
+<!--                [aspectRatio]="1"-->
+<!--                [resizeToWidth]="0"-->
+<!--                format="png"-->
+<!--                (imageCropped)="imageCropped($event)">-->
+<!--            </image-cropper>-->
+<!--        </div>-->
+<!--        <div class="text-center col-md-4">-->
+<!--            <h5>Preview</h5>-->
+<!--            <img [src]="croppedImage" alt="preview"/>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <button class="btn btn-primary"  (click)="cropImage()">Crop</button>-->
+<!--    </div>-->
+<!--    <div *ngIf="extractedText">-->
+<!--        <br>-->
+<!--            <p>-->
+<!--                {{extractedText}}-->
+<!--            </p>-->
+<!--        <hr>-->
+<!--        <p>If your question requires an image or diagram, please check the box!</p>-->
+<!--        <mat-checkbox color="primary">Image required</mat-checkbox>-->
+<!--        <div>-->
+<!--            <div class="col-lg-6 col-md-4 col-xs-6" *ngFor="let extractedImage of extractedImages">-->
+<!--                These images were found on the page. Please select the required image.-->
+<!--                If the only image available is of the full page please select it and crop out the section required.-->
+<!--                <a href="#" class="d-block mb-4 h-100">-->
+<!--                    <img class="img-fluid img-thumbnail" [src]="extractedImage" style="height: 200px; width:-->
+<!--                            140px;" (click)="selectImage(extractedImage, extractedImages.indexOf(extractedImage))">-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->

@@ -68,7 +68,7 @@ export class FileUploadComponent implements OnInit {
         this.fileData = fileInput.target.files[0] as File;
     }
 
-    onSubmit() {
+    uploadPDF() {
         this.uploading = true;
         this.fileUploadService.uploadFile(this.fileData)
         .subscribe(events => {
