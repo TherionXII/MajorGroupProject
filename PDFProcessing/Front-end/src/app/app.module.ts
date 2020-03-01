@@ -1,23 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
 import {
-    MatCheckboxModule,
+    MatButtonModule,
+    MatCardModule, MatDividerModule,
     MatFormFieldModule,
-    MatListModule,
+    MatIconModule,
     MatProgressSpinnerModule,
-    MatInputModule,
     MatStepperModule,
-    MatButtonModule, MatIconModule, MatTabsModule, MatCardModule
+    MatTabsModule
 } from '@angular/material';
-import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -30,19 +29,17 @@ import {FormsModule} from '@angular/forms';
         AppRoutingModule,
         HttpClientModule,
         ImageCropperModule,
-        BrowserAnimationsModule,
         MaterialFileInputModule,
-        MatCheckboxModule,
-        MatFormFieldModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        MatInputModule,
-        MatStepperModule,
-        MatButtonModule,
-        MatIconModule,
         FormsModule,
+        BrowserAnimationsModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
         MatTabsModule,
-        MatCardModule
+        MatCardModule,
+        MatDividerModule,
+        MatButtonModule
     ],
     providers: [],
     bootstrap: [AppComponent]

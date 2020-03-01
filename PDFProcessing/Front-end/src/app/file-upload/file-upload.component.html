@@ -13,11 +13,16 @@
     </mat-step>
 
     <mat-step label="Choose page">
-        <mat-spinner *ngIf="uploading"></mat-spinner>
+        <div *ngIf="uploading">
+            <mat-spinner></mat-spinner>
+            <p>
+                Processing file....
+            </p>
+        </div>
         <mat-tab-group #tabPage *ngIf="!uploading">
             <div *ngFor="let image of images">
                 <mat-tab label="Page {{images.indexOf(image) + 1}}">
-                    <img class="img-fluid img-thumbnail" [src]="image" style="height: 600px; width:420px;">
+                    <img class="img-fluid img-thumbnail" [src]="image" style="height: 600px; width:420px;" alt="">
                     <div>
                         <button mat-button matStepperPrevious color="accent">
                             Back
@@ -32,26 +37,55 @@
         </mat-tab-group>
     </mat-step>
 
-    <mat-step label="Crop Text">
+    <mat-step label="Select Text">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Select only the text you need</mat-card-title>
                 <mat-card-subtitle>When you are ready click next</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content style="width: auto; height: auto">
-                <image-cropper
-                    [imageChangedEvent]="imageChangedEvent"
-                    [imageBase64]="imageBase64"
-                    [maintainAspectRatio]="false"
-                    [aspectRatio]="1"
-                    [resizeToWidth]="0"
-                    format="png"
-                    (imageCropped)="imageCropped($event)">
-                </image-cropper>
+            <mat-card-content>
+                <div style="max-width: 750px; max-height: 1050px">
+                    <image-cropper
+                        [imageChangedEvent]="imageChangedEvent"
+                        [imageBase64]="imageBase64"
+                        [maintainAspectRatio]="false"
+                        [aspectRatio]="1"
+                        [resizeToWidth]="0"
+                        format="png"
+                        (imageCropped)="imageCropped($event)">
+                    </image-cropper>
+                </div>
             </mat-card-content>
             <mat-card-actions>
                 <button mat-button matStepperPrevious color="accent">Back</button>
-                <button mat-button matStepperNext color="primary" (click)="cropImage()">Next</button>
+                <button mat-button matStepperNext color="primary" (click)="selectTextFromPage()">Next</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-step>
+
+    <mat-step label="Select Image" optional>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Only select an image or diagram if it is necessary!</mat-card-title>
+                <mat-card-subtitle>You can skip this step if you want by clicking next.</mat-card-subtitle>
+                <button mat-button mat-raised-button matStepperNext color="primary">Skip</button>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="max-width: 750px; max-height: 1050px">
+                    <image-cropper
+                        [imageChangedEvent]="imageChangedEvent"
+                        [imageBase64]="imageBase64"
+                        [maintainAspectRatio]="false"
+                        [aspectRatio]="1"
+                        [resizeToWidth]="0"
+                        format="png"
+                        (imageCropped)="imageCropped($event)">
+                    </image-cropper>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button matStepperPrevious color="accent">Back</button>
+                <button mat-button matStepperNext color="primary" (click)="selectImageFromPage()">Next</button>
             </mat-card-actions>
         </mat-card>
     </mat-step>
@@ -59,17 +93,43 @@
     <mat-step label="Preview Results">
         <mat-card>
             <mat-card-header>
-                <mat-card-title>This is the text from the area you selected</mat-card-title>
-                <mat-card-subtitle>You can edit it here. Then when you are ready click next</mat-card-subtitle>
+                <mat-card-title>
+                    The text from the area you selected will appear here.
+                </mat-card-title>
+                <mat-card-subtitle>
+                    You can review and edit it here before posting to the forum.
+                </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content style="display: flex">
-                <p id="extracted-text-result" contenteditable="true" style="width: auto">
-                    {{extractedText}}
-                </p>
+                <div [innerHTML]="extractedText" contenteditable="true" style="display: block; padding: 20px;
+                background-color: lightgrey; border-radius: 10px"></div>
             </mat-card-content>
-            <mat-card-actions>
-                <button mat-button matStepperPrevious color="accent">Back</button>
-                <button mat-button matStepperNext color="primary">Next</button>
+                <mat-card-content *ngIf="imageRequired">
+                    <h4 class="mat-subheading-2">Diagrams or pictures</h4>
+                    <h5 class="mat-subheading-1">The following images were detected on the page. Choose one before
+                        posting to the forum.</h5>
+                    <mat-tab-group #tabImage>
+                        <div *ngFor="let extractedImage of extractedImages">
+                            <mat-tab label="Image {{extractedImages.indexOf(extractedImage) + 1}}">
+                                <img class="img-fluid img-thumbnail" [src]="extractedImage" style="height: auto;
+                                width:auto;" alt="">
+                                <div>
+                                    <button mat-button matStepperPrevious color="accent">
+                                        Back
+                                    </button>
+                                    <button mat-button matStepperNext color="primary"
+                                            (click)="postToForum(extractedImages[tabImage.selectedIndex])">
+                                        Post to Forum
+                                    </button>
+                                </div>
+                            </mat-tab>
+                        </div>
+                    </mat-tab-group>
+                </mat-card-content>
+
+            <mat-card-actions *ngIf="!imageRequired">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext (click)="postToForum(null)">Post to Forum</button>
             </mat-card-actions>
         </mat-card>
     </mat-step>
@@ -85,11 +145,6 @@
 <!--                <input type="file" name="image" (change)="fileProgress($event)" />-->
 <!--            </div>-->
 <!--            <mat-spinner *ngIf="uploading"></mat-spinner>-->
-
-<!--            <div class="mb-3" *ngIf="uploadedFilePath">-->
-<!--                {{ uploadedFilePath }}-->
-<!--            </div>-->
-
 <!--            <div class="form-group">-->
 <!--                <button class="btn btn-primary"  (click)="uploadPDF()">Submit</button>-->
 <!--            </div>-->

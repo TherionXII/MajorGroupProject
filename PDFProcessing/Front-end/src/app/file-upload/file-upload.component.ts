@@ -12,19 +12,19 @@ export class FileUploadComponent implements OnInit {
 
     fileData: File = null;
     uploading = false;
-    uploadedFilePath: string = null;
     images: any = [];
     pageNumber: any = '';
 
     imageChangedEvent: any = '';
     imageBase64: any = '';
+    croppedTextPosition: any = '';
     croppedImage: any = '';
-    croppedImagePosition: any = '';
+    croppedPosition: any = '';
 
     extractedText: any = '';
     extractedImages: any = [];
-    indexOfSelectedImage: any = '';
-    imagesRequired = false;
+    selectedImage: any = '';
+    imageRequired = false;
 
     @ViewChild(ImageCropperComponent, {static: false}) imageCropper: ImageCropperComponent;
 
@@ -40,20 +40,22 @@ export class FileUploadComponent implements OnInit {
         console.log(indexOfImage);
     }
 
-    selectImage(image: any, indexOfImage: any): void {
-        this.imageBase64 = image;
-        this.indexOfSelectedImage = indexOfImage;
-        console.log(this.indexOfSelectedImage);
+    selectImageFromPage(): void {
+        this.imageRequired = true;
+        this.selectedImage = this.croppedImage;
+        this.extractedImages.unshift(this.selectedImage);
+        console.log(this.selectedImage);
     }
 
-    imageCropped(event: ImageCroppedEvent) {
+    imageCropped(event: ImageCroppedEvent): void {
         this.croppedImage = event.base64;
-        this.croppedImagePosition = event.imagePosition;
+        this.croppedPosition = event.imagePosition;
         console.log(event);
     }
 
-    cropImage() {
-        this.fileUploadService.uploadFileAndArea(this.fileData, this.pageNumber, this.croppedImagePosition)
+    selectTextFromPage(): void {
+        this.croppedTextPosition = this.croppedPosition;
+        this.fileUploadService.uploadFileAndArea(this.fileData, this.pageNumber, this.croppedTextPosition)
         .subscribe(events => {
             if (events.type === HttpEventType.Response) {
                 console.log(events);
@@ -64,11 +66,11 @@ export class FileUploadComponent implements OnInit {
         });
     }
 
-    fileProgress(fileInput: any) {
+    fileProgress(fileInput: any): void {
         this.fileData = fileInput.target.files[0] as File;
     }
 
-    uploadPDF() {
+    uploadPDF(): void {
         this.uploading = true;
         this.fileUploadService.uploadFile(this.fileData)
         .subscribe(events => {
@@ -78,6 +80,13 @@ export class FileUploadComponent implements OnInit {
                 this.images = events.body;
             }
         });
+    }
+
+    postToForum(image: any): void {
+        console.log(this.extractedText);
+        if (image !== null) {
+            console.log(image);
+        }
     }
 
 }
