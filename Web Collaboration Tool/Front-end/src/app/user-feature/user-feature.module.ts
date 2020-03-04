@@ -17,13 +17,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { UserCollaborationPaneComponent } from './PartialComponents/user-collaboration-pane/user-collaboration-pane.component';
+import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 
 
 @NgModule({
   declarations: [
     UserPageComponent,
     UserSettingsComponent,
-    UserCollaborationPaneComponent
+    UserCollaborationPaneComponent,
+    UserNotificationsComponent
   ],
   imports: [
     CommonModule,

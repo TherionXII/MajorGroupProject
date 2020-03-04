@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,10 +6,14 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   public title = 'Front-end';
 
   constructor(private router: Router) {}
+
+  public ngOnInit(): void {
+    // this.logout();
+  }
 
   public getUsername(): string {
     return localStorage.getItem('username');

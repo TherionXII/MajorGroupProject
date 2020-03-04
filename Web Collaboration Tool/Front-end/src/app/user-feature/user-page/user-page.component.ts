@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {IUserProfile} from '../Interfaces/IUserProfile';
 import {ActivatedRoute} from '@angular/router';
 import {IQuery} from '../../query-feature/Interfaces/IQuery';
-import {RxStompService} from '@stomp/ng2-stompjs';
-import {ICollaborationRequest} from '../../auxiliary-module/Interfaces/ICollaborationRequest';
 
 @Component({
   selector: 'app-user-page',
