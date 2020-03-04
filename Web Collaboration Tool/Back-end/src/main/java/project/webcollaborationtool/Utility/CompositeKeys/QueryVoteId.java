@@ -4,10 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Getter @Setter
-@NoArgsConstructor
-@EqualsAndHashCode
-@AllArgsConstructor
+@Data
 public class QueryVoteId implements Serializable
 {
     private String username;

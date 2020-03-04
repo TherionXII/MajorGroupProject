@@ -3,7 +3,6 @@ package project.webcollaborationtool.User.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.webcollaborationtool.User.Entities.Profile;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Exceptions.UserExistsException;
@@ -25,7 +24,7 @@ public class UserController
     {
         try
         {
-            return ResponseEntity.ok(this.profileService.createProfile(this.userService.createUser(user), new Profile()));
+            return ResponseEntity.ok(this.profileService.createProfile(this.userService.createUser(user)));
         }
         catch(UserExistsException | InvalidUserDataException exception)
         {

@@ -1,19 +1,13 @@
 package project.webcollaborationtool.Query.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.lang.Nullable;
 import project.webcollaborationtool.Utility.CompositeKeys.QueryVoteId;
 
 import javax.persistence.*;
 
+@Data
 @Entity
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @IdClass(QueryVoteId.class)
 public class QueryVote
 {

@@ -19,7 +19,7 @@ public class ProfileService
     @Autowired
     private ProfileRepository profileRepository;
 
-    public User createProfile(@NotNull User user, @NotNull Profile profile)
+    public User createProfile(@NotNull User user)
     {
         user.setProfile(this.profileRepository.save(new Profile(user.getUsername(), null, null, null, null)));
 
