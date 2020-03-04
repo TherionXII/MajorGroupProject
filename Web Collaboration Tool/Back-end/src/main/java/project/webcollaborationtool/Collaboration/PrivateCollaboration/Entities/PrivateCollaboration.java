@@ -1,11 +1,11 @@
-package project.webcollaborationtool.Collaboration.Entities;
+package project.webcollaborationtool.Collaboration.PrivateCollaboration.Entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.webcollaborationtool.User.Entities.User;
-import project.webcollaborationtool.Utility.CompositeKeys.UserToUserId;
+import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId;
 
 import javax.persistence.*;
 
@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(UserToUserId.class)
-public class UserToUserCollaboration
+@IdClass(PrivateCollaborationId.class)
+public class PrivateCollaboration
 {
     @Id
     private String collaboratorOneUsername;

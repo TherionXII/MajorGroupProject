@@ -10,7 +10,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserToUserId implements Serializable
+public class PrivateCollaborationId implements Serializable
 {
     private String collaboratorOneUsername;
     private String collaboratorTwoUsername;
