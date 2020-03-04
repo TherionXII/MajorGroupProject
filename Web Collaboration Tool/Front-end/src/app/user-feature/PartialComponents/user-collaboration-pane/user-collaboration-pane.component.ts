@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RxStompService} from '@stomp/ng2-stompjs';
-import {ICollaborationRequest} from '../../../auxiliary-module/Interfaces/ICollaborationRequest';
+import {INotification} from '../../../auxiliary-module/Interfaces/INotification';
+import {IRequest} from '../../../auxiliary-module/IRequest';
 
 @Component({
   selector: 'app-user-collaboration-pane',
@@ -26,13 +27,11 @@ export class UserCollaborationPaneComponent implements OnInit {
     });
 
     this.username = this.route.snapshot.paramMap.get('username');
-
-    console.log(this.isLoggedIn() && !this.isLoggedInUser());
   }
 
   public onCollaborationRequest(): void {
     this.hasSentRequest = true;
-    this.rxStompService.publish({ destination: '/app/user/collaboration/request', body: JSON.stringify(this.composeMessageBody()) });
+    this.rxStompService.publish({ destination: '/app/user/collaboration/request', body: JSON.stringify(this.composeRequestBody()) });
   }
 
   public onCollaborationRequestResponse(response: boolean): void {
@@ -47,11 +46,11 @@ export class UserCollaborationPaneComponent implements OnInit {
     return localStorage.getItem('username') ? localStorage.getItem('username') === this.username : false;
   }
 
-  private composeMessageBody(): ICollaborationRequest {
-    return { recipient: this.username, sender: localStorage.getItem('username'), responded: false} as ICollaborationRequest;
+  private composeRequestBody(): IRequest {
+    return { recipient: this.username, sender: localStorage.getItem('username') } as IRequest;
   }
 
-  private composeResponseBody(response: boolean): ICollaborationRequest {
-    return { recipient: this.username, sender: localStorage.getItem('username'), responded: true, accepted: response } as ICollaborationRequest;
+  private composeResponseBody(response: boolean): IRequest {
+    return { recipient: this.username, sender: localStorage.getItem('username'), isAccepted: response } as IRequest;
   }
 }
