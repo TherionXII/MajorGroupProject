@@ -9,6 +9,8 @@ import project.webcollaborationtool.Request.Entities.PrivateCollaborationRequest
 import project.webcollaborationtool.User.Repositories.UserRepository;
 import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId;
 
+import java.util.Collection;
+
 @Service
 @Transactional
 public class PrivateCollaborationService
@@ -35,5 +37,10 @@ public class PrivateCollaborationService
     {
         return this.privateCollaborationRepository.existsById(new PrivateCollaborationId(firstUsername, secondUsername)) ||
                this.privateCollaborationRepository.existsById(new PrivateCollaborationId(secondUsername, firstUsername));
+    }
+
+    public Collection<PrivateCollaboration> getAllPrivateCollaborationsForUser(String username)
+    {
+        return this.privateCollaborationRepository.findAllByCollaboratorOneUsernameOrCollaboratorTwoUsername(username, username);
     }
 }
