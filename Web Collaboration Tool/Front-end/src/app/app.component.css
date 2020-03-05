@@ -3,6 +3,11 @@ mat-sidenav
   width: 150px;
 }
 
+mat-sidenav-container
+{
+  min-height: 50%;
+}
+
 .Icon
 {
   font-feature-settings: "liga";

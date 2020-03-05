@@ -13,7 +13,6 @@ export class UserNotificationResolverService implements Resolve<INotification[]>
               private router: Router) { }
 
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<INotification[]> | Promise<INotification[]> | INotification[] {
-    console.log('inv');
     return this.notificationsService.getAllNotificationsForUser(localStorage.getItem('username'))
                                     .pipe(first(), catchError(() => this.onFail()));
   }

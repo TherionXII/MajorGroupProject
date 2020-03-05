@@ -19,6 +19,7 @@ import {AuthenticationGuard} from './Utility/Guards/authentication.guard';
 import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
 import {SocketConfigurationConfig} from './Utility/SocketConfiguration.config';
 import {SimpleNotificationsModule} from 'angular2-notifications';
+import {PrivateCollaborationsModule} from './private-collaborations/private-collaborations.module';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, canActivate: [ AuthenticationGuard ] }
@@ -37,6 +38,7 @@ const routes: Routes = [
     AuxiliaryModule,
     UserFeatureModule,
     QueryFeatureModule,
+    PrivateCollaborationsModule,
     RouterModule.forRoot(routes),
     MatButtonModule,
     SimpleNotificationsModule.forRoot()
