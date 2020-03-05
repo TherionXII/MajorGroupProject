@@ -5,3 +5,8 @@ Web Collaboration Tool/Front-end/src/coverage/Edge 18.18363.0 (Windows 10.0.0)/p
 Web Collaboration Tool/Front-end/src/coverage/Edge 18.18363.0 (Windows 10.0.0)/prettify.js
 Web Collaboration Tool/Front-end/src/coverage/Edge 18.18363.0 (Windows 10.0.0)/sort-arrow-sprite.png
 Web Collaboration Tool/Front-end/src/coverage/Edge 18.18363.0 (Windows 10.0.0)/sorter.js
+
+.idea
+node_modules
+target
+package-lock.json
