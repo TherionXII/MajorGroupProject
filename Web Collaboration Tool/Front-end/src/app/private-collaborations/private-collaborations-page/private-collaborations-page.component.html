@@ -1,1 +1,21 @@
-<p>private-collaborations-page works!</p>
+<mat-tab-group>
+  <mat-tab label = "Chats">
+    <mat-list>
+      <mat-list-item *ngFor = "let collaboration of collaborations">
+        <a [routerLink] = "[ '/thread', collaboration.thread ? collaboration.thread.id : '' ]">
+          <p>{{ collaboration.collaboratorOneUsername === username ? collaboration.collaboratorTwoUsername : collaboration.collaboratorOneUsername }}</p>
+          <p>{{ collaboration.thread ? (collaboration.thread.lastMessage ? collaboration.thread.lastMessage : 'Send a message') : null }}</p>
+        </a>
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+  <mat-tab label = "New Chat">
+    <mat-list>
+      <mat-list-item *ngFor = "let collaboration of collaborations">
+        <button mat-raised-button (click) = "onNewThread(collaboration)">
+          Send a message to {{ collaboration.collaboratorOneUsername === username ? collaboration.collaboratorTwoUsername : collaboration.collaboratorOneUsername }}
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+</mat-tab-group>
