@@ -35,6 +35,8 @@ export class UserCollaborationPaneComponent implements OnInit {
   }
 
   public onCollaborationRequestResponse(response: boolean): void {
+    if(response) this.onAccept();
+    else this.onReject();
     this.rxStompService.publish({ destination: '/app/user/collaboration/response', body: JSON.stringify(this.composeResponseBody(response))})
   }
 
@@ -52,5 +54,14 @@ export class UserCollaborationPaneComponent implements OnInit {
 
   private composeResponseBody(response: boolean): IRequest {
     return { recipient: this.username, sender: localStorage.getItem('username'), isAccepted: response } as IRequest;
+  }
+
+  private onAccept(): void {
+    this.isCollaborating = true;
+  }
+
+  private onReject(): void {
+    this.hasReceivedRequest = false;
+    this.hasSentRequest = false;
   }
 }

@@ -7,6 +7,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatListModule} from '@angular/material/list';
 import { PrivateCollaborationChatComponent } from './private-collaboration-chat/private-collaboration-chat.component';
 import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +18,10 @@ import {MatButtonModule} from '@angular/material/button';
     PrivateCollaborationsRoutingModule,
     MatTabsModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PrivateCollaborationsModule { }
