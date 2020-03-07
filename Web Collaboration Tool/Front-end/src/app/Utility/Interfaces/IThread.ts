@@ -1,7 +1,9 @@
+import {IMessage} from './IMessage';
+
 export interface IThread {
   id: number;
 
-  messages?: Array<any>;
+  messages?: Array<IMessage>;
 
-  lastMessage?: any;
+  lastMessage?: IMessage;
 }
