@@ -16,6 +16,9 @@ public class Message
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
+    private String message;
+
     @ManyToOne
     @JsonIgnore
     private ChatThread thread;

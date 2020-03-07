@@ -3,9 +3,13 @@ package project.webcollaborationtool.Collaboration.Thread.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.Collaboration.PrivateCollaboration.Repositories.PrivateCollaborationRepository;
+import project.webcollaborationtool.Collaboration.Thread.Entities.Message;
 import project.webcollaborationtool.Collaboration.Thread.Entities.PrivateCollaborationThread;
 import project.webcollaborationtool.Collaboration.Thread.Repositories.ChatThreadRepository;
+import project.webcollaborationtool.Collaboration.Thread.Repositories.MessageRepository;
 import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId;
+
+import java.util.Collection;
 
 @Service
 public class ThreadService
@@ -15,6 +19,9 @@ public class ThreadService
 
     @Autowired
     private ChatThreadRepository chatThreadRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     public Integer createPrivateThread(String collaboratorOne, String collaboratorTwo)
     {
@@ -32,5 +39,16 @@ public class ThreadService
         privateCollaborationRepository.save(privateCollaboration.orElseThrow());
 
         return thread.getId();
+    }
+
+    public Collection<Message> getMessagesForThread(Integer threadId)
+    {
+        return this.chatThreadRepository.findById(threadId).orElseThrow().getMessages();
+    }
+
+    public void addMessage(Message message, Integer threadId)
+    {
+        message.setThread(this.chatThreadRepository.findById(threadId).orElseThrow());
+        this.messageRepository.save(message);
     }
 }
