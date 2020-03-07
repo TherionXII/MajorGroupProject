@@ -1,1 +1,14 @@
-<p>private-collaboration-chat works!</p>
+<div *ngFor = "let message of messages">
+  <p *ngIf = "message.sender === username" class = "loggedInUserMessage">{{ message.message }}</p><br>
+  <p *ngIf = "message.sender !== username" class = "otherUserMessage">{{ message.message }}</p><br>
+</div>
+
+<div style = "clear: both;">
+  <form id = "messageForm" (ngSubmit) = "onMessageSend()">
+    <mat-form-field>
+      <textarea matInput placeholder = "Enter your message" [formControl] = "messageFormControl"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button type = "submit">Send message</button>
+  </form>
+</div>

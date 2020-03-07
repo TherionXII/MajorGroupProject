@@ -1,0 +1,16 @@
+.loggedInUserMessage
+{
+  float: right;
+  color: blue;
+}
+
+.otherUserMessage
+{
+  float: left;
+  color: red;
+}
+
+#messageForm
+{
+  margin-top: 20%;
+}
