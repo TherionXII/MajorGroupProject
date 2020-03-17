@@ -17,6 +17,8 @@ public class QueryVoteController
     @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
     public ResponseEntity<Query> vote(@RequestBody QueryVote queryVote)
     {
-        return ResponseEntity.ok().body(this.queryVoteService.vote(queryVote, queryVote.getQueryId()));
+        System.out.println(queryVote);
+
+        return ResponseEntity.ok().body(this.queryVoteService.vote(queryVote, queryVote.getQuery().getId()));
     }
 }

@@ -48,7 +48,12 @@ public class ThreadService
 
     public void addMessage(Message message, Integer threadId)
     {
-        message.setThread(this.chatThreadRepository.findById(threadId).orElseThrow());
-        this.messageRepository.save(message);
+        var thread = this.chatThreadRepository.findById(threadId).orElseThrow();
+
+        message.setThread(thread);
+        message = this.messageRepository.save(message);
+
+        thread.setLastMessage(message);
+        this.chatThreadRepository.save(thread);
     }
 }

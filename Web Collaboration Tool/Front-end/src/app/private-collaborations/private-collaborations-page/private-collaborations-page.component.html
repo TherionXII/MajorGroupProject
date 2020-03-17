@@ -2,7 +2,7 @@
   <mat-tab label = "Chats">
     <mat-list>
       <mat-list-item *ngFor = "let collaboration of collaborations">
-        <a [routerLink] = "[ '/thread', collaboration.thread ? collaboration.thread.id : '' ]">
+        <a *ngIf = "collaboration.thread" [routerLink] = "[ '/thread', collaboration.thread ? collaboration.thread.id : '' ]">
           <p>{{ collaboration.collaboratorOneUsername === username ? collaboration.collaboratorTwoUsername : collaboration.collaboratorOneUsername }}</p>
           <p>{{ collaboration.thread ? (collaboration.thread.lastMessage ? collaboration.thread.lastMessage.message : 'Send a message') : null }}</p>
         </a>
