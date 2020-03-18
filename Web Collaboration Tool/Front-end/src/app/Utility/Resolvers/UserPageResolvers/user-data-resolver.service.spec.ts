@@ -2,10 +2,10 @@ import {TestBed} from '@angular/core/testing';
 
 import {UserDataResolverService} from './user-data-resolver.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {UserService} from '../../../user-feature/Services/user.service';
+import {UserService} from '../../../User/Services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {of} from 'rxjs';
-import {IUserProfile} from '../../../user-feature/Interfaces/IUserProfile';
+import {IUserProfile} from '../../../User/Interfaces/IUserProfile';
 import {Type} from '@angular/core';
 
 describe('ProfileResolverService', () => {

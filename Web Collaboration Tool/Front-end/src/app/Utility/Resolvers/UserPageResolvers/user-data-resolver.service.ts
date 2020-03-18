@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {EMPTY, forkJoin, Observable} from 'rxjs';
-import {UserService} from '../../../user-feature/Services/user.service';
+import {UserService} from '../../../User/Services/user.service';
 import {catchError, first} from 'rxjs/operators';
-import {QueryService} from '../../../query-feature/services/query.service';
+import {QueryService} from '../../../Query/Services/query.service';
 
 @Injectable({
   providedIn: 'root'

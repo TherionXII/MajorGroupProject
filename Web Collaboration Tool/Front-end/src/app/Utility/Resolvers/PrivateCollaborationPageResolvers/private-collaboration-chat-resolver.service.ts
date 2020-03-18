@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {IMessage} from '../../Interfaces/IMessage';
 import {EMPTY, Observable} from 'rxjs';
-import {ThreadService} from '../../../private-collaborations/Services/thread.service';
+import {ThreadService} from '../../../PrivateCollaboration/Services/thread.service';
 import {catchError, first} from 'rxjs/operators';
 
 @Injectable({

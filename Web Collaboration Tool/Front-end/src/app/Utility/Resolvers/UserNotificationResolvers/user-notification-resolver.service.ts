@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {INotification} from '../../../auxiliary-module/Interfaces/INotification';
+import {INotification} from '../../Interfaces/INotification';
 import {EMPTY, Observable} from 'rxjs';
-import {NotificationService} from '../../../auxiliary-module/services/notification.service';
+import {NotificationService} from '../../Services/notification.service';
 import {catchError, first} from 'rxjs/operators';
 
 @Injectable({

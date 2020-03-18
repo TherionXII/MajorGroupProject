@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {NotificationService} from '../../../auxiliary-module/services/notification.service';
-import {PrivateCollaborationService} from '../../../private-collaborations/Services/private-collaboration.service';
+import {NotificationService} from '../../Services/notification.service';
+import {PrivateCollaborationService} from '../../../PrivateCollaboration/Services/private-collaboration.service';
 import {EMPTY, forkJoin, Observable, pipe} from 'rxjs';
 import {catchError, first} from 'rxjs/operators';
 

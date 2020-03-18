@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {RequestService} from '../../../private-collaborations/Services/request.service';
+import {RequestService} from '../../../PrivateCollaboration/Services/request.service';
 import {EMPTY, Observable} from 'rxjs';
 import {catchError, first} from 'rxjs/operators';
-import {IRequest} from '../../../auxiliary-module/IRequest';
+import {IRequest} from '../../Interfaces/IRequest';
 
 @Injectable({
   providedIn: 'root'

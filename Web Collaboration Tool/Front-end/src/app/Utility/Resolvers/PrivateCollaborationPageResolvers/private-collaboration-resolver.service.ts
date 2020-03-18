@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {IPrivateCollaboration} from '../../../private-collaborations/Interfaces/IPrivateCollaboration';
+import {IPrivateCollaboration} from '../../../PrivateCollaboration/Interfaces/IPrivateCollaboration';
 import {EMPTY, Observable} from 'rxjs';
-import {PrivateCollaborationService} from '../../../private-collaborations/Services/private-collaboration.service';
+import {PrivateCollaborationService} from '../../../PrivateCollaboration/Services/private-collaboration.service';
 import {catchError, first} from 'rxjs/operators';
 
 @Injectable({
