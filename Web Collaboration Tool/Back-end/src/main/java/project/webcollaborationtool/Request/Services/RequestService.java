@@ -6,6 +6,7 @@ import project.webcollaborationtool.Request.Entities.PrivateCollaborationRequest
 import project.webcollaborationtool.Request.Repositories.PrivateCollaborationRequestRepository;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @Service
 public class RequestService
@@ -13,14 +14,20 @@ public class RequestService
     @Autowired
     private PrivateCollaborationRequestRepository privateCollaborationRequestRepository;
 
+    public Collection<PrivateCollaborationRequest> getRequestsForUser(String username)
+    {
+        return this.privateCollaborationRequestRepository.findAllByRecipient(username);
+    }
+
     public void createPrivateCollaborationRequest(@NotNull PrivateCollaborationRequest privateCollaborationRequest)
     {
         this.privateCollaborationRequestRepository.save(privateCollaborationRequest);
     }
 
-    public void respondToCollaborationRequest(@NotNull PrivateCollaborationRequest privateCollaborationRequest)
+    public void deleteCollaborationRequest(@NotNull PrivateCollaborationRequest privateCollaborationRequest)
     {
-        this.privateCollaborationRequestRepository.delete(privateCollaborationRequest);
+        var id = this.privateCollaborationRequestRepository.findBySenderAndRecipient(privateCollaborationRequest.getSender(), privateCollaborationRequest.getRecipient()).getId();
+        this.privateCollaborationRequestRepository.deleteById(id);
     }
 
     public boolean existsBySenderAndRecipient(String sender, String recipient)
