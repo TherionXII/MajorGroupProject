@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {IMessage} from '../../Utility/Interfaces/IMessage';
+import {IMessage} from '../../../Utility/Interfaces/IMessage';
 import {ActivatedRoute} from '@angular/router';
 import {FormControl} from '@angular/forms';
 import {RxStompService} from '@stomp/ng2-stompjs';

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {IPrivateCollaboration} from '../Interfaces/IPrivateCollaboration';
+import {IPrivateCollaboration} from '../../Interfaces/IPrivateCollaboration';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ThreadService} from '../Services/thread.service';
+import {ThreadService} from '../../Services/thread.service';
 import {RxStompService} from '@stomp/ng2-stompjs';
-import {IRequest} from '../../auxiliary-module/IRequest';
+import {IRequest} from '../../../Utility/Interfaces/IRequest';
 
 @Component({
   selector: 'app-private-collaborations-page',

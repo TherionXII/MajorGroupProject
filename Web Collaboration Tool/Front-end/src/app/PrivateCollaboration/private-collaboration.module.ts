@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PrivateCollaborationsRoutingModule } from './private-collaborations-routing.module';
-import { PrivateCollaborationsPageComponent } from './private-collaborations-page/private-collaborations-page.component';
+import { PrivateCollaborationRoutingModule } from './private-collaboration-routing.module';
+import { PrivateCollaborationsPageComponent } from './Components/private-collaborations-page/private-collaborations-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatListModule} from '@angular/material/list';
-import { PrivateCollaborationChatComponent } from './private-collaboration-chat/private-collaboration-chat.component';
+import { PrivateCollaborationChatComponent } from './Components/private-collaboration-chat/private-collaboration-chat.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -15,7 +15,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   declarations: [PrivateCollaborationsPageComponent, PrivateCollaborationChatComponent],
   imports: [
     CommonModule,
-    PrivateCollaborationsRoutingModule,
+    PrivateCollaborationRoutingModule,
     MatTabsModule,
     MatListModule,
     MatButtonModule,
@@ -24,4 +24,4 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
   ]
 })
-export class PrivateCollaborationsModule { }
+export class PrivateCollaborationModule { }
