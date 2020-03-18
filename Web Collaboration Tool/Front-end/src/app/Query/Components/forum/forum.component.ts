@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {QueryService} from '../services/query.service';
-import {IQuery} from '../Interfaces/IQuery';
+import {QueryService} from '../../Services/query.service';
+import {IQuery} from '../../Interfaces/IQuery';
 import {Router} from '@angular/router';
 
 @Component({

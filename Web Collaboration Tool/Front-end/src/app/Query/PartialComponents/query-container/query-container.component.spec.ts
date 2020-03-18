@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QueryContainerComponent } from './query-container.component';
-import {QueryFeatureModule} from '../query-feature.module';
-import {QueryService} from '../services/query.service';
-import {IQuery} from '../Interfaces/IQuery';
+import {QueryModule} from '../../query.module';
+import {QueryService} from '../../Services/query.service';
+import {IQuery} from '../../Interfaces/IQuery';
 import {of, throwError} from 'rxjs';
-import {IQueryVote} from '../Interfaces/IQueryVote';
+import {IQueryVote} from '../../Interfaces/IQueryVote';
 
 describe('QueryContainerComponent', () => {
   let component: QueryContainerComponent;
@@ -15,7 +15,7 @@ describe('QueryContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ QueryFeatureModule ],
+      imports: [ QueryModule ],
       providers: [ { provide: QueryService, useValue: queryService }]
     })
     .compileComponents();

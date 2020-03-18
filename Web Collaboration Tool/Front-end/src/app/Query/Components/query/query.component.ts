@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {QueryService} from '../services/query.service';
+import {QueryService} from '../../Services/query.service';
 import {ActivatedRoute} from '@angular/router';
-import {IQuery} from '../Interfaces/IQuery';
+import {IQuery} from '../../Interfaces/IQuery';
 
 @Component({
   selector: 'app-query',

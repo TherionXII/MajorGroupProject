@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ForumComponent} from './forum/forum.component';
-import {QueryComponent} from './query/query.component';
+import {ForumComponent} from './Components/forum/forum.component';
+import {QueryComponent} from './Components/query/query.component';
 
 const routes: Routes = [
   { path: 'forum', component: ForumComponent },
@@ -12,4 +12,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class QueryFeatureRoutingModule { }
+export class QueryRoutingModule { }

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { QueryFeatureRoutingModule } from './query-feature-routing.module';
+import { QueryRoutingModule } from './query-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ForumComponent} from './forum/forum.component';
-import {QueryComponent} from './query/query.component';
-import {QueryContainerComponent} from './query-container/query-container.component';
+import {ForumComponent} from './Components/forum/forum.component';
+import {QueryComponent} from './Components/query/query.component';
+import {QueryContainerComponent} from './PartialComponents/query-container/query-container.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -32,7 +32,7 @@ import {MatButtonModule} from '@angular/material/button';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    QueryFeatureRoutingModule,
+    QueryRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -46,4 +46,4 @@ import {MatButtonModule} from '@angular/material/button';
     ReactiveFormsModule,
   ]
 })
-export class QueryFeatureModule { }
+export class QueryModule { }

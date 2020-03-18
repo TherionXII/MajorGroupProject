@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IQuery} from '../Interfaces/IQuery';
+import {IQuery} from '../../Interfaces/IQuery';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {QueryService} from '../services/query.service';
-import {IQueryVote} from '../Interfaces/IQueryVote';
+import {QueryService} from '../../Services/query.service';
+import {IQueryVote} from '../../Interfaces/IQueryVote';
 
 @Component({
   selector: 'app-query-container',

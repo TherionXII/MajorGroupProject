@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QueryComponent } from './query.component';
-import {QueryFeatureModule} from '../query-feature.module';
-import {QueryService} from '../services/query.service';
+import {QueryModule} from '../../query.module';
+import {QueryService} from '../../Services/query.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {IQuery} from '../Interfaces/IQuery';
+import {IQuery} from '../../Interfaces/IQuery';
 import {ActivatedRoute} from '@angular/router';
 import {of, throwError} from 'rxjs';
 import {Type} from '@angular/core';
@@ -20,7 +20,7 @@ describe('QueryComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        QueryFeatureModule,
+        QueryModule,
         RouterTestingModule.withRoutes([])
       ],
       providers: [ { provide: QueryService, useValue: queryService } ]

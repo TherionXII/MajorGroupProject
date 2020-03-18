@@ -1,4 +1,4 @@
-import { IUser } from '../../user-feature/Interfaces/IUser';
+import { IUser } from '../../User/Interfaces/IUser';
 
 export interface IQuery {
   id?: number;

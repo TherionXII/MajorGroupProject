@@ -1,11 +1,11 @@
 import {async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
 
 import { ForumComponent } from './forum.component';
-import {QueryFeatureModule} from '../query-feature.module';
-import {QueryService} from '../services/query.service';
+import {QueryModule} from '../../query.module';
+import {QueryService} from '../../Services/query.service';
 import {of, throwError} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
-import {IQuery} from '../Interfaces/IQuery';
+import {IQuery} from '../../Interfaces/IQuery';
 import {Router} from '@angular/router';
 import {Type} from '@angular/core';
 
@@ -20,7 +20,7 @@ describe('ForumComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        QueryFeatureModule,
+        QueryModule,
         RouterTestingModule
       ],
       providers: [
