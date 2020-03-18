@@ -31,13 +31,13 @@ export class UserCollaborationPaneComponent implements OnInit {
 
   public onCollaborationRequest(): void {
     this.hasSentRequest = true;
-    this.rxStompService.publish({ destination: '/app/user/collaboration/request', body: JSON.stringify(this.composeRequestBody()) });
+    this.rxStompService.publish({ destination: `/app/user/collaboration/request/${this.username}`, body: JSON.stringify(this.composeRequestBody()) });
   }
 
   public onCollaborationRequestResponse(response: boolean): void {
     if(response) this.onAccept();
     else this.onReject();
-    this.rxStompService.publish({ destination: '/app/user/collaboration/response', body: JSON.stringify(this.composeResponseBody(response))})
+    this.rxStompService.publish({ destination: `/app/user/collaboration/response/${this.username}`, body: JSON.stringify(this.composeResponseBody(response))})
   }
 
   public isLoggedIn(): boolean {
@@ -49,11 +49,11 @@ export class UserCollaborationPaneComponent implements OnInit {
   }
 
   private composeRequestBody(): IRequest {
-    return { recipient: this.username, sender: localStorage.getItem('username') } as IRequest;
+    return { recipient: this.username, sender: localStorage.getItem('username'), isAccepted: false } as IRequest;
   }
 
   private composeResponseBody(response: boolean): IRequest {
-    return { recipient: this.username, sender: localStorage.getItem('username'), isAccepted: response } as IRequest;
+    return { recipient: localStorage.getItem('username'), sender: this.username, isAccepted: response } as IRequest;
   }
 
   private onAccept(): void {

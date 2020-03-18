@@ -4,9 +4,17 @@ import {PrivateCollaborationsPageComponent} from './private-collaborations-page/
 import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationPageResolvers/private-collaboration-resolver.service';
 import {PrivateCollaborationChatComponent} from './private-collaboration-chat/private-collaboration-chat.component';
 import {PrivateCollaborationChatResolverService} from '../Utility/Resolvers/PrivateCollaborationPageResolvers/private-collaboration-chat-resolver.service';
+import {PrivateCollaborationRequestResolverService} from '../Utility/Resolvers/PrivateCollaborationPageResolvers/private-collaboration-request-resolver.service';
 
 const routes: Routes = [
-  { path: 'collaborations', component: PrivateCollaborationsPageComponent, resolve: { privateCollaborations: PrivateCollaborationResolverService } },
+  {
+    path: 'collaborations',
+    component: PrivateCollaborationsPageComponent,
+    resolve: {
+      privateCollaborations: PrivateCollaborationResolverService,
+      requests: PrivateCollaborationRequestResolverService
+    }
+  },
   { path: 'thread/:id', component: PrivateCollaborationChatComponent, resolve: { messages: PrivateCollaborationChatResolverService } }
 ];
 
