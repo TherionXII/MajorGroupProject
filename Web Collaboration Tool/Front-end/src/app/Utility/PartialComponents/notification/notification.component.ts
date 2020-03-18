@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {Subscription} from 'rxjs';
 import {NotificationsService} from 'angular2-notifications';
-import {INotification} from '../Interfaces/INotification';
+import {INotification} from '../../Interfaces/INotification';
 
 @Component({
   selector: 'app-notification-module',

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { SignUpService } from '../services/sign-up.service';
-import { UserService } from '../../user-feature/Services/user.service';
+import { SignUpService } from '../../Services/sign-up.service';
+import { UserService } from '../../../User/Services/user.service';
 
-import { IUser } from '../../user-feature/Interfaces/IUser';
+import { IUser } from '../../../User/Interfaces/IUser';
 
-import { ValidatorMethods } from '../../Utility/ValidatorMethods';
+import { ValidatorMethods } from '../../HelperClasses/ValidatorMethods';
 
 @Component({
   selector: 'app-sign-up',

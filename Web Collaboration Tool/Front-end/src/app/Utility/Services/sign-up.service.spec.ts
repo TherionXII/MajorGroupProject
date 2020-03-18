@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
-import { IUser } from '../../user-feature/Interfaces/IUser';
+import { IUser } from '../../User/Interfaces/IUser';
 
 import { SignUpService } from './sign-up.service';
 import {Type} from '@angular/core';

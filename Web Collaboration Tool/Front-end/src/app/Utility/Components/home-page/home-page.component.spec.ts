@@ -3,11 +3,11 @@ import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@a
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
-import {AuxiliaryModule} from '../auxiliary.module';
+import {UtilityModule} from '../../utility.module';
 
 import { HomePageComponent } from './home-page.component';
 
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../../Services/login.service';
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
@@ -18,7 +18,7 @@ describe('HomePageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ AuxiliaryModule ],
+      imports: [ UtilityModule ],
       providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true },
         { provide: LoginService, useValue: loginService },

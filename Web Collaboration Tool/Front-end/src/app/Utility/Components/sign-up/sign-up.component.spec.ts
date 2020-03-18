@@ -1,12 +1,12 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { SignUpComponent } from './sign-up.component';
-import {AuxiliaryModule} from '../auxiliary.module';
-import {SignUpService} from '../services/sign-up.service';
-import {UserService} from '../../user-feature/Services/user.service';
+import {UtilityModule} from '../../utility.module';
+import {SignUpService} from '../../Services/sign-up.service';
+import {UserService} from '../../../User/Services/user.service';
 import {Router} from '@angular/router';
 import {of, throwError} from 'rxjs';
-import {IUser} from '../../user-feature/Interfaces/IUser';
+import {IUser} from '../../../User/Interfaces/IUser';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -18,7 +18,7 @@ describe('SignUpComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ AuxiliaryModule ],
+      imports: [ UtilityModule ],
       providers: [
         { provide: SignUpService, useValue: signUpService },
         { provide: UserService, useValue: userService },
