@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UserFeatureRoutingModule } from './user-feature-routing.module';
-import {UserPageComponent} from './user-page/user-page.component';
-import {UserSettingsComponent} from './user-settings/user-settings.component';
+import { UserRoutingModule } from './user-routing.module';
+import {UserPageComponent} from './Components/user-page/user-page.component';
+import {UserSettingsComponent} from './Components/user-settings/user-settings.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -17,7 +17,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { UserCollaborationPaneComponent } from './PartialComponents/user-collaboration-pane/user-collaboration-pane.component';
-import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
+import { UserNotificationsComponent } from './Components/user-notifications/user-notifications.component';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { UserNotificationsComponent } from './user-notifications/user-notificati
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    UserFeatureRoutingModule,
+    UserRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -44,4 +44,4 @@ import { UserNotificationsComponent } from './user-notifications/user-notificati
     ReactiveFormsModule,
   ]
 })
-export class UserFeatureModule { }
+export class UserModule { }

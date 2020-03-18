@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {IUserProfile} from '../Interfaces/IUserProfile';
+import {IUserProfile} from '../../Interfaces/IUserProfile';
 import {ActivatedRoute} from '@angular/router';
-import {IQuery} from '../../query-feature/Interfaces/IQuery';
+import {IQuery} from '../../../Query/Interfaces/IQuery';
 
 @Component({
   selector: 'app-user-page',

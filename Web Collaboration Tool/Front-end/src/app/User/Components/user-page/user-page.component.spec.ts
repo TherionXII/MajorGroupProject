@@ -1,17 +1,17 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { UserPageComponent } from './user-page.component';
-import {UserFeatureModule} from '../user-feature.module';
-import {UserService} from '../Services/user.service';
-import {QueryService} from '../../query-feature/services/query.service';
+import {UserModule} from '../../user.module';
+import {UserService} from '../../Services/user.service';
+import {QueryService} from '../../../Query/Services/query.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ActivatedRoute, ActivatedRouteSnapshot, Data, Router} from '@angular/router';
 import {Type} from '@angular/core';
 import {of, pipe, throwError} from 'rxjs';
-import {IUserProfile} from '../Interfaces/IUserProfile';
-import {IQuery} from '../../query-feature/Interfaces/IQuery';
+import {IUserProfile} from '../../Interfaces/IUserProfile';
+import {IQuery} from '../../../Query/Interfaces/IQuery';
 import {mergeMap, take} from 'rxjs/operators';
-import {UserDataResolverService} from '../../Utility/Resolvers/UserPageResolvers/user-data-resolver.service';
+import {UserDataResolverService} from '../../../Utility/Resolvers/UserPageResolvers/user-data-resolver.service';
 
 describe('UserPageComponent', () => {
   let component: UserPageComponent;
@@ -33,7 +33,7 @@ describe('UserPageComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        UserFeatureModule,
+        UserModule,
         RouterTestingModule.withRoutes([])
       ],
       providers: [

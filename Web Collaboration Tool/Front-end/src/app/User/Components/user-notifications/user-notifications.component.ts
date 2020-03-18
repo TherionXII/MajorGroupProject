@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {INotification} from '../../auxiliary-module/Interfaces/INotification';
+import {INotification} from '../../../Utility/Interfaces/INotification';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

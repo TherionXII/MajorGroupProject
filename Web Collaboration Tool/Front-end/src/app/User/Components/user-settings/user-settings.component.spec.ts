@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserSettingsComponent } from './user-settings.component';
-import {UserFeatureModule} from '../user-feature.module';
-import {UserService} from '../Services/user.service';
-import {IUserProfile} from '../Interfaces/IUserProfile';
+import {UserModule} from '../../user.module';
+import {UserService} from '../../Services/user.service';
+import {IUserProfile} from '../../Interfaces/IUserProfile';
 import {of, throwError} from 'rxjs';
 
 describe('UserSettingsComponent', () => {
@@ -15,7 +15,7 @@ describe('UserSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ UserFeatureModule ],
+      imports: [ UserModule ],
       providers: [ { provide: UserService, useValue: userService } ]
     })
     .compileComponents();

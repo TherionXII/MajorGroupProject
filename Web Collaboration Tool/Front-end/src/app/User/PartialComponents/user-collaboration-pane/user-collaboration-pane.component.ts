@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RxStompService} from '@stomp/ng2-stompjs';
-import {INotification} from '../../../auxiliary-module/Interfaces/INotification';
-import {IRequest} from '../../../auxiliary-module/IRequest';
+import {INotification} from '../../../Utility/Interfaces/INotification';
+import {IRequest} from '../../../Utility/Interfaces/IRequest';
 
 @Component({
   selector: 'app-user-collaboration-pane',
