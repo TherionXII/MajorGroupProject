@@ -1,9 +1,6 @@
 package project.webcollaborationtool.Request.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.springframework.lang.Nullable;
-import project.webcollaborationtool.User.Entities.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,6 +19,6 @@ public class PrivateCollaborationRequest
     @NotNull
     private String recipient;
 
-    @Nullable
+    @NotNull
     private Boolean isAccepted;
 }

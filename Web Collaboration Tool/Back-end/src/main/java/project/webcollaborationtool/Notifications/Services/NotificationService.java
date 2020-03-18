@@ -1,8 +1,6 @@
 package project.webcollaborationtool.Notifications.Services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.Notifications.Entities.Notification;
 import project.webcollaborationtool.Notifications.Entities.PrivateCollaborationNotification;
@@ -26,13 +24,7 @@ public class NotificationService
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private MessageSendingOperations<String> messageSendingOperations;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    public void addPrivateCollaborationRequestNotification(PrivateCollaborationRequest privateCollaborationRequest) throws Exception
+    public Notification addPrivateCollaborationRequestNotification(PrivateCollaborationRequest privateCollaborationRequest)
     {
         var privateCollaborationNotification = new PrivateCollaborationNotification();
         privateCollaborationNotification.setTitle("You have a new collaboration request!");
@@ -40,13 +32,10 @@ public class NotificationService
         privateCollaborationNotification.setRecipient(this.userRepository.findByUsername(privateCollaborationRequest.getRecipient()));
         privateCollaborationNotification.setSender(privateCollaborationRequest.getSender());
 
-        this.notificationRepository.save(privateCollaborationNotification);
-
-        this.messageSendingOperations.convertAndSend("/topic/user/collaboration/request/" + privateCollaborationNotification.getRecipient().getUsername(),
-                                                      this.objectMapper.writeValueAsString(privateCollaborationNotification));
+        return this.notificationRepository.save(privateCollaborationNotification);
     }
 
-    public void addPrivateCollaborationRequestResponseNotification(PrivateCollaborationRequest privateCollaborationRequest) throws Exception
+    public Notification addPrivateCollaborationRequestResponseNotification(PrivateCollaborationRequest privateCollaborationRequest)
     {
         var privateCollaborationNotification = new PrivateCollaborationNotification();
         privateCollaborationNotification.setTitle("A user responded to your collaboration request!");
@@ -57,10 +46,7 @@ public class NotificationService
         privateCollaborationNotification.setRecipient(this.userRepository.findByUsername(privateCollaborationRequest.getRecipient()));
         privateCollaborationNotification.setSender(privateCollaborationRequest.getSender());
 
-        this.notificationRepository.save(privateCollaborationNotification);
-
-        this.messageSendingOperations.convertAndSend("/topic/user/collaboration/request/" + privateCollaborationNotification.getRecipient().getUsername(),
-                                                        this.objectMapper.writeValueAsString(privateCollaborationNotification));
+        return this.notificationRepository.save(privateCollaborationNotification);
     }
 
     public Collection<PrivateNotification> getNotifications(String username)
