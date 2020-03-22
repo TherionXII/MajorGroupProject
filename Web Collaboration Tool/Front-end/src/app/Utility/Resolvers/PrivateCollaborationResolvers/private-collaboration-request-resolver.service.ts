@@ -3,16 +3,16 @@ import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@ang
 import {RequestService} from '../../../PrivateCollaboration/Services/request.service';
 import {EMPTY, Observable} from 'rxjs';
 import {catchError, first} from 'rxjs/operators';
-import {IRequest} from '../../Interfaces/IRequest';
+import {IPrivateCollaborationRequest} from '../../Interfaces/IPrivateCollaborationRequest';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrivateCollaborationRequestResolverService implements Resolve<Array<IRequest>> {
+export class PrivateCollaborationRequestResolverService implements Resolve<Array<IPrivateCollaborationRequest>> {
   constructor(private requestService: RequestService,
               private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Array<IRequest>> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Array<IPrivateCollaborationRequest>> | Observable<never> {
     return this.requestService.getPrivateCollaborationRequestsForUser(localStorage.getItem('username'))
                               .pipe(first(), catchError(() => this.onFail()));
   }

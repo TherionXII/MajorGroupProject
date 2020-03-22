@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Service
-public class RequestService
+public class PrivateCollaborationRequestService
 {
     @Autowired
     private PrivateCollaborationRequestRepository privateCollaborationRequestRepository;

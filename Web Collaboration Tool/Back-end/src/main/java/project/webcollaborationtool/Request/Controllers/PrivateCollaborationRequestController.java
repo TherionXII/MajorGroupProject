@@ -13,18 +13,18 @@ import project.webcollaborationtool.Collaboration.PrivateCollaboration.Services.
 import project.webcollaborationtool.Notifications.Entities.Notification;
 import project.webcollaborationtool.Notifications.Services.NotificationService;
 import project.webcollaborationtool.Request.Entities.PrivateCollaborationRequest;
-import project.webcollaborationtool.Request.Services.RequestService;
+import project.webcollaborationtool.Request.Services.PrivateCollaborationRequestService;
 
 import java.util.Collection;
 
 @Controller
-public class RequestController
+public class PrivateCollaborationRequestController
 {
     @Autowired
     private PrivateCollaborationService privateCollaborationService;
 
     @Autowired
-    private RequestService requestService;
+    private PrivateCollaborationRequestService privateCollaborationRequestService;
 
     @Autowired
     private NotificationService notificationService;
@@ -33,21 +33,21 @@ public class RequestController
     @CrossOrigin(origins = "http://localhost:4200", methods = RequestMethod.GET)
     public ResponseEntity<Collection<PrivateCollaborationRequest>> getCollaborationRequestsForUser(@PathVariable String username)
     {
-        return ResponseEntity.ok().body(this.requestService.getRequestsForUser(username));
+        return ResponseEntity.ok().body(this.privateCollaborationRequestService.getRequestsForUser(username));
     }
 
     @GetMapping("/hasSentRequest/{sender}/{recipient}")
     @CrossOrigin(origins = "http://localhost:4200", methods = RequestMethod.GET)
     public ResponseEntity<Boolean> hasSentRequest(@PathVariable String sender, @PathVariable String recipient)
     {
-        return ResponseEntity.ok().body(this.requestService.existsBySenderAndRecipient(sender, recipient));
+        return ResponseEntity.ok().body(this.privateCollaborationRequestService.existsBySenderAndRecipient(sender, recipient));
     }
 
     @GetMapping("/hasReceivedRequest/{recipient}/{sender}")
     @CrossOrigin(origins = "http://localhost:4200", methods = RequestMethod.GET)
     public ResponseEntity<Boolean> hasReceivedRequest(@PathVariable String recipient, @PathVariable String sender)
     {
-        return ResponseEntity.ok().body(this.requestService.existsBySenderAndRecipient(sender, recipient));
+        return ResponseEntity.ok().body(this.privateCollaborationRequestService.existsBySenderAndRecipient(sender, recipient));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -55,7 +55,7 @@ public class RequestController
     @MessageMapping("/user/collaboration/request/{recipient}")
     public Notification createCollaborationRequest(PrivateCollaborationRequest privateCollaborationRequest)
     {
-        this.requestService.createPrivateCollaborationRequest(privateCollaborationRequest);
+        this.privateCollaborationRequestService.createPrivateCollaborationRequest(privateCollaborationRequest);
         return this.notificationService.addPrivateCollaborationRequestNotification(privateCollaborationRequest);
     }
 
@@ -66,7 +66,7 @@ public class RequestController
     {
         if(privateCollaborationRequest.getIsAccepted()) this.privateCollaborationService.createPrivateCollaboration(privateCollaborationRequest);
 
-        this.requestService.deleteCollaborationRequest(privateCollaborationRequest);
+        this.privateCollaborationRequestService.deleteCollaborationRequest(privateCollaborationRequest);
 
         return this.notificationService.addPrivateCollaborationRequestResponseNotification(privateCollaborationRequest);
     }

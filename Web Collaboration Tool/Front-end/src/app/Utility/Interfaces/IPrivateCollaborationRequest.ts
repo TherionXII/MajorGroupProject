@@ -1,4 +1,4 @@
-export interface IRequest {
+export interface IPrivateCollaborationRequest {
   sender: string;
   recipient: string;
 
