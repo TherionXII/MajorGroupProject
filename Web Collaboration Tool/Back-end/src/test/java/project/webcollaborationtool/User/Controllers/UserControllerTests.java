@@ -39,7 +39,7 @@ public class UserControllerTests
     @BeforeEach
     public void setUp()
     {
-        this.validUser = this.userRepository.save(new User("username", "password", "a@a.com", null, null, null));
+        this.validUser = this.userRepository.save(new User("username", "password", "a@a.com", null, null, null, null));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class UserControllerTests
     public void testCreateUserWithInvalidUsername() throws Exception
     {
         this.userRepository.deleteById(this.validUser.getUsername());
-        var user = new User(null, "password", "email", null, null, null);
+        var user = new User(null, "password", "email", null, null, null, null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -78,7 +78,7 @@ public class UserControllerTests
     public void testCreateUserWithInvalidPassword() throws Exception
     {
         this.userRepository.deleteById(this.validUser.getUsername());
-        var user = new User("username", null, "email", null, null, null);
+        var user = new User("username", null, "email", null, null, null, null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))
@@ -93,7 +93,7 @@ public class UserControllerTests
     public void testCreateUserWithInvalidEmail() throws Exception
     {
         this.userRepository.deleteById(this.validUser.getUsername());
-        var user = new User("username", "password", null, null, null, null);
+        var user = new User("username", "password", null, null, null, null, null);
 
         this.mockMvc.perform(post("/createUser")
                              .content(this.objectMapper.writeValueAsString(user))

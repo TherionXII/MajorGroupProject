@@ -41,9 +41,9 @@ public class LoginControllerTests
     @BeforeEach
     public void setUp()
     {
-        this.validUser = this.userRepository.save(new User("username", "password", "email", null, null, null));
-        this.nonExistentUser = new User("user", "password", "e", null, null, null);
-        this.userWithInvalidPassword = new User("username", "pass", "email", null, null, null);
+        this.validUser = this.userRepository.save(new User("username", "password", "email", null, null, null, null));
+        this.nonExistentUser = new User("user", "password", "e", null, null, null, null);
+        this.userWithInvalidPassword = new User("username", "pass", "email", null, null, null, null);
     }
 
     @Test
