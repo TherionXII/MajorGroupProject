@@ -20,6 +20,10 @@ import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@s
 import {SocketConfigurationConfig} from './Utility/HelperClasses/SocketConfiguration.config';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {PrivateCollaborationModule} from './PrivateCollaboration/private-collaboration.module';
+import { GroupCollaborationHomeComponent } from './GroupCollaboration/Components/group-collaboration-home/group-collaboration-home.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {ReactiveFormsModule} from '@angular/forms';
+import {GroupCollaborationModule} from './GroupCollaboration/group-collaboration.module';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, canActivate: [ AuthenticationGuard ] }
@@ -39,6 +43,7 @@ const routes: Routes = [
     UserModule,
     QueryModule,
     PrivateCollaborationModule,
+    GroupCollaborationModule,
     RouterModule.forRoot(routes),
     MatButtonModule,
     SimpleNotificationsModule.forRoot()
