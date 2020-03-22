@@ -50,7 +50,7 @@ public class ThreadService
     {
         var thread = this.chatThreadRepository.findById(threadId).orElseThrow();
 
-        message.setThread(thread);
+//        message.setThread(thread);
         message = this.messageRepository.save(message);
 
         thread.setLastMessage(message);

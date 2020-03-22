@@ -2,21 +2,15 @@ package project.webcollaborationtool.Collaboration.PrivateCollaboration.Entities
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import project.webcollaborationtool.Collaboration.Thread.Entities.ChatThread;
+import lombok.*;
 import project.webcollaborationtool.Collaboration.Thread.Entities.PrivateCollaborationThread;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId;
 
 import javax.persistence.*;
 
+@Data
 @Entity
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @IdClass(PrivateCollaborationId.class)
 public class PrivateCollaboration
 {

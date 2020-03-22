@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {PrivateCollaborationsPageComponent} from './Components/private-collaborations-page/private-collaborations-page.component';
-import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationPageResolvers/private-collaboration-resolver.service';
+import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-resolver.service';
 import {PrivateCollaborationChatComponent} from './Components/private-collaboration-chat/private-collaboration-chat.component';
-import {PrivateCollaborationChatResolverService} from '../Utility/Resolvers/PrivateCollaborationPageResolvers/private-collaboration-chat-resolver.service';
-import {PrivateCollaborationRequestResolverService} from '../Utility/Resolvers/PrivateCollaborationPageResolvers/private-collaboration-request-resolver.service';
+import {PrivateCollaborationChatResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-chat-resolver.service';
+import {PrivateCollaborationRequestResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-request-resolver.service';
 
 const routes: Routes = [
   {

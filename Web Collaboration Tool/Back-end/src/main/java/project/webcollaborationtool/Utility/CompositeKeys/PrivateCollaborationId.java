@@ -5,9 +5,8 @@ import lombok.*;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+@Data
 @Embeddable
-@Getter @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrivateCollaborationId implements Serializable

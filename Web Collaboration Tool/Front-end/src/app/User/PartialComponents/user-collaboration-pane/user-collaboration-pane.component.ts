@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {INotification} from '../../../Utility/Interfaces/INotification';
-import {IRequest} from '../../../Utility/Interfaces/IRequest';
+import {IPrivateCollaborationRequest} from '../../../Utility/Interfaces/IPrivateCollaborationRequest';
 
 @Component({
   selector: 'app-user-collaboration-pane',
@@ -48,12 +48,12 @@ export class UserCollaborationPaneComponent implements OnInit {
     return localStorage.getItem('username') ? localStorage.getItem('username') === this.username : false;
   }
 
-  private composeRequestBody(): IRequest {
-    return { recipient: this.username, sender: localStorage.getItem('username'), isAccepted: false } as IRequest;
+  private composeRequestBody(): IPrivateCollaborationRequest {
+    return { recipient: this.username, sender: localStorage.getItem('username'), isAccepted: false } as IPrivateCollaborationRequest;
   }
 
-  private composeResponseBody(response: boolean): IRequest {
-    return { recipient: localStorage.getItem('username'), sender: this.username, isAccepted: response } as IRequest;
+  private composeResponseBody(response: boolean): IPrivateCollaborationRequest {
+    return { recipient: localStorage.getItem('username'), sender: this.username, isAccepted: response } as IPrivateCollaborationRequest;
   }
 
   private onAccept(): void {

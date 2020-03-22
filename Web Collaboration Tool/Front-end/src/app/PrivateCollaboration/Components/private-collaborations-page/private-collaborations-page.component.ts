@@ -3,7 +3,7 @@ import {IPrivateCollaboration} from '../../Interfaces/IPrivateCollaboration';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ThreadService} from '../../Services/thread.service';
 import {RxStompService} from '@stomp/ng2-stompjs';
-import {IRequest} from '../../../Utility/Interfaces/IRequest';
+import {IPrivateCollaborationRequest} from '../../../Utility/Interfaces/IPrivateCollaborationRequest';
 
 @Component({
   selector: 'app-private-collaborations-page',
@@ -12,7 +12,7 @@ import {IRequest} from '../../../Utility/Interfaces/IRequest';
 })
 export class PrivateCollaborationsPageComponent implements OnInit {
   public collaborations: Array<IPrivateCollaboration>;
-  public requests: Array<IRequest>;
+  public requests: Array<IPrivateCollaborationRequest>;
 
   public username: string;
 
@@ -24,7 +24,7 @@ export class PrivateCollaborationsPageComponent implements OnInit {
   ngOnInit(): void {
     this.username = localStorage.getItem('username');
 
-    this.activatedRoute.data.subscribe((data: { privateCollaborations: Array<IPrivateCollaboration>, requests: Array<IRequest> }) => {
+    this.activatedRoute.data.subscribe((data: { privateCollaborations: Array<IPrivateCollaboration>, requests: Array<IPrivateCollaborationRequest> }) => {
       this.collaborations = data.privateCollaborations;
       this.requests = data.requests;
     });
@@ -35,7 +35,7 @@ export class PrivateCollaborationsPageComponent implements OnInit {
       .subscribe(response => this.router.navigateByUrl(`/thread/${response}`));
   }
 
-  public onCollaborationRequestResponse(response: boolean, request: IRequest): void {
+  public onCollaborationRequestResponse(response: boolean, request: IPrivateCollaborationRequest): void {
     this.requests = this.requests.filter(item => item !== request);
 
     request.isAccepted = response;

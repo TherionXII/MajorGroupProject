@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {UserPageComponent} from './Components/user-page/user-page.component';
 import {UserSettingsComponent} from './Components/user-settings/user-settings.component';
 
-import {PrivateCollaborationStatusResolverService} from '../Utility/Resolvers/UserPageResolvers/private-collaboration-status-resolver.service';
-import {UserDataResolverService} from '../Utility/Resolvers/UserPageResolvers/user-data-resolver.service';
+import {PrivateCollaborationStatusResolverService} from '../Utility/Resolvers/UserResolvers/private-collaboration-status-resolver.service';
+import {UserDataResolverService} from '../Utility/Resolvers/UserResolvers/user-data-resolver.service';
 import {UserNotificationsComponent} from './Components/user-notifications/user-notifications.component';
 import {UserNotificationResolverService} from '../Utility/Resolvers/UserNotificationResolvers/user-notification-resolver.service';
 
