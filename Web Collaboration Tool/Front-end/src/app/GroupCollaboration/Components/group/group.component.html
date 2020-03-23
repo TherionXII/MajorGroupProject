@@ -1,6 +1,8 @@
 <mat-tab-group>
   <mat-tab label = "Forum"></mat-tab>
-  <mat-tab label = "Group chat"></mat-tab>
+  <mat-tab label = "Group chat">
+    <app-chat></app-chat>
+  </mat-tab>
   <mat-tab label = "Papers"></mat-tab>
   <mat-tab label = "Management">
     <app-group-management [group] = "group" [privateCollaborations] = "privateCollaborations"

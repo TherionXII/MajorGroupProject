@@ -34,7 +34,7 @@ export class GroupCollaborationHomeComponent implements OnInit {
 
   public onSubmit(): void {
     this.groupService.createGroup(this.newGroupForm.getRawValue() as IGroup, localStorage.getItem('username'))
-      .subscribe(groupId => this.router.navigateByUrl('/group/' + groupId));
+      .subscribe(group => this.router.navigateByUrl(`/group/${group.id}/${group.thread.id}`));
   }
 
   public onInvitationResponse(invitation: IGroupCollaborationRequest, isAccepted: boolean): void {

@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { GroupComponent } from './Components/group/group.component';
 import {MatListModule} from '@angular/material/list';
 import { GroupManagementComponent } from './PartialComponents/group-management/group-management.component';
+import {UtilityModule} from '../Utility/utility.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { GroupManagementComponent } from './PartialComponents/group-management/g
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    UtilityModule
   ]
 })
 export class GroupCollaborationModule { }

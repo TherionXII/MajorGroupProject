@@ -1,4 +1,5 @@
 import {IGroupMember} from './IGroupMember';
+import {IThread} from '../../Utility/Interfaces/IThread';
 
 export interface IGroup {
   id?: number;
@@ -7,4 +8,6 @@ export interface IGroup {
   title: string;
 
   groupMembers: Array<IGroupMember>;
+
+  thread: IThread;
 }
