@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Services.GroupCollaborationService;
+import project.webcollaborationtool.Collaboration.Thread.Services.ThreadService;
 import project.webcollaborationtool.Notifications.Entities.Notification;
 import project.webcollaborationtool.Notifications.Services.NotificationService;
 
@@ -22,13 +23,18 @@ public class GroupCollaborationController
     private GroupCollaborationService groupCollaborationService;
 
     @Autowired
+    private ThreadService threadService;
+
+    @Autowired
     private NotificationService notificationService;
 
     @PostMapping("/{username}/createGroup")
     @CrossOrigin(origins = "/groups", methods = RequestMethod.POST)
-    public ResponseEntity<Integer> createGroup(@RequestBody GroupCollaboration groupCollaboration, @PathVariable String username)
+    public ResponseEntity<GroupCollaboration> createGroup(@RequestBody GroupCollaboration groupCollaboration, @PathVariable String username)
     {
-        return ResponseEntity.ok().body(this.groupCollaborationService.createGroup(groupCollaboration, username));
+        var group = this.groupCollaborationService.createGroup(groupCollaboration, username);
+        group = this.threadService.createGroupThread(group.getId());
+        return ResponseEntity.ok().body(group);
     }
 
     @GetMapping("/{username}/getGroups")

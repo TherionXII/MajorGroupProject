@@ -2,7 +2,10 @@ package project.webcollaborationtool.Collaboration.Thread.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
+import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupCollaborationRepository;
 import project.webcollaborationtool.Collaboration.PrivateCollaboration.Repositories.PrivateCollaborationRepository;
+import project.webcollaborationtool.Collaboration.Thread.Entities.GroupCollaborationThread;
 import project.webcollaborationtool.Collaboration.Thread.Entities.Message;
 import project.webcollaborationtool.Collaboration.Thread.Entities.PrivateCollaborationThread;
 import project.webcollaborationtool.Collaboration.Thread.Repositories.ChatThreadRepository;
@@ -16,6 +19,9 @@ public class ThreadService
 {
     @Autowired
     private PrivateCollaborationRepository privateCollaborationRepository;
+
+    @Autowired
+    private GroupCollaborationRepository groupCollaborationRepository;
 
     @Autowired
     private ChatThreadRepository chatThreadRepository;
@@ -41,6 +47,18 @@ public class ThreadService
         return thread.getId();
     }
 
+    public GroupCollaboration createGroupThread(Integer groupId)
+    {
+        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow();
+
+        var thread = new GroupCollaborationThread();
+        thread.setGroupCollaboration(groupCollaboration);
+        thread = this.chatThreadRepository.save(thread);
+
+        groupCollaboration.setThread(thread);
+        return groupCollaborationRepository.save(groupCollaboration);
+    }
+
     public Collection<Message> getMessagesForThread(Integer threadId)
     {
         return this.chatThreadRepository.findById(threadId).orElseThrow().getMessages();
@@ -50,10 +68,11 @@ public class ThreadService
     {
         var thread = this.chatThreadRepository.findById(threadId).orElseThrow();
 
-//        message.setThread(thread);
         message = this.messageRepository.save(message);
 
         thread.setLastMessage(message);
         this.chatThreadRepository.save(thread);
     }
+
+
 }
