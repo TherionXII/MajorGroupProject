@@ -35,13 +35,13 @@ public class GroupCollaborationService
         return groupList;
     }
 
-    public Integer createGroup(GroupCollaboration groupCollaboration, String username)
+    public GroupCollaboration createGroup(GroupCollaboration groupCollaboration, String username)
     {
         groupCollaboration = this.groupCollaborationRepository.save(groupCollaboration);
 
         this.addMember(groupCollaboration, this.userRepository.findByUsername(username), true);
 
-        return groupCollaboration.getId();
+        return groupCollaboration;
     }
 
     public GroupCollaboration getGroupById(Integer groupId)
