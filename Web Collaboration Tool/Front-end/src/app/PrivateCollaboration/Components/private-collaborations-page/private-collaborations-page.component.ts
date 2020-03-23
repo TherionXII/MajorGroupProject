@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IPrivateCollaboration} from '../../Interfaces/IPrivateCollaboration';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ThreadService} from '../../Services/thread.service';
+import {ThreadService} from '../../../Utility/Services/thread.service';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {IPrivateCollaborationRequest} from '../../../Utility/Interfaces/IPrivateCollaborationRequest';
 
@@ -21,7 +21,7 @@ export class PrivateCollaborationsPageComponent implements OnInit {
               private rxStompService: RxStompService,
               private router: Router) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.username = localStorage.getItem('username');
 
     this.activatedRoute.data.subscribe((data: { privateCollaborations: Array<IPrivateCollaboration>, requests: Array<IPrivateCollaborationRequest> }) => {

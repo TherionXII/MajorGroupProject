@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {PrivateCollaborationsPageComponent} from './Components/private-collaborations-page/private-collaborations-page.component';
 import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-resolver.service';
 import {ChatComponent} from '../Utility/PartialComponents/chat/chat.component';
-import {PrivateCollaborationChatResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-chat-resolver.service';
+import {ChatResolverService} from '../Utility/Resolvers/ThreadResolvers/chat-resolver.service';
 import {PrivateCollaborationRequestResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-request-resolver.service';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
       requests: PrivateCollaborationRequestResolverService
     }
   },
-  { path: 'thread/:id', component: ChatComponent, resolve: { messages: PrivateCollaborationChatResolverService } }
+  { path: 'thread/:threadId', component: ChatComponent, resolve: { chatData: ChatResolverService } }
 ];
 
 @NgModule({

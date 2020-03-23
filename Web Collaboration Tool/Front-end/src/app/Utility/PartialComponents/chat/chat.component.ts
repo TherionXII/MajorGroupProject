@@ -6,7 +6,7 @@ import {RxStompService} from '@stomp/ng2-stompjs';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-private-collaboration-chat',
+  selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
@@ -30,12 +30,11 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.messages = data.chatData[0];
       this.watchChannel = data.chatData[1];
       this.publishChannel = data.chatData[2];
+
+      this.chatSubscription = this.rxStompService.watch(this.watchChannel).subscribe(request => this.messages.push(JSON.parse(request.body)));
     });
 
     this.messageFormControl = new FormControl('');
-
-    this.chatSubscription = this.rxStompService.watch(this.watchChannel)
-                                               .subscribe(request => this.messages.push(JSON.parse(request.body)));
   }
 
   public ngOnDestroy(): void {

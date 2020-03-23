@@ -10,8 +10,8 @@ import {IGroupCollaborationRequest} from '../../Utility/Interfaces/IGroupCollabo
 export class GroupService {
   constructor(private httpClient: HttpClient) { }
 
-  public createGroup(group: IGroup, adminUsername: string): Observable<number> {
-    return this.httpClient.post<number>(`http://localhost:8080/api/groups/${adminUsername}/createGroup`, group);
+  public createGroup(group: IGroup, adminUsername: string): Observable<IGroup> {
+    return this.httpClient.post<IGroup>(`http://localhost:8080/api/groups/${adminUsername}/createGroup`, group);
   }
 
   public getUserGroups(username: string): Observable<Array<IGroup>>{
