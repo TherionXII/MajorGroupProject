@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {IMessage} from '../../../Utility/Interfaces/IMessage';
+import {IMessage} from '../../Interfaces/IMessage';
 import {ActivatedRoute} from '@angular/router';
 import {FormControl} from '@angular/forms';
 import {RxStompService} from '@stomp/ng2-stompjs';
@@ -7,15 +7,18 @@ import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-private-collaboration-chat',
-  templateUrl: './private-collaboration-chat.component.html',
-  styleUrls: ['./private-collaboration-chat.component.css']
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
 })
-export class PrivateCollaborationChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy {
   public messages: Array<IMessage>;
   public username: string;
 
   public messageFormControl: FormControl;
+
   private chatSubscription: Subscription;
+  private watchChannel: string;
+  private publishChannel: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private rxStompService: RxStompService) { }
@@ -23,12 +26,16 @@ export class PrivateCollaborationChatComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.username = localStorage.getItem('username');
 
-    this.activatedRoute.data.subscribe((data: { messages: Array<IMessage> }) => this.messages = data.messages);
+    this.activatedRoute.data.subscribe((data: { chatData: [Array<IMessage>, string, string] }) => {
+      this.messages = data.chatData[0];
+      this.watchChannel = data.chatData[1];
+      this.publishChannel = data.chatData[2];
+    });
 
     this.messageFormControl = new FormControl('');
 
-    this.chatSubscription = this.rxStompService.watch(`/topic/user/collaboration/chat/${this.activatedRoute.snapshot.paramMap.get('id')}`)
-                                               .subscribe(request => this.messages.push(JSON.parse(request.body) as IMessage));
+    this.chatSubscription = this.rxStompService.watch(this.watchChannel)
+                                               .subscribe(request => this.messages.push(JSON.parse(request.body)));
   }
 
   public ngOnDestroy(): void {
@@ -40,7 +47,7 @@ export class PrivateCollaborationChatComponent implements OnInit, OnDestroy {
 
     this.messageFormControl.reset('');
 
-    this.rxStompService.publish({ destination: `/app/user/collaboration/chat/${this.activatedRoute.snapshot.paramMap.get('id')}`,
+    this.rxStompService.publish({ destination: this.publishChannel,
                                              body: JSON.stringify(body) })
   }
 
