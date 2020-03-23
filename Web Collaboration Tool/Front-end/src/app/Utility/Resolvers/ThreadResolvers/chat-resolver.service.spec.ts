@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PrivateCollaborationChatResolverService } from './private-collaboration-chat-resolver.service';
+import { ChatResolverService } from './chat-resolver.service';
 
 describe('PrivateCollaborationChatResolverService', () => {
-  let service: PrivateCollaborationChatResolverService;
+  let service: ChatResolverService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PrivateCollaborationChatResolverService);
+    service = TestBed.inject(ChatResolverService);
   });
 
   it('should be created', () => {
