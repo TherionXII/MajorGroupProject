@@ -25,7 +25,7 @@ describe('QueryService', () => {
   });
 
   it('should send a successful request to get recent queries', () => {
-    queryService.getRecentQueries()
+    queryService.getRecentPublicQueries()
                 .subscribe(response => expect(response.length).toEqual(2), () => fail('Should not have failed!'));
 
     const request = httpTestingController.expectOne('http://localhost:8080/getRecentQueries');
@@ -36,7 +36,7 @@ describe('QueryService', () => {
   });
 
   it('should send an unsuccessful request to get recent queries', () => {
-    queryService.getRecentQueries()
+    queryService.getRecentPublicQueries()
                 .subscribe(() => fail('Should have failed'), error => expect(error.error).toEqual('error'));
 
     const request = httpTestingController.expectOne('http://localhost:8080/getRecentQueries');
@@ -113,7 +113,7 @@ describe('QueryService', () => {
   });
 
   it('should send a successful request to create a query', () => {
-    queryService.createQuery({} as IQuery, 'username')
+    queryService.createPublicQuery({} as IQuery, 'username')
                 .subscribe(response => expect(response.id).toEqual(1), () => fail('Should not have failed!'));
 
     const request = httpTestingController.expectOne('http://localhost:8080/username/createQuery');
@@ -125,7 +125,7 @@ describe('QueryService', () => {
   });
 
   it('should send an unsuccessful request to create a query', () => {
-    queryService.createQuery({} as IQuery, 'username')
+    queryService.createPublicQuery({} as IQuery, 'username')
                 .subscribe(() => fail('Should have failed'), error => expect(error.error).toEqual('error'));
 
     const request = httpTestingController.expectOne('http://localhost:8080/username/createQuery');

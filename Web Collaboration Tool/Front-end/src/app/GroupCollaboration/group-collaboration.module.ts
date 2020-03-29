@@ -12,6 +12,7 @@ import { GroupComponent } from './Components/group/group.component';
 import {MatListModule} from '@angular/material/list';
 import { GroupManagementComponent } from './PartialComponents/group-management/group-management.component';
 import {UtilityModule} from '../Utility/utility.module';
+import {QueryModule} from '../Query/query.module';
 
 
 @NgModule({
@@ -20,16 +21,17 @@ import {UtilityModule} from '../Utility/utility.module';
     GroupComponent,
     GroupManagementComponent
   ],
-  imports: [
-    CommonModule,
-    GroupCollaborationRoutingModule,
-    ReactiveFormsModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatListModule,
-    UtilityModule
-  ]
+    imports: [
+        CommonModule,
+        GroupCollaborationRoutingModule,
+        ReactiveFormsModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatListModule,
+        UtilityModule,
+        QueryModule
+    ]
 })
 export class GroupCollaborationModule { }

@@ -11,24 +11,32 @@ import {IQueryVote} from '../Interfaces/IQueryVote';
 export class QueryService {
   constructor(private httpClient: HttpClient) { }
 
-  public getRecentQueries(): Observable<IQuery[]> {
-    return this.httpClient.get<IQuery[]>(`http://localhost:8080/api/queries/publicQueries/getRecentQueries`);
+  public getRecentPublicQueries(): Observable<Array<IQuery>> {
+    return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/publicQueries/getRecentQueries`);
   }
 
-  public getRecentQueriesForUser(username: string): Observable<IQuery[]> {
-    return this.httpClient.get<IQuery[]>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentQueries`);
+  public getRecentGroupQueries(groupId: string): Observable<Array<IQuery>> {
+    return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/groupQueries/${groupId}/getRecentQueries`);
   }
 
-  public getRecentResponsesForUser(username: string): Observable<IQuery[]> {
-    return this.httpClient.get<IQuery[]>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentResponses`);
+  public getRecentQueriesForUser(username: string): Observable<Array<IQuery>> {
+    return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentQueries`);
+  }
+
+  public getRecentResponsesForUser(username: string): Observable<Array<IQuery>> {
+    return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentResponses`);
   }
 
   public getQueryById(id: number): Observable<IQuery> {
     return this.httpClient.get<IQuery>(`http://localhost:8080/api/queries/${id}/getQuery`);
   }
 
-  public createQuery(query: IQuery, username: string): Observable<IQuery> {
+  public createPublicQuery(query: IQuery, username: string): Observable<IQuery> {
     return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/createQuery`, query);
+  }
+
+  public createGroupQuery(query: IQuery, username: string, groupId: string): Observable<IQuery> {
+    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/groupQueries/${username}/${groupId}/createQuery`, query);
   }
 
   public createResponse(response: IQuery, username: string, id: number): Observable<IQuery> {

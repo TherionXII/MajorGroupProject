@@ -6,6 +6,7 @@ import {GroupCollaborationResolverService} from '../Utility/Resolvers/GroupColla
 import {GroupResolverService} from '../Utility/Resolvers/GroupCollaborationResolvers/group-resolver.service';
 import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-resolver.service';
 import {ChatResolverService} from '../Utility/Resolvers/ThreadResolvers/chat-resolver.service';
+import {ForumResolverService} from '../Utility/Resolvers/QueryResolvers/forum-resolver.service';
 
 const routes: Routes = [
   {
@@ -16,12 +17,13 @@ const routes: Routes = [
     }
   },
   {
-    path: 'group/:id/:threadId',
+    path: 'group/:groupId/:threadId',
     component: GroupComponent,
     resolve: {
       groupData: GroupResolverService,
       privateCollaborations: PrivateCollaborationResolverService,
-      chatData: ChatResolverService
+      chatData: ChatResolverService,
+      forumData: ForumResolverService
     }
   }
 ];

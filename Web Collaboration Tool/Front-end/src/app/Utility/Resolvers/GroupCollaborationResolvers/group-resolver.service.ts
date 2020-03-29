@@ -14,9 +14,9 @@ export class GroupResolverService implements Resolve<IGroup> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Observable<never> {
     return forkJoin([
-      this.groupService.getGroupById(route.paramMap.get('id'))
+      this.groupService.getGroupById(route.paramMap.get('groupId'))
                        .pipe(first(), catchError(() => this.onFail())),
-      this.groupService.getGroupInvitationsForGroup(route.paramMap.get('id'))
+      this.groupService.getGroupInvitationsForGroup(route.paramMap.get('groupId'))
     ]);
   }
 
