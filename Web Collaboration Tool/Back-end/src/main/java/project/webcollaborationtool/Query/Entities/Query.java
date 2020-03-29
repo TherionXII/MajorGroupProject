@@ -13,16 +13,15 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Set;
 
+@Data
 @Entity
-@ToString
-@Getter @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "query_type", discriminatorType = DiscriminatorType.STRING)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Query
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Nullable

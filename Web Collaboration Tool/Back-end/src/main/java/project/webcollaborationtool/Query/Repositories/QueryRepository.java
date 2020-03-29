@@ -10,8 +10,5 @@ import java.util.Collection;
 @Repository
 public interface QueryRepository extends CrudRepository<Query, Integer>
 {
-    Collection<Query> findTop10ByParentOrderByCreatedAtDesc(Query parent);
-    Collection<Query> findTop10ByUserOrderByCreatedAtDesc(User user);
-    Collection<Query> findTop10ByUserAndParentOrderByCreatedAtDesc(User user, Query parent);
-    Collection<Query> findTop10ByUserAndParentIsNotNullOrderByCreatedAtDesc(User user);
+
 }
