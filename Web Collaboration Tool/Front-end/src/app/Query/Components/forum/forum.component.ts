@@ -31,8 +31,6 @@ export class ForumComponent implements OnInit {
       contents: new FormControl('', [Validators.required])
     });
 
-    this.queries = new Array<IQuery>();
-
     this.queryService.getRecentQueries().subscribe(result => this.queries = result, error => this.getQueriesError = error.message);
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RxStompService} from '@stomp/ng2-stompjs';
-import {INotification} from '../../../Utility/Interfaces/INotification';
 import {IPrivateCollaborationRequest} from '../../../Utility/Interfaces/IPrivateCollaborationRequest';
 
 @Component({
@@ -27,6 +26,8 @@ export class UserCollaborationPaneComponent implements OnInit {
     });
 
     this.username = this.route.snapshot.paramMap.get('username');
+
+    console.log(this.isLoggedIn() && !this.isLoggedInUser());
   }
 
   public onCollaborationRequest(): void {
@@ -45,7 +46,7 @@ export class UserCollaborationPaneComponent implements OnInit {
   }
 
   public isLoggedInUser(): boolean {
-    return localStorage.getItem('username') ? localStorage.getItem('username') === this.username : false;
+    return localStorage.getItem('username') === this.username;
   }
 
   private composeRequestBody(): IPrivateCollaborationRequest {
