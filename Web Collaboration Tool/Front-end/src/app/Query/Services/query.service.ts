@@ -12,27 +12,27 @@ export class QueryService {
   constructor(private httpClient: HttpClient) { }
 
   public getRecentQueries(): Observable<IQuery[]> {
-    return this.httpClient.get<IQuery[]>(`http://localhost:8080/getRecentQueries`);
+    return this.httpClient.get<IQuery[]>(`http://localhost:8080/api/queries/publicQueries/getRecentQueries`);
   }
 
   public getRecentQueriesForUser(username: string): Observable<IQuery[]> {
-    return this.httpClient.get<IQuery[]>(`http://localhost:8080/${username}/getRecentQueries`);
+    return this.httpClient.get<IQuery[]>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentQueries`);
   }
 
   public getRecentResponsesForUser(username: string): Observable<IQuery[]> {
-    return this.httpClient.get<IQuery[]>(`http://localhost:8080/${username}/getRecentResponses`);
+    return this.httpClient.get<IQuery[]>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentResponses`);
   }
 
   public getQueryById(id: number): Observable<IQuery> {
-    return this.httpClient.get<IQuery>(`http://localhost:8080/getQuery/${id}`);
+    return this.httpClient.get<IQuery>(`http://localhost:8080/api/queries/${id}/getQuery`);
   }
 
   public createQuery(query: IQuery, username: string): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/${username}/createQuery`, query);
+    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/createQuery`, query);
   }
 
   public createResponse(response: IQuery, username: string, id: number): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/${username}/${id}/createResponse`, response);
+    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/${id}/createResponse`, response);
   }
 
   public submitVote(vote: IQueryVote): Observable<IQuery> {
