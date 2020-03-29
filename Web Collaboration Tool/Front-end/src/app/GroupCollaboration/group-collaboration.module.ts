@@ -13,25 +13,39 @@ import {MatListModule} from '@angular/material/list';
 import { GroupManagementComponent } from './PartialComponents/group-management/group-management.component';
 import {UtilityModule} from '../Utility/utility.module';
 import {QueryModule} from '../Query/query.module';
+import {FileUploadComponent} from './PartialComponents/file-upload/file-upload.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
+import {ImageCropperModule} from 'ngx-image-cropper';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
 
 
 @NgModule({
   declarations: [
     GroupCollaborationHomeComponent,
     GroupComponent,
-    GroupManagementComponent
+    GroupManagementComponent,
+    FileUploadComponent
   ],
-    imports: [
-        CommonModule,
-        GroupCollaborationRoutingModule,
-        ReactiveFormsModule,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatListModule,
-        UtilityModule,
-        QueryModule
-    ]
+  imports: [
+    CommonModule,
+    GroupCollaborationRoutingModule,
+    ReactiveFormsModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatListModule,
+    UtilityModule,
+    QueryModule,
+    MatStepperModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    ImageCropperModule,
+    MaterialFileInputModule
+  ]
 })
 export class GroupCollaborationModule { }

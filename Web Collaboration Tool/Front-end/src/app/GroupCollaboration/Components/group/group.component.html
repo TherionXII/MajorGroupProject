@@ -5,7 +5,9 @@
   <mat-tab label = "Group chat">
     <app-chat></app-chat>
   </mat-tab>
-  <mat-tab label = "Papers"></mat-tab>
+  <mat-tab label = "Papers">
+    <app-file-upload></app-file-upload>
+  </mat-tab>
   <mat-tab label = "Management">
     <app-group-management [group] = "group" [privateCollaborations] = "privateCollaborations"
                           [username] = "username" [groupInvitations] ="groupInvitations" ></app-group-management>

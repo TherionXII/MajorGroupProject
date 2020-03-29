@@ -1,4 +1,4 @@
-package com.colm.pdf.PDFTextExtraction.controller;
+package project.webcollaborationtool.Collaboration.PDFProcessing;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;

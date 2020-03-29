@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpEventType} from '@angular/common/http';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
-import {FileUploadService} from '../file-upload.service';
+import {FileUploadService} from '../../Services/file-upload.service';
 
 @Component({
   selector: 'app-file-upload',
