@@ -27,6 +27,9 @@ import {MatButtonModule} from '@angular/material/button';
     QueryComponent,
     QueryContainerComponent
   ],
+  exports: [
+    ForumComponent
+  ],
   imports: [
     CommonModule,
     BrowserModule,

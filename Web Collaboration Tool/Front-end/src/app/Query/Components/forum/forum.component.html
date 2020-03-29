@@ -1,12 +1,11 @@
 <mat-tab-group>
   <mat-tab label = "Queries">
-    <mat-error>{{ getQueriesError ? getQueriesError : null }}</mat-error>
     <mat-list *ngIf = "queries != undefined">
       <a *ngFor = "let query of queries" [routerLink] = "['/query', query.id]">
       <mat-list-item>
         <h3 mat-line>{{ query.title }}</h3>
         <p mat-line>
-          <span>Created by: {{ query.user.username }}</span>
+          <span>Created by: {{ query.username }}</span>
           <span>{{ query.subtitle }}</span>
         </p>
       </mat-list-item>
@@ -14,7 +13,6 @@
     </mat-list>
   </mat-tab>
   <mat-tab *ngIf = "isCreateVisible" label = "New Query">
-    <mat-error>{{ createQueryError ? createQueryError : null }}</mat-error>
     <h1>Create a new query: </h1>
     <form [formGroup] = "queryFormGroup" (ngSubmit) = "onSubmit()">
       <mat-form-field>

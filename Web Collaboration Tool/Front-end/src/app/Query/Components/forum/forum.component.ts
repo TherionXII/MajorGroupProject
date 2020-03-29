@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../../Services/query.service';
 import {IQuery} from '../../Interfaces/IQuery';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-forum',
@@ -11,18 +12,17 @@ import {Router} from '@angular/router';
 })
 export class ForumComponent implements OnInit {
   public isCreateVisible: boolean;
+  public IsPublic: boolean;
 
   public queryFormGroup: FormGroup;
 
   public queries: Array<IQuery>;
 
-  public getQueriesError: string;
-  public createQueryError: string;
-
   constructor(private queryService: QueryService,
+              private activatedRoute: ActivatedRoute,
               private router: Router) {}
 
-  ngOnInit() {
+  public ngOnInit(): void {
     localStorage.getItem('username') ? this.isCreateVisible = true : this.isCreateVisible = false;
 
     this.queryFormGroup = new FormGroup({
@@ -31,11 +31,20 @@ export class ForumComponent implements OnInit {
       contents: new FormControl('', [Validators.required])
     });
 
-    this.queryService.getRecentQueries().subscribe(result => this.queries = result, error => this.getQueriesError = error.message);
+    this.activatedRoute.data.subscribe((data: { forumData: [Array<IQuery>, boolean] }) => {
+      this.queries = data.forumData[0];
+      this.IsPublic = data.forumData[1];
+    });
   }
 
-  public onSubmit() {
-    this.queryService.createQuery(this.queryFormGroup.getRawValue() as IQuery, localStorage.getItem('username'))
-      .subscribe(response => this.router.navigateByUrl('/query/' + response.id), error => this.createQueryError = error.message);
+  public onSubmit(): void {
+    let result: Observable<IQuery>;
+    if(this.IsPublic)
+      result = this.queryService.createPublicQuery(this.queryFormGroup.getRawValue() as IQuery, localStorage.getItem('username'));
+    else
+      result = this.queryService.createGroupQuery(this.queryFormGroup.getRawValue() as IQuery, localStorage.getItem('username'),
+                                                  this.activatedRoute.snapshot.paramMap.get('groupId'));
+
+    result.subscribe(response => this.router.navigateByUrl('/query/' + response.id));
   }
 }
