@@ -13,9 +13,8 @@ public class QueryService
     @Autowired
     private QueryRepository queryRepository;
 
-    public Query getQueryById(@NotNull int id)
+    public Query getQueryById(@NotNull Integer id)
     {
         return this.queryRepository.findById(id).orElseThrow();
     }
-
 }

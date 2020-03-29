@@ -1,5 +1,6 @@
 package project.webcollaborationtool.Query.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.Nullable;
 import project.webcollaborationtool.Utility.CompositeKeys.QueryVoteId;
@@ -18,6 +19,7 @@ public class QueryVote
     private Integer queryId;
 
     @ManyToOne
+    @JsonIgnore
     @MapsId("queryId")
     @JoinColumn(name = "queryId", referencedColumnName = "id")
     private Query query;

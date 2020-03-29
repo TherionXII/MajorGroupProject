@@ -24,17 +24,21 @@ public class QueryVoteService
     {
         var query = this.queryRepository.findById(queryId).orElseThrow(InvalidQueryDataException::new);
 
-        if(!this.queryVoteRepository.existsByUsernameAndQuery(queryVote.getUsername(), query) ||
-            this.queryVoteRepository.findByUsernameAndQuery(queryVote.getUsername(), query).getVote() != queryVote.getVote())
-        {
-            queryVote.setQuery(query);
-            this.queryVoteRepository.save(queryVote);
+//        if(!this.queryVoteRepository.existsByUsernameAndQuery(queryVote.getUsername(), query) ||
+//            this.queryVoteRepository.findByUsernameAndQuery(queryVote.getUsername(), query).getVote() != queryVote.getVote())
+//        {
+//            queryVote.setQuery(query);
+//            this.queryVoteRepository.save(queryVote);
+//
+//            query.setRating(0);
+//            return this.updateQueryRating(query);
+//        }
 
-            query.setRating(0);
-            return this.updateQueryRating(query);
-        }
+        queryVote.setQuery(query);
+        this.queryVoteRepository.save(queryVote);
+        query.setRating(0);
 
-        return query;
+        return this.updateQueryRating(query);
     }
 
     private Query updateQueryRating(Query query)

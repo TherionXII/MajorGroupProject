@@ -13,12 +13,10 @@ public class QueryVoteController
     @Autowired
     private QueryVoteService queryVoteService;
 
-    @PostMapping(path = "/vote")
+    @PostMapping(path = "/{queryId}/vote")
     @CrossOrigin(methods = RequestMethod.POST, origins = "http://localhost:4200")
-    public ResponseEntity<Query> vote(@RequestBody QueryVote queryVote)
+    public ResponseEntity<Query> vote(@RequestBody QueryVote queryVote, @PathVariable Integer queryId)
     {
-        System.out.println(queryVote);
-
-        return ResponseEntity.ok().body(this.queryVoteService.vote(queryVote, queryVote.getQuery().getId()));
+        return ResponseEntity.ok().body(this.queryVoteService.vote(queryVote, queryId));
     }
 }
