@@ -1,7 +1,5 @@
 package project.webcollaborationtool.Query.Services;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -9,14 +7,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import project.webcollaborationtool.Query.Entities.Query;
 import project.webcollaborationtool.Query.Repositories.QueryRepository;
 import project.webcollaborationtool.User.Entities.User;
-import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import java.util.ArrayList;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class QueryServiceTests
@@ -28,7 +21,7 @@ public class QueryServiceTests
     private UserRepository userRepository;
 
     @InjectMocks
-    private QueryService queryService;
+    private PublicQueryService publicQueryService;
 
     private User user;
     private ArrayList<Query> queries;
