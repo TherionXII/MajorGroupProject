@@ -15,9 +15,6 @@ public class PublicQueryService
     @Autowired
     private PublicQueryRepository publicQueryRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     public Collection<PublicQuery> getRecentQueries()
     {
         return this.publicQueryRepository.findTop10ByParentOrderByCreatedAtDesc(null);
@@ -25,17 +22,17 @@ public class PublicQueryService
 
     public Collection<PublicQuery> getRecentQueriesForUser(@NotNull String username)
     {
-        return this.publicQueryRepository.findTop10ByUserAndParentOrderByCreatedAtDesc(this.userRepository.findByUsername(username), null);
+        return this.publicQueryRepository.findTop10ByUsernameAndParentOrderByCreatedAtDesc(username, null);
     }
 
     public Collection<PublicQuery> getRecentResponsesForUser(@NotNull String username)
     {
-        return this.publicQueryRepository.findTop10ByUserAndParentIsNotNullOrderByCreatedAtDesc(this.userRepository.findByUsername(username));
+        return this.publicQueryRepository.findTop10ByUsernameAndParentIsNotNullOrderByCreatedAtDesc(username);
     }
 
     public PublicQuery createQuery(@NotNull PublicQuery query, @NotNull String username)
     {
-        query.setUser(this.userRepository.findByUsername(username));
+        query.setUsername(username);
         query.setParent(null);
         query.setChildren(null);
         query.setRating(0);
@@ -45,11 +42,13 @@ public class PublicQueryService
 
     public PublicQuery createResponse(@NotNull PublicQuery response, @NotNull String username, @NotNull Integer parentId)
     {
-        response.setUser(this.userRepository.findByUsername(username));
+        response.setUsername(username);
         response.setParent(this.publicQueryRepository.findById(parentId).orElseThrow());
         response.setChildren(null);
         response.setRating(0);
 
-        return this.publicQueryRepository.save(response);
+        this.publicQueryRepository.save(response);
+
+        return this.publicQueryRepository.findById(parentId).orElseThrow();
     }
 }

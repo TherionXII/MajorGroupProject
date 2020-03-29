@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.User.Entities.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -51,8 +50,8 @@ public class Query
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Collection<Query> children;
 
-    @ManyToOne
-    private User user;
+    @NotNull
+    private String username;
 
     @JsonIgnore
     @OneToMany(mappedBy = "query")
