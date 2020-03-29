@@ -35,7 +35,7 @@ export class QueryService {
     return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/${id}/createResponse`, response);
   }
 
-  public submitVote(vote: IQueryVote): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/vote`, vote);
+  public submitVote(vote: IQueryVote, id: number): Observable<IQuery> {
+    return this.httpClient.post<IQuery>(`http://localhost:8080/${id}/vote`, vote);
   }
 }

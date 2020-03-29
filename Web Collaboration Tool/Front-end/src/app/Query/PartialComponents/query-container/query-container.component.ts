@@ -39,7 +39,7 @@ export class QueryContainerComponent implements OnInit {
   }
 
   public onVote(query: IQuery, vote: boolean): void {
-    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), query, queryId: query.id } as IQueryVote)
+    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), queryId: query.id }, query.id)
       .subscribe(updatedQuery => this.query = updatedQuery, error => this.submissionError = error.message);
   }
 }

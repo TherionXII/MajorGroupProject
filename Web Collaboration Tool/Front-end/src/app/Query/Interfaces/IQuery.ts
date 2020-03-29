@@ -1,5 +1,3 @@
-import { IUser } from '../../User/Interfaces/IUser';
-
 export interface IQuery {
   id?: number;
 
@@ -9,7 +7,7 @@ export interface IQuery {
   contents: string;
   rating: number;
 
-  user?: IUser;
+  username: string;
   parent?: IQuery;
   children?: Array<IQuery>;
 

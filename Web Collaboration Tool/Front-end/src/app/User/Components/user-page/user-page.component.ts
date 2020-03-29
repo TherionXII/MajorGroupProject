@@ -29,6 +29,6 @@ export class UserPageComponent implements OnInit {
       response = response.parent;
     }
 
-    return response.user.username;
+    return response.username;
   }
 }
