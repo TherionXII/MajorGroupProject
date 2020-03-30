@@ -37,20 +37,17 @@ export class FileUploadComponent implements OnInit {
     selectPageToCrop(image: any, indexOfImage: any): void {
         this.imageBase64 = image;
         this.pageNumber = indexOfImage;
-        console.log(indexOfImage);
     }
 
     selectImageFromPage(): void {
         this.imageRequired = true;
         this.selectedImage = this.croppedImage;
         this.extractedImages.unshift(this.selectedImage);
-        console.log(this.selectedImage);
     }
 
     imageCropped(event: ImageCroppedEvent): void {
         this.croppedImage = event.base64;
         this.croppedPosition = event.imagePosition;
-        console.log(event);
     }
 
     selectTextFromPage(): void {
@@ -58,7 +55,6 @@ export class FileUploadComponent implements OnInit {
         this.fileUploadService.uploadFileAndArea(this.fileData, this.pageNumber, this.croppedTextPosition)
         .subscribe(events => {
             if (events.type === HttpEventType.Response) {
-                console.log(events);
                 this.extractedText = events.body.extractedText;
                 this.extractedImages = events.body.imagesOnPage;
                 console.log(this.extractedText);
@@ -76,7 +72,6 @@ export class FileUploadComponent implements OnInit {
         .subscribe(events => {
             if (events.type === HttpEventType.Response) {
                 this.uploading = false;
-                console.log(events.body);
                 this.images = events.body;
             }
         });
