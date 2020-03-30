@@ -10,6 +10,7 @@ import project.webcollaborationtool.Collaboration.PDFProcessing.Utility.PDFProce
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -22,14 +23,20 @@ public class PDFConversionService
     {
         PDDocument document = PDDocument.load(multipartFile.getBytes());
 
-        var pageImages = new ArrayList<String>();
+        var asyncResults = new ArrayList<CompletableFuture<String>>();
 
         var renderer = new PDFRenderer(document);
         int numberOfPages = document.getNumberOfPages();
 
-        for (int pageNumber = 0; pageNumber < numberOfPages; pageNumber++)
-            pageImages.add(this.pdfProcessingUtility.convertPage(renderer, pageNumber).get());
+        for(int pageNumber = 0; pageNumber < numberOfPages; ++pageNumber)
+            asyncResults.add(this.pdfProcessingUtility.convertPage(renderer, pageNumber));
 
-        return pageImages;
+        CompletableFuture.allOf(asyncResults.toArray(CompletableFuture[]::new)).join();
+
+        var encodedStrings = new ArrayList<String>();
+        for(var result : asyncResults)
+            encodedStrings.add(result.get());
+
+        return encodedStrings;
     }
 }

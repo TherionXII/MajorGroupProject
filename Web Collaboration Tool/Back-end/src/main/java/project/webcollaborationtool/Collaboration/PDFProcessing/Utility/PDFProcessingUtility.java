@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 @Service
@@ -21,12 +22,12 @@ public class PDFProcessingUtility
     private final static Integer DPI = 300;
 
     @Async("threadPoolTaskExecutor")
-    public Future<String> convertPage(PDFRenderer renderer, Integer pageNumber) throws IOException
+    public CompletableFuture<String> convertPage(PDFRenderer renderer, Integer pageNumber) throws IOException
     {
         File tempImageFile = File.createTempFile("tempFile_" + pageNumber, ".png");
         BufferedImage bufferedImage = renderer.renderImageWithDPI(pageNumber, PDFProcessingUtility.DPI, ImageType.RGB);
         ImageIO.write(bufferedImage, "png", tempImageFile);
 
-        return new AsyncResult<>("data:image/png;base64," + Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempImageFile)));
+        return CompletableFuture.completedFuture("data:image/png;base64," + Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempImageFile)));
     }
 }
