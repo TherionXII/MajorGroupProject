@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Collaboration.PDFProcessing;
+package project.webcollaborationtool.Collaboration.PDFProcessing.Controllers;
 
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -46,9 +46,7 @@ public class PDFTextExtractionController
             String extractedText = extractTextByArea(document, pageNumber, rectangle);
 
             if (extractedText.trim().isEmpty())
-            {
                 extractedText = extractTextFromScannedImageByArea(document, pageNumber, rectangle);
-            }
 
             List<String> imagesOnPageBase64 = extractAllImagesFromPDFPage(document, pageNumber);
 
