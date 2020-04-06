@@ -37,6 +37,8 @@ public class PDFConversionService
         for(var result : asyncResults)
             encodedStrings.add(result.get());
 
+        document.close();
+
         return encodedStrings;
     }
 }

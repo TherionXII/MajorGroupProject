@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -29,23 +30,24 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
     GroupManagementComponent,
     FileUploadComponent
   ],
-  imports: [
-    CommonModule,
-    GroupCollaborationRoutingModule,
-    ReactiveFormsModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatListModule,
-    UtilityModule,
-    QueryModule,
-    MatStepperModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    ImageCropperModule,
-    MaterialFileInputModule
-  ]
+    imports: [
+        CommonModule,
+        GroupCollaborationRoutingModule,
+        ReactiveFormsModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatListModule,
+        UtilityModule,
+        QueryModule,
+        MatStepperModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        ImageCropperModule,
+        MaterialFileInputModule,
+        MatCheckboxModule
+    ]
 })
 export class GroupCollaborationModule { }

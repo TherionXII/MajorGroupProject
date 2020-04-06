@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {HttpEventType} from '@angular/common/http';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {FileUploadService} from '../../Services/file-upload.service';
+import {ExtractedPaperQuestion, ProcessedPaperQuestion} from '../../Interfaces/PaperQuestion';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-file-upload',
@@ -9,79 +10,77 @@ import {FileUploadService} from '../../Services/file-upload.service';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit {
+  public processedPaperQuestions: Array<ProcessedPaperQuestion>;
+  public currentQuestion: ExtractedPaperQuestion;
+  public currentImage: string;
 
-    fileData: File = null;
-    uploading = false;
-    images: any = [];
-    pageNumber: any = '';
+  public userWarning: string;
 
-    imageChangedEvent: any = '';
-    imageBase64: any = '';
-    croppedTextPosition: any = '';
-    croppedImage: any = '';
-    croppedPosition: any = '';
+  public isSelectingText = true;
 
-    extractedText: any = '';
-    extractedImages: any = [];
-    selectedImage: any = '';
-    imageRequired = false;
+  public fileData: File;
+  public uploading = false;
+  public images: Array<string>;
 
-    @ViewChild(ImageCropperComponent, {static: false}) imageCropper: ImageCropperComponent;
+  // imageChangedEvent: any = '';
 
+  @ViewChild(ImageCropperComponent, {static: false}) imageCropper: ImageCropperComponent;
 
-    constructor(private fileUploadService: FileUploadService) { }
+  constructor(private fileUploadService: FileUploadService, private sanitizer: DomSanitizer) {
+    this.processedPaperQuestions = new Array<ProcessedPaperQuestion>();
+    this.currentQuestion = new ExtractedPaperQuestion();
+  }
 
-    ngOnInit() {
+  public ngOnInit(): void {
+  }
+
+  public onFileChange(fileInput: any): void {
+    this.fileData = fileInput.target.files[0] as File;
+  }
+
+  public onUpload(): void {
+    this.uploading = true;
+    this.fileUploadService.uploadFile(this.fileData)
+      .subscribe(images => {
+        this.uploading = false;
+        this.images = images;
+      }, error => console.log(error));
+  }
+
+  public onSelectionTypeChange(): void {
+    this.isSelectingText = !this.isSelectingText;
+  }
+
+  public onCrop(event: ImageCroppedEvent, pageNumber: number): void {
+    if(this.isSelectingText)
+      this.cropText(event.imagePosition, pageNumber);
+    else
+      this.cropImage(event.imagePosition, event.base64)
+  }
+
+  public onNextQuestion(): void {
+    this.fileUploadService.uploadFileAndArea(this.fileData, this.currentQuestion)
+      .subscribe(processedQuestion => this.processedPaperQuestions.push(processedQuestion));
+
+    this.currentQuestion = new ExtractedPaperQuestion();
+  }
+
+  public onPageChange(event): void {
+    this.currentImage = this.images[event.index];
+  }
+
+  private cropText(imagePosition: any, pageNumber: number): void {
+    this.currentQuestion.pageNumber = pageNumber;
+    this.currentQuestion.questionPosition = imagePosition;
+  }
+
+  private cropImage(imagePosition: any, image: any) {
+    if(this.currentQuestion.questionPosition === undefined) {
+      this.userWarning = 'Please select text first';
+      return;
     }
 
-    selectPageToCrop(image: any, indexOfImage: any): void {
-        this.imageBase64 = image;
-        this.pageNumber = indexOfImage;
-    }
-
-    selectImageFromPage(): void {
-        this.imageRequired = true;
-        this.selectedImage = this.croppedImage;
-        this.extractedImages.unshift(this.selectedImage);
-    }
-
-    imageCropped(event: ImageCroppedEvent): void {
-        this.croppedImage = event.base64;
-        this.croppedPosition = event.imagePosition;
-    }
-
-    selectTextFromPage(): void {
-        this.croppedTextPosition = this.croppedPosition;
-        this.fileUploadService.uploadFileAndArea(this.fileData, this.pageNumber, this.croppedTextPosition)
-        .subscribe(events => {
-            if (events.type === HttpEventType.Response) {
-                this.extractedText = events.body.extractedText;
-                this.extractedImages = events.body.imagesOnPage;
-                console.log(this.extractedText);
-            }
-        });
-    }
-
-    fileProgress(fileInput: any): void {
-        this.fileData = fileInput.target.files[0] as File;
-    }
-
-    uploadPDF(): void {
-        this.uploading = true;
-        this.fileUploadService.uploadFile(this.fileData)
-        .subscribe(events => {
-            if (events.type === HttpEventType.Response) {
-                this.uploading = false;
-                this.images = events.body;
-            }
-        });
-    }
-
-    postToForum(image: any): void {
-        console.log(this.extractedText);
-        if (image !== null) {
-            console.log(image);
-        }
-    }
-
+    this.currentQuestion.questionImage.imagePosition = imagePosition;
+    this.currentQuestion.questionImage.image = image;
+  }
 }
