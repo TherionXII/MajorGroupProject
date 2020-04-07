@@ -1,8 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {FileUploadService} from '../../Services/file-upload.service';
 import {ExtractedPaperQuestion, ProcessedPaperQuestion} from '../../Interfaces/PaperQuestion';
 import {DomSanitizer} from '@angular/platform-browser';
+import {IPaper} from '../../Interfaces/IPaper';
+import {IPage} from '../../Interfaces/IPage';
 
 @Component({
   selector: 'app-file-upload',
@@ -10,9 +12,14 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit {
+  @Input()
+  private groupId: number;
+
+  public paper: IPaper;
+  public currentPage: IPage;
+
   public processedPaperQuestions: Array<ProcessedPaperQuestion>;
   public currentQuestion: ExtractedPaperQuestion;
-  public currentImage: string;
 
   public userWarning: string;
 
@@ -20,15 +27,13 @@ export class FileUploadComponent implements OnInit {
 
   public fileData: File;
   public uploading = false;
-  public images: Array<string>;
-
-  // imageChangedEvent: any = '';
 
   @ViewChild(ImageCropperComponent, {static: false}) imageCropper: ImageCropperComponent;
 
-  constructor(private fileUploadService: FileUploadService, private sanitizer: DomSanitizer) {
+  constructor(private fileUploadService: FileUploadService) {
     this.processedPaperQuestions = new Array<ProcessedPaperQuestion>();
     this.currentQuestion = new ExtractedPaperQuestion();
+    this.paper = new IPaper();
   }
 
   public ngOnInit(): void {
@@ -40,10 +45,11 @@ export class FileUploadComponent implements OnInit {
 
   public onUpload(): void {
     this.uploading = true;
-    this.fileUploadService.uploadFile(this.fileData)
-      .subscribe(images => {
+    this.fileUploadService.uploadFile(this.fileData, this.groupId)
+      .subscribe(paper => {
         this.uploading = false;
-        this.images = images;
+        this.paper = paper;
+        this.currentPage = this.paper.pages[0];
       }, error => console.log(error));
   }
 
@@ -59,14 +65,14 @@ export class FileUploadComponent implements OnInit {
   }
 
   public onNextQuestion(): void {
-    this.fileUploadService.uploadFileAndArea(this.fileData, this.currentQuestion)
-      .subscribe(processedQuestion => this.processedPaperQuestions.push(processedQuestion));
+    this.fileUploadService.uploadFileAndArea(this.currentQuestion, this.paper.id)
+      .subscribe(processedQuestion => console.log(processedQuestion));
 
     this.currentQuestion = new ExtractedPaperQuestion();
   }
 
   public onPageChange(event): void {
-    this.currentImage = this.images[event.index];
+    this.currentPage = this.paper.pages[event.index];
   }
 
   private cropText(imagePosition: any, pageNumber: number): void {
