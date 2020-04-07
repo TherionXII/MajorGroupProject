@@ -28,6 +28,6 @@ public class PDFProcessingUtility
         BufferedImage bufferedImage = renderer.renderImageWithDPI(pageNumber, PDFProcessingUtility.DPI, ImageType.RGB);
         ImageIO.write(bufferedImage, "png", tempImageFile);
 
-        return CompletableFuture.completedFuture("data:image/png;base64," + Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempImageFile)));
+        return CompletableFuture.completedFuture(Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(tempImageFile)));
     }
 }
