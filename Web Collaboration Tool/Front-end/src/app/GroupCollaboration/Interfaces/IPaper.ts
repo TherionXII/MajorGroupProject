@@ -1,9 +1,9 @@
-import {ProcessedPaperQuestion} from './PaperQuestion';
+import {PaperQuestion} from './PaperQuestion';
 import {IPage} from './IPage';
 
 export class IPaper {
   id: number;
 
   pages: Array<IPage>;
-  questions: Array<ProcessedPaperQuestion>;
+  questions: Array<PaperQuestion>;
 }

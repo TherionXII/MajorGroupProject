@@ -1,15 +1,14 @@
 import {IQuestionImage} from './IQuestionImage';
+import {IPosition} from './IPosition';
 
-export class ExtractedPaperQuestion {
-  public pageNumber: number;
+export class PaperQuestion {
+  public id?: number;
 
-  public questionPosition: any;
+  public text?: string;
+
+  public questionPosition?: IPosition;
 
   public questionImage?: IQuestionImage;
-}
 
-export class ProcessedPaperQuestion {
-  public text: string;
-
-  public image?: any;
+  public pageNumber?: number;
 }

@@ -38,3 +38,10 @@
       </mat-card-content>
     </mat-card>
   </mat-step>
+  <mat-step label = "Preview results">
+    <div *ngFor = "let question of processedPaperQuestions">
+      <p>{{question.text}}</p>
+      <img *ngIf = "question.questionImage" [src]="question.questionImage.image" style="max-width: 200px; max-height: 300px;">
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

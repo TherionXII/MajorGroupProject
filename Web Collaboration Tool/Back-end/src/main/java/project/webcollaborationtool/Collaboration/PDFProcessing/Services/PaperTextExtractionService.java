@@ -10,22 +10,18 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.pdfbox.rendering.ImageType;
-import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
-import org.ghost4j.document.PDFDocument;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.Collaboration.PDFProcessing.Entities.PaperPage;
 import project.webcollaborationtool.Collaboration.PDFProcessing.Entities.PaperQuestion;
+import project.webcollaborationtool.Collaboration.PDFProcessing.Repositories.PaperPageRepository;
+import project.webcollaborationtool.Collaboration.PDFProcessing.Repositories.PaperQuestionRepository;
 import project.webcollaborationtool.Collaboration.PDFProcessing.Repositories.PaperRepository;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -39,68 +35,45 @@ public class PaperTextExtractionService
     @Autowired
     private PaperRepository paperRepository;
 
-    public String extractQuestion(JSONObject position, Integer paperId, Integer pageNumber) throws IOException, TesseractException
+    @Autowired
+    private PaperPageRepository paperPageRepository;
+
+    @Autowired
+    private PaperQuestionRepository paperQuestionRepository;
+
+    public PaperQuestion extractQuestion(PaperQuestion question, Integer paperId, Integer pageNumber) throws IOException, TesseractException
     {
-        Rectangle rectangle = toRectangle(position);
-
-        var paper = paperRepository.findById(paperId).orElseThrow();
+        var paper = this.paperRepository.findById(paperId).orElseThrow();
         var document = PDDocument.load(paper.getOriginalPaper());
-        String extractedText = extractTextByArea(document, pageNumber, rectangle);
+        var position = new Rectangle(question.getQuestionPosition().getX1(), question.getQuestionPosition().getY1(),
+                               question.getQuestionPosition().getX2() - question.getQuestionPosition().getX1(),
+                               question.getQuestionPosition().getY2() - question.getQuestionPosition().getY1());
 
-        System.out.println(extractedText);
+        String extractedText = extractTextByArea(document, pageNumber, position);
 
-        if (extractedText.trim().isEmpty())
-        {
-            var tempFile = File.createTempFile("tempFile_" + pageNumber, ".png");
-            var image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(paper.getPages().toArray(PaperPage[]::new)[pageNumber].getPageOriginal())));
-            ImageIO.write(image, "png", tempFile);
-            extractedText = extractTextFromScannedImageByArea(tempFile, pageNumber, rectangle);
-        }
+        if(extractedText.trim().isEmpty())
+            extractedText = extractTextFromScannedImageByArea(this.paperPageRepository.findByExamPaperAndPageNumber(paper, pageNumber), position);
 
-//        List<String> imagesOnPageBase64 = extractAllImagesFromPDFPage(document, pageNumber);
+        question.setExamPaper(paper);
+        question.setText(extractedText);
 
-        return extractedText;
+        document.close();
+
+        return this.paperQuestionRepository.save(question);
     }
 
-    private String extractTextFromScannedImageByArea(File tempImageFile, int pageNumber, Rectangle rectangle) throws IOException,
-            TesseractException
+    private String extractTextFromScannedImageByArea(PaperPage paperPage, Rectangle rectangle) throws IOException, TesseractException
     {
         // set up tesseract for OCR
         ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath("tessdata");
+        tesseract.setDatapath("C:/Users/theri/OneDrive/College/Semester Five/Year Project/Web Collaboration Tool/Back-end/tessdata");
         tesseract.setLanguage("eng");
         tesseract.setTessVariable("user_defined_dpi", "300");
 
-        String textResultFromOCR = tesseract.doOCR(tempImageFile, rectangle);
+        var image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(paperPage.getPageOriginal())));
 
-        tempImageFile.delete();
 
-        return textResultFromOCR;
-    }
-
-    private List<String> extractAllImagesFromPDFPage(PDDocument document, int pageNumber) throws IOException
-    {
-        List<String> imagesOnPage = new ArrayList<>();
-
-        PDPage page = document.getPage(pageNumber);
-        PDResources pdResources = page.getResources();
-        File tempImageFile = File.createTempFile("tempFile", ".png");
-
-        for (COSName cosName : pdResources.getXObjectNames())
-        {
-            PDXObject pdxObject = pdResources.getXObject(cosName);
-            if (pdxObject instanceof PDImageXObject)
-            {
-                ImageIO.write(((PDImageXObject) pdxObject).getImage(),"PNG", tempImageFile);
-
-                byte[] fileContent = FileUtils.readFileToByteArray(tempImageFile);
-                String encodedString = Base64.getEncoder().encodeToString(fileContent);
-
-                imagesOnPage.add("data:image/png;base64," + encodedString);
-            }
-        }
-        tempImageFile.delete();
-        return imagesOnPage;
+        return tesseract.doOCR(image, rectangle);
     }
 
     private String extractTextByArea(PDDocument document, int pageNumber, Rectangle rectangle) throws IOException
@@ -112,15 +85,5 @@ public class PaperTextExtractionService
         stripperByArea.addRegion("Area1", rectangle);
         stripperByArea.extractRegions(page);
         return stripperByArea.getTextForRegion("Area1");
-    }
-
-    private Rectangle toRectangle(JSONObject position)
-    {
-        int x1 = position.getInt("x1");
-        int y1 = position.getInt("y1");
-        int x2 = position.getInt("x2");
-        int y2 = position.getInt("y2");
-
-        return new Rectangle(x1, y1, x2-x1, y2-y1);
     }
 }

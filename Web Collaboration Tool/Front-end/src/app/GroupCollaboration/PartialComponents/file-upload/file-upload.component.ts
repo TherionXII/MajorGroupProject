@@ -1,10 +1,11 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
+import {CropperPosition, ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {FileUploadService} from '../../Services/file-upload.service';
-import {ExtractedPaperQuestion, ProcessedPaperQuestion} from '../../Interfaces/PaperQuestion';
+import {PaperQuestion} from '../../Interfaces/PaperQuestion';
 import {DomSanitizer} from '@angular/platform-browser';
 import {IPaper} from '../../Interfaces/IPaper';
 import {IPage} from '../../Interfaces/IPage';
+import {IPosition} from '../../Interfaces/IPosition';
 
 @Component({
   selector: 'app-file-upload',
@@ -18,8 +19,8 @@ export class FileUploadComponent implements OnInit {
   public paper: IPaper;
   public currentPage: IPage;
 
-  public processedPaperQuestions: Array<ProcessedPaperQuestion>;
-  public currentQuestion: ExtractedPaperQuestion;
+  public processedPaperQuestions: Array<PaperQuestion>;
+  public currentQuestion: PaperQuestion;
 
   public userWarning: string;
 
@@ -31,8 +32,8 @@ export class FileUploadComponent implements OnInit {
   @ViewChild(ImageCropperComponent, {static: false}) imageCropper: ImageCropperComponent;
 
   constructor(private fileUploadService: FileUploadService) {
-    this.processedPaperQuestions = new Array<ProcessedPaperQuestion>();
-    this.currentQuestion = new ExtractedPaperQuestion();
+    this.processedPaperQuestions = new Array<PaperQuestion>();
+    this.currentQuestion = new PaperQuestion();
     this.paper = new IPaper();
   }
 
@@ -65,28 +66,22 @@ export class FileUploadComponent implements OnInit {
   }
 
   public onNextQuestion(): void {
-    this.fileUploadService.uploadFileAndArea(this.currentQuestion, this.paper.id)
-      .subscribe(processedQuestion => console.log(processedQuestion));
+    this.fileUploadService.processQuestion(this.currentQuestion, this.paper.id)
+      .subscribe(processedQuestion => this.processedPaperQuestions.push(processedQuestion));
 
-    this.currentQuestion = new ExtractedPaperQuestion();
+    this.currentQuestion = new PaperQuestion();
   }
 
   public onPageChange(event): void {
     this.currentPage = this.paper.pages[event.index];
   }
 
-  private cropText(imagePosition: any, pageNumber: number): void {
+  private cropText(imagePosition: CropperPosition, pageNumber: number): void {
     this.currentQuestion.pageNumber = pageNumber;
-    this.currentQuestion.questionPosition = imagePosition;
+    this.currentQuestion.questionPosition = imagePosition as IPosition;
   }
 
-  private cropImage(imagePosition: any, image: any) {
-    if(this.currentQuestion.questionPosition === undefined) {
-      this.userWarning = 'Please select text first';
-      return;
-    }
-
-    this.currentQuestion.questionImage.imagePosition = imagePosition;
-    this.currentQuestion.questionImage.image = image;
+  private cropImage(imagePosition: CropperPosition, image: string) {
+    this.currentQuestion.questionImage = { imagePosition, image };
   }
 }

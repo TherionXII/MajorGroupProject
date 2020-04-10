@@ -1,6 +1,7 @@
 package project.webcollaborationtool.Collaboration.PDFProcessing.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
@@ -15,18 +16,20 @@ public class PaperQuestion
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Lob
     @NotNull
     private String text;
 
-    @Lob
     @NotNull
-    private String originalImage;
+    @Transient
+    @JsonInclude
+    private Position questionPosition;
 
     @ManyToOne
     @JsonIgnore
     private Paper examPaper;
 
-    @OneToOne
     @Nullable
-    private PaperImage paperImage;
+    @OneToOne(cascade = CascadeType.ALL)
+    private PaperImage questionImage;
 }
