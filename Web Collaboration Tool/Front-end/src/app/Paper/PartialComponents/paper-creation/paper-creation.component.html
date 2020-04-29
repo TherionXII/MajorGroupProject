@@ -1,0 +1,14 @@
+<form [formGroup] = "newPaperForm">
+  <mat-form-field>
+    <mat-label>Enter the name of your paper: </mat-label>
+    <input matInput type = "text" formControlName = "paperName">
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-label>Enter the description of your paper: </mat-label>
+    <textarea matInput formControlName = "paperDescription"></textarea>
+  </mat-form-field><br>
+
+  <button mat-button color="primary" (click)="onSubmit()">Next</button>
+</form>
+
+
