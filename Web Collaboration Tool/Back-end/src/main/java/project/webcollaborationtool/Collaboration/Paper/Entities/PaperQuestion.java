@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Collaboration.PDFProcessing.Entities;
+package project.webcollaborationtool.Collaboration.Paper.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -20,7 +20,10 @@ public class PaperQuestion
     @NotNull
     private String text;
 
-    @NotNull
+    @Lob
+    @Nullable
+    private String answer;
+
     @Transient
     @JsonInclude
     private Position questionPosition;

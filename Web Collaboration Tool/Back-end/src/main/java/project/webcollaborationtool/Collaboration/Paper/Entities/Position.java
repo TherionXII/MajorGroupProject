@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Collaboration.PDFProcessing.Entities;
+package project.webcollaborationtool.Collaboration.Paper.Entities;
 
 import lombok.Data;
 

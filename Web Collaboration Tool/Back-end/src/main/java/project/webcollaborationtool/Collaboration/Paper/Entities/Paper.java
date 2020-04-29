@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Collaboration.PDFProcessing.Entities;
+package project.webcollaborationtool.Collaboration.Paper.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -18,18 +18,26 @@ public class Paper
     private Integer id;
 
     @NotNull
-    @OneToMany(mappedBy = "examPaper")
+    private String paperName;
+
+    @NotNull
+    private String paperDescription;
+
+    @Nullable
+    @JsonIgnore
+    @OneToMany(mappedBy = "examPaper", cascade = CascadeType.ALL)
     private Collection<PaperPage> pages;
 
     @Nullable
-    @OneToMany(mappedBy = "examPaper")
+    @OneToMany(mappedBy = "examPaper", cascade = CascadeType.ALL)
     private Collection<PaperQuestion> questions;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     private GroupCollaboration groupCollaboration;
 
     @Lob
-    @NotNull
+    @Nullable
+    @JsonIgnore
     private byte[] originalPaper;
 }
