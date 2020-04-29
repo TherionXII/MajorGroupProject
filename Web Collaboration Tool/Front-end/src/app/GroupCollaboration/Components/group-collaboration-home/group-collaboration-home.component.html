@@ -1,34 +1,11 @@
 <mat-tab-group>
   <mat-tab label = "Groups">
-    <mat-list>
-      <mat-list-item *ngFor = "let userGroup of userGroups">
-        <a [routerLink] = "['/group', userGroup.id, userGroup.thread.id]">
-          <p> {{ userGroup.title }} </p>
-          <p> {{ userGroup.description }} </p>
-        </a>
-      </mat-list-item>
-    </mat-list>
+    <app-user-groups></app-user-groups>
   </mat-tab>
   <mat-tab label = "New Group">
-    <h1>Create a new group: </h1>
-    <form [formGroup] = "newGroupForm" (ngSubmit) = "onSubmit()">
-      <mat-form-field>
-        <input matInput placeholder = "Enter the title of your group: " formControlName = "title">
-      </mat-form-field><br>
-      <mat-form-field>
-        <input matInput placeholder = "Enter the description of your group: " formControlName = "description">
-      </mat-form-field><br>
-      <button mat-raised-button type = "submit">Create new group</button>
-    </form>
+    <app-group-creation></app-group-creation>
   </mat-tab>
   <mat-tab label = "Group invitations">
-    <mat-list>
-      <mat-list-item *ngFor = "let invitation of groupInvitations">
-        <p>Invitation from group {{ invitation.group.title }}</p><br>
-        <p>Group described as {{ invitation.group.description }}</p><br>
-        <button mat-raised-button (click) = "onInvitationResponse(invitation, true)">Accept invitation</button>
-        <button mat-raised-button (click) = "onInvitationResponse(invitation, false)">Reject invitation</button>
-      </mat-list-item>
-    </mat-list>
+    <app-group-invitations></app-group-invitations>
   </mat-tab>
 </mat-tab-group>
