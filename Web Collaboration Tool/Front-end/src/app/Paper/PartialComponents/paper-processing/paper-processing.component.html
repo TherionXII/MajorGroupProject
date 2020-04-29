@@ -1,0 +1,45 @@
+<mat-horizontal-stepper labelPosition="bottom" linear #horizontalStepper>
+  <mat-step label = "Enter the details about your paper: ">
+    <app-create-paper (paperCreatedEvent) = "onPaperCreation($event)"></app-create-paper>
+  </mat-step>
+
+  <mat-step label="Upload your paper: ">
+    <app-upload-paper [paperId] = "paper.id" (paperUploadedEvent) = "onPaperUpload($event)"></app-upload-paper>
+  </mat-step>
+
+  <mat-step label = "Choose text and images to extract: ">
+    <mat-card >
+      <mat-card-header>
+        <mat-card-title>Select only the text you need</mat-card-title>
+        <mat-card-subtitle>When you are ready click next</mat-card-subtitle>
+        <mat-card-subtitle>Please note that an image, if any, can be selected ONLY after text has been selected</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-tab-group (selectedTabChange) = "onPageChange($event)">
+          <mat-tab label = "Page {{ paper.pages.indexOf(page) + 1 }}" *ngFor = "let page of paper.pages">
+            <mat-error *ngIf = "userWarning">{{ userWarning }}</mat-error>
+          </mat-tab>
+        </mat-tab-group>
+        <div id = "cropper-container">
+          <image-cropper *ngIf = "currentPage" [imageBase64] = "'data:image/png;base64,' + currentPage.pageOriginal" [maintainAspectRatio]="false" [aspectRatio] = "1"
+                         [resizeToWidth]="0" format="png" (imageCropped) = "onCrop($event, paper.pages.indexOf(currentPage))">
+          </image-cropper>
+
+          <mat-checkbox (change) = "onSelectionTypeChange()">Selecting Image</mat-checkbox>
+          <button mat-button matStepperPrevious color="accent">Back</button>
+          <button mat-button color = "accent" (click) = "onNextQuestion()">Next question</button>
+          <button mat-button matStepperNext color="primary">Next</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-step>
+
+  <mat-step label = "Preview results">
+    <mat-form-field *ngFor = "let question of processedPaperQuestions">
+        <textarea matInput class = "amend-width" value = "{{question.text}}"></textarea>
+        <img *ngIf = "question.questionImage" [src]="question.questionImage.image">
+        <button>Update</button>
+    </mat-form-field>
+    <button mat-raised-button matStepperNext>Submit</button>
+  </mat-step>
+</mat-horizontal-stepper>

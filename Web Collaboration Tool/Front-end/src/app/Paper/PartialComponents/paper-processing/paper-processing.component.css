@@ -1,0 +1,12 @@
+#cropper-container
+{
+  width: 750px;
+  height: 1050px;
+}
+
+.amend-width
+{
+  min-width: 150px;
+  max-width: 550px;
+  width: 100%;
+}
