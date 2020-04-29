@@ -6,6 +6,8 @@ export class PaperQuestion {
 
   public text?: string;
 
+  public answer?: string;
+
   public questionPosition?: IPosition;
 
   public questionImage?: IQuestionImage;

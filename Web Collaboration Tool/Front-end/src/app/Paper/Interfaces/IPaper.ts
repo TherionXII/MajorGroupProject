@@ -6,4 +6,7 @@ export class IPaper {
 
   pages: Array<IPage>;
   questions: Array<PaperQuestion>;
+
+  paperName: string;
+  paperDescription: string;
 }
