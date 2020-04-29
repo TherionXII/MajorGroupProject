@@ -1,33 +1,24 @@
-package project.webcollaborationtool.Collaboration.PDFProcessing.Services;
+package project.webcollaborationtool.Collaboration.Paper.Services;
 
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-import org.apache.commons.io.FileUtils;
-import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Collaboration.PDFProcessing.Entities.PaperPage;
-import project.webcollaborationtool.Collaboration.PDFProcessing.Entities.PaperQuestion;
-import project.webcollaborationtool.Collaboration.PDFProcessing.Repositories.PaperPageRepository;
-import project.webcollaborationtool.Collaboration.PDFProcessing.Repositories.PaperQuestionRepository;
-import project.webcollaborationtool.Collaboration.PDFProcessing.Repositories.PaperRepository;
+import project.webcollaborationtool.Collaboration.Paper.Entities.PaperPage;
+import project.webcollaborationtool.Collaboration.Paper.Entities.PaperQuestion;
+import project.webcollaborationtool.Collaboration.Paper.Repositories.PaperPageRepository;
+import project.webcollaborationtool.Collaboration.Paper.Repositories.PaperQuestionRepository;
+import project.webcollaborationtool.Collaboration.Paper.Repositories.PaperRepository;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 
 @Service
 public class PaperTextExtractionService
