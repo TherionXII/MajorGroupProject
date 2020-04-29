@@ -1,39 +1,56 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { UtilityModule } from './Utility/utility.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { RouterModule, Routes } from '@angular/router';
+import { QueryModule } from './Query/query.module';
+import { UserModule } from './User/user.module';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import {UserService} from './services/user.service';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import { UserPageComponent } from './user-page/user-page.component';
-import {RouterModule, Routes} from '@angular/router';
-import {RedirectService} from './services/redirect.service';
+import { HomePageComponent } from './Utility/Components/home-page/home-page.component';
+import { MatButtonModule } from '@angular/material/button';
+import {AuthenticationGuard} from './Utility/Guards/authentication.guard';
+import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
+import {SocketConfigurationConfig} from './Utility/HelperClasses/SocketConfiguration.config';
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import {PrivateCollaborationModule} from './PrivateCollaboration/private-collaboration.module';
+import { GroupCollaborationHomeComponent } from './GroupCollaboration/Components/group-collaboration-home/group-collaboration-home.component';
+import {MatTabsModule} from '@angular/material/tabs';
 import {ReactiveFormsModule} from '@angular/forms';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import {GroupCollaborationModule} from './GroupCollaboration/group-collaboration.module';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'user', component: UserPageComponent },
-  { path: 'signUp', component: SignUpComponent }
+  { path: '', component: HomePageComponent, canActivate: [ AuthenticationGuard ] }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomePageComponent,
-    UserPageComponent,
-    SignUpComponent
+    AppComponent
   ],
   imports: [
-    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    UtilityModule,
+    UserModule,
+    QueryModule,
+    PrivateCollaborationModule,
+    GroupCollaborationModule,
     RouterModule.forRoot(routes),
-    BrowserModule,
-    HttpClientModule
+    MatButtonModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
-    RedirectService,
-    UserService,
-    HttpClient
+    { provide: InjectableRxStompConfig, useValue: SocketConfigurationConfig },
+    { provide: RxStompService, useFactory: rxStompServiceFactory, deps: [ InjectableRxStompConfig ]}
   ],
   bootstrap: [AppComponent]
 })

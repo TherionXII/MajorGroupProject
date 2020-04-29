@@ -1,0 +1,29 @@
+<mat-card-content>
+  <mat-error>{{ submissionError ? submissionError : null }}</mat-error>
+  {{ query ? query.contents : null }}
+   <section id = "ratingSection">
+      <button mat-raised-button (click) = "onVote(query, true)">
+        <i class = "material-icons">arrow_upward</i>
+      </button><br>
+      {{ query ? query.rating : null }}<br>
+      <button mat-raised-button (click) = "onVote(query, false)">
+        <i class = "material-icons">arrow_downward</i>
+      </button>
+    </section>
+
+    <div *ngIf = "query">
+      <div *ngFor = "let query of query.children">
+        <app-query-container [query] = "query"></app-query-container>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <button mat-raised-button (click) = "onRespond()">Respond</button>
+    <form [formGroup] = "queryResponseForm" *ngIf = "isReplyVisible" (ngSubmit) = "onSubmit(query.id)">
+        <mat-form-field>
+          <textarea matInput placeholder = "Enter your response..." name = "response" formControlName = "contents"></textarea>
+        </mat-form-field>
+
+      <button mat-raised-button type = "submit" [disabled] = "!queryResponseForm.valid">Respond</button>
+    </form>
+  </mat-card-footer>

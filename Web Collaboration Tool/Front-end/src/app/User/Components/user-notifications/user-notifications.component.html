@@ -1,0 +1,6 @@
+<mat-list>
+  <mat-list-item *ngFor = "let notification of notifications">
+    <p>{{ notification.content }}</p>
+    <button mat-raised-button>Delete notification</button>
+  </mat-list-item>
+</mat-list>

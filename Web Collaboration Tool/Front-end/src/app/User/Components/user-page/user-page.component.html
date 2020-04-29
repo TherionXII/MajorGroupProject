@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title>{{ userProfile.username }}</mat-card-title>
+  <mat-card-content>
+    <app-user-collaboration-pane></app-user-collaboration-pane>
+    <mat-tab-group>
+      <mat-tab label = "Recent queries">
+        <mat-list>
+          <mat-list-item *ngFor = "let query of userQueries">
+            <h3>{{ query.title }}&nbsp;</h3><br>
+            <h3>{{ query.subtitle }}&nbsp;</h3>
+            <h3>Responses: {{ query.children ? query.children.length : 0 }}</h3>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab>
+      <mat-tab label = "Most recent responses">
+        <mat-list>
+          <mat-list-item *ngFor = "let response of userResponses">
+            <h3>{{ getOwnerUsername(response) }}&nbsp;</h3>
+            <h3>Created by: {{ getOwnerUsername(response) }}&nbsp;</h3>
+            <h3>{{ response.contents }}&nbsp;</h3>
+            <h3>{{ response.rating }}&nbsp;</h3>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab>
+      <mat-tab label = "Most upvoted responses">
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

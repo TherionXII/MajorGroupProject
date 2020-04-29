@@ -1,0 +1,11 @@
+<mat-form-field>
+  <ngx-mat-file-input placeholder="PDF files only" required [accept]="'.pdf'" (change)="onFileChange($event)"></ngx-mat-file-input>
+  <mat-icon matSuffix>folder</mat-icon>
+</mat-form-field>
+
+<button mat-button color="primary" (click)="onUpload()">Next</button>
+
+<div *ngIf = "uploading">
+  <mat-spinner></mat-spinner>
+  <p>Processing file....</p>
+</div>

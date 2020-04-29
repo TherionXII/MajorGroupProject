@@ -1,0 +1,15 @@
+<mat-tab-group>
+  <mat-tab label = "Forum">
+    <app-forum></app-forum>
+  </mat-tab>
+  <mat-tab label = "Group chat">
+    <app-chat></app-chat>
+  </mat-tab>
+  <mat-tab label = "Papers">
+    <app-paper-management></app-paper-management>
+  </mat-tab>
+  <mat-tab label = "Management">
+    <app-group-management [group] = "group" [privateCollaborations] = "privateCollaborations"
+                          [username] = "username" [groupInvitations] ="groupInvitations" ></app-group-management>
+  </mat-tab>
+</mat-tab-group>
