@@ -13,7 +13,6 @@ import {MatListModule} from '@angular/material/list';
 import { GroupManagementComponent } from './PartialComponents/group-management/group-management.component';
 import {UtilityModule} from '../Utility/utility.module';
 import {QueryModule} from '../Query/query.module';
-import {FileUploadComponent} from './PartialComponents/file-upload/file-upload.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -21,6 +20,7 @@ import {MatCardModule} from '@angular/material/card';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {PaperModule} from '../Paper/paper.module';
 
 
 @NgModule({
@@ -28,7 +28,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     GroupCollaborationHomeComponent,
     GroupComponent,
     GroupManagementComponent,
-    FileUploadComponent
   ],
     imports: [
         CommonModule,
@@ -47,7 +46,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatCardModule,
         ImageCropperModule,
         MaterialFileInputModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        PaperModule
     ]
 })
 export class GroupCollaborationModule { }

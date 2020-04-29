@@ -7,6 +7,9 @@ import {GroupResolverService} from '../Utility/Resolvers/GroupCollaborationResol
 import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-resolver.service';
 import {ChatResolverService} from '../Utility/Resolvers/ThreadResolvers/chat-resolver.service';
 import {ForumResolverService} from '../Utility/Resolvers/QueryResolvers/forum-resolver.service';
+import {GroupPapersResolverService} from './Resolvers/group-papers-resolver.service';
+import {PaperComponent} from '../Paper/ExportComponents/paper/paper.component';
+import {PaperResolverService} from './Resolvers/paper-resolver.service';
 
 const routes: Routes = [
   {
@@ -23,9 +26,11 @@ const routes: Routes = [
       groupData: GroupResolverService,
       privateCollaborations: PrivateCollaborationResolverService,
       chatData: ChatResolverService,
-      forumData: ForumResolverService
+      forumData: ForumResolverService,
+      papers: GroupPapersResolverService
     }
-  }
+  },
+  { path: 'paper/:paperId', component: PaperComponent, resolve: { paper: PaperResolverService } }
 ];
 
 @NgModule({

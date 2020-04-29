@@ -1,9 +1,10 @@
 package project.webcollaborationtool.Collaboration.GroupCollaboration.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.springframework.lang.Nullable;
-import project.webcollaborationtool.Collaboration.PDFProcessing.Entities.Paper;
+import project.webcollaborationtool.Collaboration.Paper.Entities.Paper;
 import project.webcollaborationtool.Collaboration.Thread.Entities.GroupCollaborationThread;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class GroupCollaboration
     private Collection<GroupMember> groupMembers;
 
     @Nullable
+    @JsonIgnore
     @OneToMany(mappedBy = "groupCollaboration")
     private Collection<Paper> examPapers;
 
