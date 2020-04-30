@@ -1,0 +1,8 @@
+<mat-list>
+  <mat-list-item *ngFor = "let userGroup of userGroups">
+    <a [routerLink] = "['/group', userGroup.id, userGroup.thread.id]">
+      <p> {{ userGroup.title }} </p>
+      <p> {{ userGroup.description }} </p>
+    </a>
+  </mat-list-item>
+</mat-list>
