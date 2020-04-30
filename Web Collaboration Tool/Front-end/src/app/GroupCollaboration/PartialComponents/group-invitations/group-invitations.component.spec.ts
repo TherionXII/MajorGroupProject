@@ -14,91 +14,128 @@ fdescribe('GroupInvitationsComponent', () => {
   let component: GroupInvitationsComponent;
   let fixture: ComponentFixture<GroupInvitationsComponent>;
 
-  const firstGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
-  const secondGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
-  const activatedRouteStub = { data: of({ userGroups:  ['', [ firstGroupInvitation, secondGroupInvitation ] ] } )};
-
   const groupServiceStub = jasmine.createSpyObj('GroupService', [ 'respondToInvitation' ]);
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ GroupInvitationsComponent ],
-      imports: [
-        GroupCollaborationModule,
-        RouterTestingModule
-      ],
-      providers: [
-        { provide: GroupService, useValue: groupServiceStub },
-        { provide: ActivatedRoute, useValue: activatedRouteStub }
-      ]
-    })
-    .compileComponents();
-  }));
+  fdescribe(' testing when route has resolved', () => {
+    const firstGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
+    const secondGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
+    const activatedRouteStub = { data: of({ userGroups:  ['', [ firstGroupInvitation, secondGroupInvitation ] ] } )};
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GroupInvitationsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should initialize fields successfully', () => {
-    expect(component.groupInvitations[0]).toEqual(firstGroupInvitation);
-    expect(component.groupInvitations[1]).toEqual(secondGroupInvitation);
-    expect(component.invitationResponseError).toEqual('');
-  });
-
-  fdescribe(' invitations logic', () => {
-    let routerNavigateByUrl: Spy;
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ GroupInvitationsComponent ],
+        imports: [
+          GroupCollaborationModule,
+          RouterTestingModule
+        ],
+        providers: [
+          { provide: GroupService, useValue: groupServiceStub },
+          { provide: ActivatedRoute, useValue: activatedRouteStub }
+        ]
+      })
+        .compileComponents();
+    }));
 
     beforeEach(() => {
-      const router = TestBed.inject(Router as Type<Router>);
-      routerNavigateByUrl = spyOn(router, 'navigateByUrl');
+      fixture = TestBed.createComponent(GroupInvitationsComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
     });
 
-    it('should redirect to group page when responded to invitation positively and request succeeded', () => {
-      groupServiceStub.respondToInvitation.and.returnValue(of(1));
-
-      component.onInvitationResponse(firstGroupInvitation, true);
-
-      expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-      expect(routerNavigateByUrl).toHaveBeenCalledWith('/group/1');
-      expect(component.invitationResponseError).toEqual('');
+    it('should create', () => {
+      expect(component).toBeTruthy();
     });
 
-    it('should set an error message when responded to invitation positively but request failed', () => {
-      groupServiceStub.respondToInvitation.and.returnValue(throwError('Error'));
-
-      component.onInvitationResponse(firstGroupInvitation, true);
-
-      expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-      expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
-      expect(component.invitationResponseError).toEqual('Something went wrong; please try again later');
+    it('should initialize fields successfully', () => {
+      expect(component.groupInvitations[0]).toEqual(firstGroupInvitation);
+      expect(component.groupInvitations[1]).toEqual(secondGroupInvitation);
+      expect(component.requestError).toEqual('');
     });
 
-    it('should remove invitation from list of invitation when responded to invitation negatively and request succeeded', () => {
-      groupServiceStub.respondToInvitation.and.returnValue(of(1));
+    fdescribe(' invitations logic', () => {
+      let routerNavigateByUrl: Spy;
 
-      component.onInvitationResponse(firstGroupInvitation, false);
+      beforeEach(() => {
+        const router = TestBed.inject(Router as Type<Router>);
+        routerNavigateByUrl = spyOn(router, 'navigateByUrl');
+      });
 
-      expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-      expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
-      expect(component.groupInvitations.includes(firstGroupInvitation)).toBeFalse();
-      expect(component.invitationResponseError).toEqual('');
+      it('should redirect to group page when responded to invitation positively and request succeeded', () => {
+        groupServiceStub.respondToInvitation.and.returnValue(of(1));
+
+        component.onInvitationResponse(firstGroupInvitation, true);
+
+        expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
+        expect(routerNavigateByUrl).toHaveBeenCalledWith('/group/1');
+        expect(component.requestError).toEqual('');
+      });
+
+      it('should set an error message when responded to invitation positively but request failed', () => {
+        groupServiceStub.respondToInvitation.and.returnValue(throwError('Error'));
+
+        component.onInvitationResponse(firstGroupInvitation, true);
+
+        expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
+        expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
+        expect(component.requestError).toEqual('Something went wrong; please try again later');
+      });
+
+      it('should remove invitation from list of invitation when responded to invitation negatively and request succeeded', () => {
+        groupServiceStub.respondToInvitation.and.returnValue(of(1));
+
+        component.onInvitationResponse(firstGroupInvitation, false);
+
+        expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
+        expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
+        expect(component.groupInvitations.includes(firstGroupInvitation)).toBeFalse();
+        expect(component.requestError).toEqual('');
+      });
+
+      it('should set an error message when responded to invitation negatively but request failed', () => {
+        groupServiceStub.respondToInvitation.and.returnValue(throwError('Error'));
+
+        component.onInvitationResponse(firstGroupInvitation, false);
+
+        expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
+        expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
+        expect(component.groupInvitations.includes(firstGroupInvitation)).toBeTrue();
+        expect(component.requestError).toEqual('Something went wrong; please try again later');
+      });
+    })
+  });
+
+  fdescribe(' testing component when route failed to resolve', () => {
+    const activatedRouteStub = { data: throwError('Failed to retrieve group data; please try again later')};
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ GroupInvitationsComponent ],
+        imports: [
+          GroupCollaborationModule,
+          RouterTestingModule
+        ],
+        providers: [
+          { provide: GroupService, useValue: groupServiceStub },
+          { provide: ActivatedRoute, useValue: activatedRouteStub }
+        ]
+      })
+        .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(GroupInvitationsComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
     });
 
-    it('should set an error message when responded to invitation negatively but request failed', () => {
-      groupServiceStub.respondToInvitation.and.returnValue(throwError('Error'));
+    it('should be created', () => {
+      expect(component).toBeTruthy();
+    });
 
-      component.onInvitationResponse(firstGroupInvitation, false);
-
-      expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-      expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
-      expect(component.groupInvitations.includes(firstGroupInvitation)).toBeTrue();
-      expect(component.invitationResponseError).toEqual('Something went wrong; please try again later');
+    it('should set an error message and initialize fields successfully', () => {
+      expect(component.requestError).toEqual('Failed to retrieve group data; please try again later');
+      expect(component.groupInvitations.length).toEqual(0);
     });
   })
 });

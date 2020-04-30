@@ -1,5 +1,5 @@
 <mat-list>
-  <mat-error>{{ invitationResponseError }}</mat-error>
+  <mat-error>{{ requestError }}</mat-error>
   <mat-list-item *ngFor = "let invitation of groupInvitations">
     <p>Invitation from group {{ invitation.group.title }}</p><br>
     <p>Group described as {{ invitation.group.description }}</p><br>

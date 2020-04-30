@@ -10,25 +10,24 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class GroupInvitationsComponent implements OnInit {
   public groupInvitations: Array<IGroupCollaborationRequest>;
-  public invitationResponseError: string;
+  public requestError: string;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private groupService: GroupService,
-              private router: Router) {
-    this.invitationResponseError = '';
+  constructor(private activatedRoute: ActivatedRoute, private groupService: GroupService, private router: Router) {
+    this.groupInvitations = new Array<IGroupCollaborationRequest>();
+    this.requestError = '';
   }
 
   public ngOnInit(): void {
     this.activatedRoute.data.subscribe((data: { userGroups: [ any, Array<IGroupCollaborationRequest> ]}) => {
       this.groupInvitations = data.userGroups[1];
-    });
+    }, error => this.requestError = error);
   }
 
   public onInvitationResponse(invitation: IGroupCollaborationRequest, isAccepted: boolean): void {
     invitation.isAccepted = isAccepted;
 
     this.groupService.respondToInvitation(invitation).subscribe(id => this.onSuccess(id, isAccepted, invitation),
-                                                                () => this.invitationResponseError = 'Something went wrong; please try again later');
+                                                                () => this.requestError = 'Something went wrong; please try again later');
   }
 
   private onSuccess(id: number, isAccepted: boolean, invitation: IGroupCollaborationRequest): void {
