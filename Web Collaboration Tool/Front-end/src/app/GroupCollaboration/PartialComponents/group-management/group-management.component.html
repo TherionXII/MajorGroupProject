@@ -1,11 +1,11 @@
 <mat-tab-group>
-  <mat-tab label = "Members management" *ngIf = "userMember.isAdmin">
+  <mat-tab label = "Members management" *ngIf = "loggedInGroupMember.isAdmin">
     <mat-list>
       <mat-list-item *ngFor = "let member of group.groupMembers">
-        <div *ngIf = "member.memberUsername !== userMember.memberUsername">
+        <div *ngIf = "member.memberUsername !== loggedInGroupMember.memberUsername">
           <h3>{{ member.memberUsername }}</h3>
           <button *ngIf = "!member.isAdmin" (click) = "onMakeAdmin(member.memberUsername)">Make administrator</button>
-          <button *ngIf = "userMember.isAdmin" (click) = "onRemoveFromGroup(member.memberUsername)">Remove from group</button>
+          <button *ngIf = "loggedInGroupMember.isAdmin" (click) = "onRemoveFromGroup(member.memberUsername)">Remove from group</button>
         </div>
       </mat-list-item>
     </mat-list>
@@ -20,5 +20,5 @@
       </mat-list-item>
     </mat-list>
   </mat-tab>
-  <mat-tab label = "Delete group" *ngIf = "userMember.isAdmin"></mat-tab>
+  <mat-tab label = "Delete group" *ngIf = "loggedInGroupMember.isAdmin"></mat-tab>
 </mat-tab-group>
