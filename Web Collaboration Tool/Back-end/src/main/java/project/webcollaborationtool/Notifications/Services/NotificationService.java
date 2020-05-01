@@ -9,8 +9,8 @@ import project.webcollaborationtool.Notifications.Entities.PrivateCollaborationN
 import project.webcollaborationtool.Notifications.Entities.PrivateNotification;
 import project.webcollaborationtool.Notifications.Repositories.NotificationRepository;
 import project.webcollaborationtool.Notifications.Repositories.PrivateNotificationRepository;
-import project.webcollaborationtool.Request.Entities.GroupCollaborationRequest;
-import project.webcollaborationtool.Request.Entities.PrivateCollaborationRequest;
+import project.webcollaborationtool.Collaboration.Request.Entities.GroupCollaborationRequest;
+import project.webcollaborationtool.Collaboration.Request.Entities.PrivateCollaborationRequest;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import java.util.Collection;

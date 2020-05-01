@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.webcollaborationtool.Collaboration.PrivateCollaboration.Entities.PrivateCollaboration;
 import project.webcollaborationtool.Collaboration.PrivateCollaboration.Repositories.PrivateCollaborationRepository;
-import project.webcollaborationtool.Request.Entities.PrivateCollaborationRequest;
+import project.webcollaborationtool.Collaboration.Request.Entities.PrivateCollaborationRequest;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId;
 

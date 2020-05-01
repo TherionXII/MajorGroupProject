@@ -1,9 +1,9 @@
-package project.webcollaborationtool.Request.Services;
+package project.webcollaborationtool.Collaboration.Request.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Request.Entities.GroupCollaborationRequest;
-import project.webcollaborationtool.Request.Repositories.GroupCollaborationRequestRepository;
+import project.webcollaborationtool.Collaboration.Request.Entities.GroupCollaborationRequest;
+import project.webcollaborationtool.Collaboration.Request.Repositories.GroupCollaborationRequestRepository;
 
 import java.util.Collection;
 

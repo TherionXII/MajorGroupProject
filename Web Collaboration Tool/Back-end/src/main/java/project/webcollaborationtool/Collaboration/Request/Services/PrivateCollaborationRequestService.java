@@ -1,9 +1,9 @@
-package project.webcollaborationtool.Request.Services;
+package project.webcollaborationtool.Collaboration.Request.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.webcollaborationtool.Request.Entities.PrivateCollaborationRequest;
-import project.webcollaborationtool.Request.Repositories.PrivateCollaborationRequestRepository;
+import project.webcollaborationtool.Collaboration.Request.Repositories.PrivateCollaborationRequestRepository;
+import project.webcollaborationtool.Collaboration.Request.Entities.PrivateCollaborationRequest;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;

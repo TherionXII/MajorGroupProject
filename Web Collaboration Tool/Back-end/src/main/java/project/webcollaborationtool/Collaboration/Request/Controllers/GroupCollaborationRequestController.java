@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Request.Controllers;
+package project.webcollaborationtool.Collaboration.Request.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -6,10 +6,10 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Services.GroupCollaborationService;
+import project.webcollaborationtool.Collaboration.Request.Entities.GroupCollaborationRequest;
+import project.webcollaborationtool.Collaboration.Request.Services.GroupCollaborationRequestService;
 import project.webcollaborationtool.Notifications.Entities.Notification;
 import project.webcollaborationtool.Notifications.Services.NotificationService;
-import project.webcollaborationtool.Request.Entities.GroupCollaborationRequest;
-import project.webcollaborationtool.Request.Services.GroupCollaborationRequestService;
 
 import java.util.Collection;
 

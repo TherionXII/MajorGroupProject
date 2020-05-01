@@ -1,4 +1,4 @@
-package project.webcollaborationtool.Request.Entities;
+package project.webcollaborationtool.Collaboration.Request.Entities;
 
 import lombok.Data;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;

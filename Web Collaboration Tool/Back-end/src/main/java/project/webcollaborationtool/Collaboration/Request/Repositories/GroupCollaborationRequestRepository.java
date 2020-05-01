@@ -1,8 +1,8 @@
-package project.webcollaborationtool.Request.Repositories;
+package project.webcollaborationtool.Collaboration.Request.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import project.webcollaborationtool.Request.Entities.GroupCollaborationRequest;
+import project.webcollaborationtool.Collaboration.Request.Entities.GroupCollaborationRequest;
 
 import java.util.Collection;
 
