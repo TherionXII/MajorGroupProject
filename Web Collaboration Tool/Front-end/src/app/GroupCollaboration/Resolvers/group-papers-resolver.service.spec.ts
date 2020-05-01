@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Type} from '@angular/core';
 import {of, throwError} from 'rxjs';
 
-fdescribe('GroupPapersResolverService', () => {
+describe('GroupPapersResolverService', () => {
   let service: GroupPapersResolverService;
 
   const mockPapers = [ {} as IPaper, {} as IPaper ];

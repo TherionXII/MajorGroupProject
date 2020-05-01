@@ -7,14 +7,14 @@ import {GroupCollaborationModule} from '../../group-collaboration.module';
 import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 
-fdescribe('UserGroupsComponent', () => {
+describe('UserGroupsComponent', () => {
   let component: UserGroupsComponent;
   let fixture: ComponentFixture<UserGroupsComponent>;
 
   const userGroupOne = { id: 0, title: 'title 1', description: 'description1', thread: { id: 0 } } as IGroup;
   const userGroupTwo =  { id: 1, title: 'title 2', description: 'description2', thread: { id: 1 } } as IGroup;
 
-  fdescribe(' should initialize component successfully when activated route resolved', () => {
+  describe(' should initialize component successfully when activated route resolved', () => {
     const activatedRouteStub = { data: of({ userGroups: [ [ userGroupOne, userGroupTwo], '' ] } )};
 
     beforeEach(async(() => {
@@ -46,7 +46,7 @@ fdescribe('UserGroupsComponent', () => {
     })
   });
 
-  fdescribe(' should initialize component successfully when activated route failed to resolve', () => {
+  describe(' should initialize component successfully when activated route failed to resolve', () => {
     const activatedRouteStub = { data: throwError('Failed to retrieve group data; please try again later')};
 
     beforeEach(async(() => {

@@ -9,7 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Type} from '@angular/core';
 import {of, throwError} from 'rxjs';
 
-fdescribe('GroupResolverService', () => {
+describe('GroupResolverService', () => {
   let service: GroupResolverService;
 
   const mockGroup = {} as IGroup;

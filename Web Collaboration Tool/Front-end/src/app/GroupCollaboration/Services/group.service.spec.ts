@@ -5,7 +5,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {IGroup} from '../Interfaces/IGroup';
 import {IGroupCollaborationRequest} from '../../Utility/Interfaces/IGroupCollaborationRequest';
 
-fdescribe('GroupService', () => {
+describe('GroupService', () => {
   let service: GroupService;
   let httpTestingController: HttpTestingController;
 

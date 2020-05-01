@@ -10,13 +10,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Type} from '@angular/core';
 import Spy = jasmine.Spy;
 
-fdescribe('GroupInvitationsComponent', () => {
+describe('GroupInvitationsComponent', () => {
   let component: GroupInvitationsComponent;
   let fixture: ComponentFixture<GroupInvitationsComponent>;
 
   const groupServiceStub = jasmine.createSpyObj('GroupService', [ 'respondToInvitation' ]);
 
-  fdescribe(' testing when route has resolved', () => {
+  describe(' testing when route has resolved', () => {
     const firstGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
     const secondGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
     const activatedRouteStub = { data: of({ userGroups:  ['', [ firstGroupInvitation, secondGroupInvitation ] ] } )};
@@ -53,7 +53,7 @@ fdescribe('GroupInvitationsComponent', () => {
       expect(component.requestError).toEqual('');
     });
 
-    fdescribe(' invitations logic', () => {
+    describe(' invitations logic', () => {
       let routerNavigateByUrl: Spy;
 
       beforeEach(() => {
@@ -105,7 +105,7 @@ fdescribe('GroupInvitationsComponent', () => {
     })
   });
 
-  fdescribe(' testing component when route failed to resolve', () => {
+  describe(' testing component when route failed to resolve', () => {
     const activatedRouteStub = { data: throwError('Failed to retrieve group data; please try again later')};
 
     beforeEach(async(() => {

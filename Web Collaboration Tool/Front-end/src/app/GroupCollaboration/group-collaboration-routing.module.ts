@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {GroupCollaborationHomeComponent} from './Components/group-collaboration-home/group-collaboration-home.component';
 import {GroupComponent} from './Components/group/group.component';
-import {GroupCollaborationResolverService} from '../Utility/Resolvers/GroupCollaborationResolvers/group-collaboration-resolver.service';
-import {GroupResolverService} from '../Utility/Resolvers/GroupCollaborationResolvers/group-resolver.service';
+import {GroupCollaborationResolverService} from './Resolvers/group-collaboration-resolver.service';
+import {GroupResolverService} from './Resolvers/group-resolver.service';
 import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-resolver.service';
 import {ChatResolverService} from '../Utility/Resolvers/ThreadResolvers/chat-resolver.service';
 import {ForumResolverService} from '../Utility/Resolvers/QueryResolvers/forum-resolver.service';
@@ -30,11 +30,12 @@ const routes: Routes = [
       papers: GroupPapersResolverService
     }
   },
-  { path: 'paper/:paperId', component: PaperComponent, resolve: { paper: PaperResolverService } }
+  {path: 'paper/:paperId', component: PaperComponent, resolve: {paper: PaperResolverService}}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class GroupCollaborationRoutingModule { }
+export class GroupCollaborationRoutingModule {
+}

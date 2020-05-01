@@ -8,7 +8,7 @@ import {IGroupCollaborationRequest} from '../../Utility/Interfaces/IGroupCollabo
 import {of, throwError} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 
-fdescribe('GroupCollaborationResolverService', () => {
+describe('GroupCollaborationResolverService', () => {
   let service: GroupCollaborationResolverService;
 
   const groupServiceStub = jasmine.createSpyObj('GroupService', [ 'getUserGroups', 'getGroupInvitationsForUser' ]);

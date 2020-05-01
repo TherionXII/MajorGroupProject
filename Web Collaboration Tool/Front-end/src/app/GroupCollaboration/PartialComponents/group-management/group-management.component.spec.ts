@@ -10,7 +10,7 @@ import {GroupCollaborationModule} from '../../group-collaboration.module';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {ActivatedRoute} from '@angular/router';
 
-fdescribe('GroupManagementComponent', () => {
+describe('GroupManagementComponent', () => {
   let component: GroupManagementComponent;
   let fixture: ComponentFixture<GroupManagementComponent>;
 
@@ -27,7 +27,7 @@ fdescribe('GroupManagementComponent', () => {
     localStorage.setItem('username', loggedInGroupMemberUsername);
   });
 
-  fdescribe(' testing component when activated route resolved successfully', () => {
+  describe(' testing component when activated route resolved successfully', () => {
     const groupInvitations = [ { recipient: 'invitedUser1' } as IGroupCollaborationRequest, { recipient: 'invitedUser2' } as IGroupCollaborationRequest ];
     const group = {
       id: 0,
@@ -123,7 +123,7 @@ fdescribe('GroupManagementComponent', () => {
     });
   });
 
-  fdescribe(' testing component when activated route failed to resolve', () => {
+  describe(' testing component when activated route failed to resolve', () => {
     const activatedRouteStub = { data: throwError('Error')};
 
     beforeEach(async(() => {

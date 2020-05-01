@@ -3,7 +3,7 @@ import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { GroupCollaborationHomeComponent } from './group-collaboration-home.component';
 
-fdescribe('GroupCollaborationPageComponent', () => {
+describe('GroupCollaborationPageComponent', () => {
   let component: GroupCollaborationHomeComponent;
   let fixture: ComponentFixture<GroupCollaborationHomeComponent>;
 

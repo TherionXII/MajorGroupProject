@@ -11,7 +11,7 @@ import {IThread} from '../../../Utility/Interfaces/IThread';
 import {Type} from '@angular/core';
 import Spy = jasmine.Spy;
 
-fdescribe('GroupCreationComponent', () => {
+describe('GroupCreationComponent', () => {
   let component: GroupCreationComponent;
   let fixture: ComponentFixture<GroupCreationComponent>;
 
@@ -44,7 +44,7 @@ fdescribe('GroupCreationComponent', () => {
     expect(component.createGroupError).toEqual('');
   });
 
-  fdescribe(' group creation form', () => {
+  describe(' group creation form', () => {
     let routerNavigateByUrl: Spy;
 
     const group: IGroup = {
