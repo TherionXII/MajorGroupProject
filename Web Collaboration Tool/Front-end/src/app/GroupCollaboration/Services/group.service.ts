@@ -18,8 +18,8 @@ export class GroupService {
     return this.httpClient.get<Array<IGroup>>(`http://localhost:8080/api/groups/${username}/getGroups`);
   }
 
-  public getGroupById(id: string): Observable<IGroup> {
-    return this.httpClient.get<IGroup>(`http://localhost:8080/api/groups/${id}/getGroup`);
+  public getGroupById(groupId: string): Observable<IGroup> {
+    return this.httpClient.get<IGroup>(`http://localhost:8080/api/groups/${groupId}/getGroup`);
   }
 
   public getGroupInvitationsForUser(username: string): Observable<Array<IGroupCollaborationRequest>> {
