@@ -15,10 +15,13 @@ export class PaperCreationComponent implements OnInit {
 
   public newPaperForm: FormGroup;
 
+  public createPaperError: string;
+
   private groupId: string;
 
   constructor(private activatedRoute: ActivatedRoute, private paperService: PaperService) {
     this.paperCreatedEvent = new EventEmitter<IPaper>();
+    this.createPaperError = '';
   }
 
   public ngOnInit(): void {
@@ -31,8 +34,7 @@ export class PaperCreationComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log(this.newPaperForm.getRawValue());
     this.paperService.createPaper(this.groupId, this.newPaperForm.getRawValue() as IPaper)
-      .subscribe((paper: IPaper) => this.paperCreatedEvent.emit(paper), error => console.log(error));
+      .subscribe((paper: IPaper) => this.paperCreatedEvent.emit(paper), error => this.createPaperError = error);
   }
 }
