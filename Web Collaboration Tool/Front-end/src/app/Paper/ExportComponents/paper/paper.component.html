@@ -1,4 +1,5 @@
+<mat-error>{{ resolverError }}</mat-error>
 <mat-form-field *ngFor="let question of questionsForm.controls; index as questionIndex">
-  <p>{{paper.questions[questionIndex].text}}</p>
+  <p>{{ paper.questions[questionIndex].text }}</p>
   <textarea matInput [value] = "question.value" (keyup) = "onChange(question.value, questionIndex)" [formControl]="question"></textarea>
 </mat-form-field>
