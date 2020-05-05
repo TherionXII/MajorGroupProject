@@ -11,18 +11,18 @@ import {IPage} from '../Interfaces/IPage';
 export class PaperService {
   constructor(private http: HttpClient) { }
 
-  public createPaper(groupId: string, paper: IPaper): Observable<IPaper | string> {
-    return this.http.post<IPaper | string>(`http://localhost:8080/api/papers/${groupId}/createPaper`, paper);
+  public createPaper(groupId: string, paper: IPaper): Observable<IPaper> {
+    return this.http.post<IPaper>(`http://localhost:8080/api/papers/${groupId}/createPaper`, paper);
   }
 
-  public uploadFile(file: File, paperId: number): Observable<Array<IPage>> {
+  public uploadFile(paperId: number, file: File): Observable<Array<IPage>> {
     const formData = new FormData();
     formData.append('file', file);
 
     return this.http.post<Array<IPage>>(`http://localhost:8080/api/papers/${paperId}/uploadPaper`, formData);
   }
 
-  public processQuestion(extractedQuestion: IPaperQuestion, paperId: number): Observable<IPaperQuestion> {
+  public processQuestion(paperId: number, extractedQuestion: IPaperQuestion): Observable<IPaperQuestion> {
     return this.http.post<IPaperQuestion>(`http://localhost:8080/api/papers/${paperId}/${extractedQuestion.pageNumber}/extractText`, extractedQuestion);
   }
 

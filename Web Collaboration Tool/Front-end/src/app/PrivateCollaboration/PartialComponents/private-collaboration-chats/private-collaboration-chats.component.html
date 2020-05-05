@@ -1,0 +1,9 @@
+<mat-list>
+  <mat-error>{{ resolverError }}</mat-error>
+  <mat-list-item *ngFor = "let collaboration of collaborations">
+    <a *ngIf = "collaboration.thread" [routerLink] = "[ '/thread', collaboration.thread.id ]">
+      <p>{{ collaboration.collaboratorOneUsername === loggedInUser ? collaboration.collaboratorTwoUsername : collaboration.collaboratorOneUsername }}</p>
+      <p>{{ collaboration.thread.lastMessage ? collaboration.thread.lastMessage.message : 'Send a message' }}</p>
+    </a>
+  </mat-list-item>
+</mat-list>

@@ -1,7 +1,7 @@
 import {IPaperQuestion} from './IPaperQuestion';
 import {IPage} from './IPage';
 
-export class IPaper {
+export interface IPaper {
   id: number;
 
   pages: Array<IPage>;

@@ -18,6 +18,7 @@ import {MatInputModule} from '@angular/material/input';
 import { PaperUploadComponent } from './PartialComponents/paper-upload/paper-upload.component';
 import {RouterModule} from '@angular/router';
 import { PaperComponent } from './ExportComponents/paper/paper.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PaperComponent } from './ExportComponents/paper/paper.component';
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule
   ],
   exports: [
     PaperManagementComponent,

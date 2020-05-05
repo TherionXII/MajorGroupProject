@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CropperPosition, ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {PaperService} from '../../Services/paper.service';
 import {IPaperQuestion} from '../../Interfaces/IPaperQuestion';
@@ -6,6 +6,7 @@ import {IPaper} from '../../Interfaces/IPaper';
 import {MatHorizontalStepper} from '@angular/material/stepper';
 import {IPosition} from '../../Interfaces/IPosition';
 import {IPage} from '../../Interfaces/IPage';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-pdf-processing',
@@ -16,25 +17,22 @@ export class PaperProcessingComponent implements OnInit {
   @ViewChild('horizontalStepper')
   public horizontalStepper: MatHorizontalStepper;
 
-  @Input()
-  private groupId: number;
-
   public paper: IPaper;
-
   public processedPaperQuestions: Array<IPaperQuestion>;
   public currentQuestion: IPaperQuestion;
-
   public currentPage: IPage;
 
-  public userWarning: string;
+  public processingError: string;
+  public isSelectingText: boolean;
 
-  public isSelectingText = true;
-
-  @ViewChild(ImageCropperComponent, {static: false}) imageCropper: ImageCropperComponent;
+  @ViewChild(ImageCropperComponent, { static: false }) imageCropper: ImageCropperComponent;
 
   constructor(private paperService: PaperService) {
     this.processedPaperQuestions = new Array<IPaperQuestion>();
-    this.paper = new IPaper();
+    this.currentQuestion = {} as IPaperQuestion;
+    this.paper = {} as IPaper;
+    this.isSelectingText = true;
+    this.processingError = '';
   }
 
   public ngOnInit(): void {
@@ -53,7 +51,7 @@ export class PaperProcessingComponent implements OnInit {
     this.horizontalStepper.next();
   }
 
-  public onPageChange(event): void {
+  public onPageChange(event: MatTabChangeEvent): void {
     this.currentPage = this.paper.pages[event.index];
   }
 
@@ -69,8 +67,9 @@ export class PaperProcessingComponent implements OnInit {
   }
 
   public onNextQuestion(): void {
-    this.paperService.processQuestion(this.currentQuestion, this.paper.id)
-      .subscribe(processedQuestion => this.processedPaperQuestions.push(processedQuestion));
+    this.paperService.processQuestion(this.paper.id, this.currentQuestion)
+      .subscribe(processedQuestion => this.processedPaperQuestions.push(processedQuestion),
+                () => this.processingError = 'Failed to process your question; please try again later');
 
     this.currentQuestion = {} as IPaperQuestion;
   }

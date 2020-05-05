@@ -15,12 +15,12 @@
         <mat-card-subtitle>Please note that an image, if any, can be selected ONLY after text has been selected</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <mat-tab-group (selectedTabChange) = "onPageChange($event)">
+        <mat-tab-group (selectedTabChange) = onPageChange($event)>
           <mat-tab label = "Page {{ paper.pages.indexOf(page) + 1 }}" *ngFor = "let page of paper.pages">
-            <mat-error *ngIf = "userWarning">{{ userWarning }}</mat-error>
           </mat-tab>
         </mat-tab-group>
         <div id = "cropper-container">
+          <mat-error>{{ processingError }}</mat-error>
           <image-cropper *ngIf = "currentPage" [imageBase64] = "'data:image/png;base64,' + currentPage.pageOriginal" [maintainAspectRatio]="false" [aspectRatio] = "1"
                          [resizeToWidth]="0" format="png" (imageCropped) = "onCrop($event, paper.pages.indexOf(currentPage))">
           </image-cropper>
