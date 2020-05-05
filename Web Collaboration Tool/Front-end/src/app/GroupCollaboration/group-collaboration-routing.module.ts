@@ -4,7 +4,7 @@ import {GroupCollaborationHomeComponent} from './Components/group-collaboration-
 import {GroupComponent} from './Components/group/group.component';
 import {GroupCollaborationResolverService} from './Resolvers/group-collaboration-resolver.service';
 import {GroupResolverService} from './Resolvers/group-resolver.service';
-import {PrivateCollaborationResolverService} from '../Utility/Resolvers/PrivateCollaborationResolvers/private-collaboration-resolver.service';
+import {PrivateCollaborationResolverService} from '../PrivateCollaboration/Resolvers/private-collaboration-resolver.service';
 import {ChatResolverService} from '../Utility/Resolvers/ThreadResolvers/chat-resolver.service';
 import {ForumResolverService} from '../Utility/Resolvers/QueryResolvers/forum-resolver.service';
 import {GroupPapersResolverService} from './Resolvers/group-papers-resolver.service';
