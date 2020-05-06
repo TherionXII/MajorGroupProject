@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {QueryService} from '../../Services/query.service';
 import {ActivatedRoute} from '@angular/router';
 import {IQuery} from '../../Interfaces/IQuery';
 
@@ -10,15 +9,16 @@ import {IQuery} from '../../Interfaces/IQuery';
 })
 export class QueryComponent implements OnInit {
   public query: IQuery;
-  public username: string;
 
-  public getQueryError: string;
+  public resolverError: string;
 
-  constructor(private queryService: QueryService,
-              private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.query = {} as IQuery;
+    this.resolverError = '';
+  }
 
   ngOnInit() {
-    this.queryService.getQueryById(this.activatedRoute.snapshot.paramMap.get('id') as unknown as number)
-      .subscribe(result => this.query = result, error => this.getQueryError = error.message);
+    this.activatedRoute.data
+      .subscribe((data: { query: IQuery}) => this.query = data.query, error => this.resolverError = error);
   }
 }
