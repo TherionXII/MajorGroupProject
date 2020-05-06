@@ -1,0 +1,12 @@
+<mat-list>
+  <mat-error>{{ resolverError }}</mat-error>
+  <a *ngFor = "let query of queries" [routerLink] = "['/query', query.id]">
+    <mat-list-item>
+      <h3 mat-line>{{ query.title }}</h3>
+      <p mat-line>
+        <span>Created by: {{ query.username }}</span>
+        <span>{{ query.subtitle }}</span>
+      </p>
+    </mat-list-item>
+  </a>
+</mat-list>
