@@ -5,13 +5,12 @@ import {QueryModule} from '../../query.module';
 import {QueryService} from '../../Services/query.service';
 import {IQuery} from '../../Interfaces/IQuery';
 import {of, throwError} from 'rxjs';
-import {IQueryVote} from '../../Interfaces/IQueryVote';
 
 describe('QueryContainerComponent', () => {
   let component: QueryContainerComponent;
   let fixture: ComponentFixture<QueryContainerComponent>;
 
-  const queryService = jasmine.createSpyObj('QueryService', [ 'createResponse', 'submitVote' ]);
+  const queryService = jasmine.createSpyObj('QueryService', [ 'createResponse' ]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,31 +23,33 @@ describe('QueryContainerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QueryContainerComponent);
     component = fixture.componentInstance;
+
+    component.query = { id: 0, contents: 'Contents', children: [] } as IQuery;
+
     fixture.detectChanges();
   });
 
-  beforeEach( () => {
-    let store = {};
-
-    spyOn(localStorage, 'getItem').and.callFake((key) => store[key]);
-    spyOn(localStorage, 'setItem').and.callFake( (key, value) => store[key] = value + '');
-    spyOn(localStorage, 'clear').and.callFake(() => store = {});
-  });
+  beforeEach(() => spyOn(localStorage, 'getItem').and.returnValue('username'));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have a valid form when input is valid', () => {
-    component.queryResponseForm.get('contents').setValue('contents');
-
-    expect(component.queryResponseForm.valid).toBeTrue();
+  it('should initialize components', () => {
+    expect(component.isReplyVisible).toBeFalse();
+    expect(component.query.id).toEqual(0);
+    expect(component.errorMessage).toEqual('');
   });
 
-  it('should have an invalid form when input is invalid', () => {
-    component.queryResponseForm.get('contents').setValue('');
+  it('should update query when queryVotedEvent is emitted', () => {
+    expect(component.query.rating).not.toEqual(1);
+    component.onQueryVote({ id: 0, rating: 1 } as IQuery);
+    expect(component.query.rating).toEqual(1);
+  });
 
-    expect(component.queryResponseForm.valid).toBeFalse();
+  it('should set an error message when queryVoteFailed event is emitted', () => {
+    component.onQueryVoteFailure('Error');
+    expect(component.errorMessage).toEqual('Error');
   });
 
   it('should reverse value of isReplyVisible when onRespond is invoked', () => {
@@ -60,64 +61,33 @@ describe('QueryContainerComponent', () => {
   });
 
   it('should send a successful request to create a response for the query', () => {
-    localStorage.setItem('username', 'username');
-
-    const query: IQuery = { id: 0, contents: 'contents', rating: 0 };
-
-    component.queryResponseForm.get('contents').setValue('contents');
+    const query = { id: 0, contents: 'contents', rating: 0 } as IQuery;
 
     const createResponseSpy = queryService.createResponse.and.returnValue(of(query));
     const onRespondSpy = spyOn(component, 'onRespond');
 
+    component.queryResponseForm.get('contents').setValue('Response');
+
     component.onSubmit(query.id);
 
-    expect(createResponseSpy).toHaveBeenCalledWith(component.queryResponseForm.getRawValue() as IQuery, 'username', 0);
+    expect(createResponseSpy).toHaveBeenCalledWith(0, 'username', component.queryResponseForm.getRawValue() as IQuery);
     expect(component.query).toEqual(query);
     expect(onRespondSpy).toHaveBeenCalled();
   });
 
   it('should set an error message when failed to create a query response', () => {
-    localStorage.setItem('username', 'username');
-
-    const query: IQuery = { id: 0, contents: 'contents', rating: 0 };
-
-    component.queryResponseForm.get('contents').setValue('contents');
+    const query = { id: 0, contents: 'contents', rating: 0 } as IQuery;
 
     const createResponseSpy = queryService.createResponse.and.returnValue(throwError({ message: 'error' }));
     const onRespondSpy = spyOn(component, 'onRespond');
 
+    component.queryResponseForm.get('contents').setValue('Response');
+
     component.onSubmit(query.id);
 
-    expect(createResponseSpy).toHaveBeenCalledWith(component.queryResponseForm.getRawValue() as IQuery, 'username', 0);
+    expect(createResponseSpy).toHaveBeenCalledWith(0, 'username', component.queryResponseForm.getRawValue() as IQuery);
     expect(component.query).not.toEqual(query);
     expect(onRespondSpy).toHaveBeenCalled();
-    expect(component.submissionError).toEqual('error');
-  });
-
-  it('should return an updated query when voted for query or a response', () => {
-    localStorage.setItem('username', 'username');
-
-    const query: IQuery = { id: 0, contents: 'contents', rating: 0 };
-
-    const submitVoteSpy = queryService.submitVote.and.returnValue(of(query));
-
-    component.onVote(query, true);
-
-    expect(submitVoteSpy).toHaveBeenCalledWith({ vote: true, username: 'username', query } as IQueryVote);
-    expect(component.query).toEqual(query);
-  });
-
-  it('should set an error message when failed to vote for a query or a response', () => {
-    localStorage.setItem('username', 'username');
-
-    const query: IQuery = { id: 0, contents: 'contents', rating: 0 };
-
-    const submitVoteSpy = queryService.submitVote.and.returnValue(throwError({ message: 'error' }));
-
-    component.onVote(query, true);
-
-    expect(submitVoteSpy).toHaveBeenCalledWith({ vote: true, username: 'username', query } as IQueryVote);
-    expect(component.query).not.toEqual(query);
-    expect(component.submissionError).toEqual('error');
+    expect(component.errorMessage).toEqual('error');
   });
 });

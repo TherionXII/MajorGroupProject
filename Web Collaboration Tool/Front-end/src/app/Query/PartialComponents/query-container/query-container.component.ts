@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {IQuery} from '../../Interfaces/IQuery';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../../Services/query.service';
-import {IQueryVote} from '../../Interfaces/IQueryVote';
 
 @Component({
   selector: 'app-query-container',
@@ -13,18 +12,29 @@ export class QueryContainerComponent implements OnInit {
   @Input()
   public query: IQuery;
 
-  public isReplyVisible = false;
+  public isReplyVisible: boolean;
 
   public queryResponseForm: FormGroup;
 
-  public submissionError: string;
+  public errorMessage: string;
 
-  constructor(private queryService: QueryService) {}
+  constructor(private queryService: QueryService) {
+    this.isReplyVisible = false;
+    this.errorMessage = '';
+  }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.queryResponseForm = new FormGroup({
       contents: new FormControl('', Validators.required)
     });
+  }
+
+  public onQueryVote(query: IQuery): void {
+    this.query = query;
+  }
+
+  public onQueryVoteFailure(error: string): void {
+    this.errorMessage = error;
   }
 
   public onRespond(): void {
@@ -32,14 +42,9 @@ export class QueryContainerComponent implements OnInit {
   }
 
   public onSubmit(id: number): void {
-    this.queryService.createResponse(this.queryResponseForm.getRawValue() as IQuery, localStorage.getItem('username'), id)
-      .subscribe(query => this.query = query, error => this.submissionError = error.message);
+    this.queryService.createResponse(id, localStorage.getItem('username'), this.queryResponseForm.getRawValue() as IQuery)
+      .subscribe(query => this.query = query, error => this.errorMessage = error.message);
 
     this.onRespond();
-  }
-
-  public onVote(query: IQuery, vote: boolean): void {
-    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), queryId: query.id }, query.id)
-      .subscribe(updatedQuery => this.query = updatedQuery, error => this.submissionError = error.message);
   }
 }

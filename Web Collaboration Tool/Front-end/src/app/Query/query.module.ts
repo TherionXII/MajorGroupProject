@@ -19,13 +19,19 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
+import { ForumQueriesComponent } from './PartialComponents/forum-queries/forum-queries.component';
+import { QueryCreationComponent } from './PartialComponents/query-creation/query-creation.component';
+import { QueryVoteComponent } from './PartialComponents/query-vote/query-vote.component';
 
 
 @NgModule({
   declarations: [
     ForumComponent,
     QueryComponent,
-    QueryContainerComponent
+    QueryContainerComponent,
+    ForumQueriesComponent,
+    QueryCreationComponent,
+    QueryVoteComponent
   ],
   exports: [
     ForumComponent
