@@ -27,23 +27,22 @@ export class QueryService {
     return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentResponses`);
   }
 
-  public getQueryById(id: number): Observable<IQuery> {
-    return this.httpClient.get<IQuery>(`http://localhost:8080/api/queries/${id}/getQuery`);
+  public getQueryById(queryId: string): Observable<IQuery> {
+    return this.httpClient.get<IQuery>(`http://localhost:8080/api/queries/${queryId}/getQuery`);
   }
 
-  public createPublicQuery(query: IQuery, username: string): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/createQuery`, query);
+  public createQuery(groupId: string, query: IQuery, isPublic: boolean): Observable<IQuery> {
+    if(isPublic)
+      return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${query.username}/createQuery`, query);
+    else
+      return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/groupQueries/${query.username}/${groupId}/createQuery`, query);
   }
 
-  public createGroupQuery(query: IQuery, username: string, groupId: string): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/groupQueries/${username}/${groupId}/createQuery`, query);
+  public createResponse(queryId: number, username: string, response: IQuery): Observable<IQuery> {
+    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/${queryId}/createResponse`, response);
   }
 
-  public createResponse(response: IQuery, username: string, id: number): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/${id}/createResponse`, response);
-  }
-
-  public submitVote(vote: IQueryVote, id: number): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/${id}/vote`, vote);
+  public submitVote(vote: IQueryVote): Observable<IQuery> {
+    return this.httpClient.post<IQuery>(`http://localhost:8080/${vote.queryId}/vote`, vote);
   }
 }
