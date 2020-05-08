@@ -31,7 +31,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.watchChannel = data.chatData[1];
       this.publishChannel = data.chatData[2];
 
-      this.chatSubscription = this.rxStompService.watch(this.watchChannel).subscribe(request => this.messages.push(JSON.parse(request.body)));
+      this.chatSubscription = this.rxStompService.watch(this.watchChannel)
+        .subscribe(request => this.messages.push(JSON.parse(request.body)));
     });
 
     this.messageFormControl = new FormControl('');
