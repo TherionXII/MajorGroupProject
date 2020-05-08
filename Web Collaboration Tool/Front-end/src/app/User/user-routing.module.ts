@@ -7,6 +7,7 @@ import {PrivateCollaborationStatusResolverService} from './Resolvers/private-col
 import {UserDataResolverService} from './Resolvers/user-data-resolver.service';
 import {UserNotificationsComponent} from './Components/user-notifications/user-notifications.component';
 import {UserNotificationResolverService} from '../Utility/Resolvers/UserNotificationResolvers/user-notification-resolver.service';
+import {UserProfileResolverService} from './Resolvers/user-profile-resolver.service';
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
     }
   },
   { path: 'notifications', component: UserNotificationsComponent, resolve: { notifications: UserNotificationResolverService } },
-  { path: 'settings', component: UserSettingsComponent }
+  { path: 'settings', component: UserSettingsComponent, resolve: { userProfile: UserProfileResolverService} }
 ];
 
 @NgModule({
