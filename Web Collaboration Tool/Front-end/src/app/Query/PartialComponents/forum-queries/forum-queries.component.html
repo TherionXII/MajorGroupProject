@@ -2,7 +2,7 @@
   <mat-error>{{ resolverError }}</mat-error>
   <mat-card class="card" *ngFor = "let query of queries" [routerLink] = "['/query', query.id]">
     <mat-card-header>
-      <mat-icon mat-card-avatar >contact_support</mat-icon>
+      <mat-icon mat-card-avatar>contact_support</mat-icon>
       <mat-card-title> {{ query.title }} </mat-card-title>
       <mat-card-subtitle> Created by : {{ query.username }} </mat-card-subtitle>
     </mat-card-header>

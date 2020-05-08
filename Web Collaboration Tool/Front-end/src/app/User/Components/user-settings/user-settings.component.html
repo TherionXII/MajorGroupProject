@@ -2,12 +2,12 @@
   <mat-tab label = "Account Settings">
     <h2>{{ resultMessage }}</h2>
     <form [formGroup] = "passwordSettingsForm">
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <input matInput placeholder = "Update your password: " type = "password" name = "password" formControlName = "password">
         <mat-error *ngIf = "!passwordSettingsForm.get('password').valid">Please enter a valid password</mat-error>
       </mat-form-field><br>
 
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <input matInput placeholder = "Repeat your new password: " type = "password" name = "repeatPassword" formControlName = "repeatPassword">
         <mat-error *ngIf = "passwordSettingsForm.hasError('validatePassword')">Passwords do not match</mat-error>
       </mat-form-field><br>
@@ -17,7 +17,7 @@
     </form>
 
     <form [formGroup] = "emailSettingsForm">
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <input matInput placeholder = "Update your email address: " type = "email" name = "email" formControlName = "email">
         <mat-error *ngIf = "!emailSettingsForm.get('email').valid">Please enter a valid email address</mat-error>
       </mat-form-field><br>
@@ -29,15 +29,15 @@
   <mat-tab label = "Profile Settings">
     <h2>{{ resultMessage }}</h2>
     <form [formGroup] = "profileSettingsFormGroup" (ngSubmit) = "onUpdateProfile()">
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <input matInput placeholder = "You may enter your real name if you wish: " name = "name" formControlName = "name" style = "width: 350px;">
       </mat-form-field><br>
 
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <input matInput placeholder = "You may enter your real surname if you wish: " name = "surname" formControlName = "surname" style = "width: 350px;">
       </mat-form-field><br>
 
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <mat-label>You may select your gender if you wish: </mat-label>
         <mat-select formControlName = "gender" style = "width: 350px;">
           <mat-option value = "male">Male</mat-option>
@@ -46,7 +46,7 @@
         </mat-select>
       </mat-form-field><br>
 
-      <mat-form-field>
+      <mat-form-field class="settings-form">
         <input matInput placeholder = "You may enter your institution's name if you wish: " name = "institution" formControlName = "institution" style = "width: 350px;">
       </mat-form-field><br>
 
