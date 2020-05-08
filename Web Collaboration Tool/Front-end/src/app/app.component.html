@@ -7,7 +7,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container autosize>
   <mat-sidenav #sidenav mode = "side" role = "navigation">
     <mat-nav-list *ngIf = "getUsername()">
       <a mat-list-item [routerLink] = "['/user', getUsername()]">Profile</a>
