@@ -1,13 +1,16 @@
 <div *ngIf = "isLoggedIn() && !isLoggedInUser()">
-  <div *ngIf = "!isCollaborating">
-    <button mat-raised-button *ngIf = "!hasSentRequest && !hasReceivedRequest" (click) = "onCollaborationRequest()">Add as collaborator</button>
-    <button mat-raised-button disabled *ngIf = "hasSentRequest">Collaboration request sent</button>
+  <mat-error>{{ resolverError }}</mat-error>
+  <div *ngIf = "!resolverError">
+    <div *ngIf = "!isCollaborating">
+      <button mat-raised-button *ngIf = "!hasSentRequest && !hasReceivedRequest" (click) = "onCollaborationRequest()">Add as collaborator</button>
+      <button mat-raised-button disabled *ngIf = "hasSentRequest">Collaboration request sent</button>
 
-    <button mat-raised-button *ngIf = "hasReceivedRequest" (click) = "onCollaborationRequestResponse(true)">Accept request</button>
-    <button mat-raised-button *ngIf = "hasReceivedRequest" (click) = "onCollaborationRequestResponse(false)">Deny request</button>
-  </div>
-  <div *ngIf = "isCollaborating">
-    <button mat-raised-button>Remove collaborator</button>
+      <button mat-raised-button *ngIf = "hasReceivedRequest" (click) = "onCollaborationRequestResponse(true)">Accept request</button>
+      <button mat-raised-button *ngIf = "hasReceivedRequest" (click) = "onCollaborationRequestResponse(false)">Deny request</button>
+    </div>
+    <div *ngIf = "isCollaborating">
+      <button mat-raised-button>Remove collaborator</button>
+    </div>
   </div>
 </div>
 

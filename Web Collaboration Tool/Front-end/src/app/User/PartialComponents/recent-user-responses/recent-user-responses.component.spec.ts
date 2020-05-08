@@ -1,22 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserNotificationsComponent } from './user-notifications.component';
+import { RecentUserResponsesComponent } from './recent-user-responses.component';
+import {IQuery} from '../../../Query/Interfaces/IQuery';
 import {of, throwError} from 'rxjs';
-import {INotification} from '../../../Utility/Interfaces/INotification';
 import {UserModule} from '../../user.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ActivatedRoute} from '@angular/router';
 
-describe('UserNotificationsComponent', () => {
-  let component: UserNotificationsComponent;
-  let fixture: ComponentFixture<UserNotificationsComponent>;
+describe('RecentUserResponsesComponent', () => {
+  let component: RecentUserResponsesComponent;
+  let fixture: ComponentFixture<RecentUserResponsesComponent>;
 
   describe('testing when route resolved successfully', () => {
-    const activatedRouteStub = { data: of({ notifications: [ {} as INotification, {} as INotification ] }) };
+    const mockResponses = [ {} as IQuery, {} as IQuery ];
+    const activatedRouteStub = { data: of({ userData: [ '', mockResponses ] }) };
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [ UserNotificationsComponent ],
+        declarations: [ RecentUserResponsesComponent ],
         imports: [
           UserModule,
           RouterTestingModule
@@ -27,7 +28,7 @@ describe('UserNotificationsComponent', () => {
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(UserNotificationsComponent);
+      fixture = TestBed.createComponent(RecentUserResponsesComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
@@ -37,8 +38,14 @@ describe('UserNotificationsComponent', () => {
     });
 
     it('should initialize fields successfully', () => {
-      expect(component.notifications.length).toEqual(2);
+      expect(component.userResponses.length).toEqual(2);
       expect(component.resolverError).toEqual('');
+    });
+
+    it('should return the username of the root query owner', () => {
+      const mockQuery = { username: 'not-owner', parent: { username: 'owner' } } as IQuery;
+
+      expect(component.getOwnerUsername(mockQuery)).toEqual('owner');
     });
   });
 
@@ -47,7 +54,7 @@ describe('UserNotificationsComponent', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        declarations: [ UserNotificationsComponent ],
+        declarations: [ RecentUserResponsesComponent ],
         imports: [
           UserModule,
           RouterTestingModule
@@ -58,13 +65,13 @@ describe('UserNotificationsComponent', () => {
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(UserNotificationsComponent);
+      fixture = TestBed.createComponent(RecentUserResponsesComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
-    it('should set an error when route failed to resolve', () => {
-      expect(component.notifications.length).toEqual(0);
+    it('should set an error message when route failed to resolve', () => {
+      expect(component.userResponses.length).toEqual(0);
       expect(component.resolverError).toEqual('Error');
     });
   });

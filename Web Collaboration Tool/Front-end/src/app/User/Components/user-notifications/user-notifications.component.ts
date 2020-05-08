@@ -10,9 +10,16 @@ import {ActivatedRoute} from '@angular/router';
 export class UserNotificationsComponent implements OnInit {
   public notifications: Array<INotification>;
 
-  constructor(private route: ActivatedRoute) { }
+  public resolverError: string;
+
+  constructor(private route: ActivatedRoute) {
+    this.notifications = new Array<INotification>();
+    this.resolverError = '';
+  }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { notifications: Array<INotification> }) => this.notifications = data.notifications);
+    this.route.data
+      .subscribe((data: { notifications: Array<INotification> }) => this.notifications = data.notifications,
+                 error => this.resolverError = error);
   }
 }
