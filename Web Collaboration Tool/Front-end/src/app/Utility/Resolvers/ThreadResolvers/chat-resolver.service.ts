@@ -14,8 +14,8 @@ export class ChatResolverService implements Resolve<[Array<IMessage>, string, st
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<[Array<IMessage>, string, string]> | Observable<never> {
     return forkJoin([
       this.threadService.getMessagesForThread(route.paramMap.get('threadId')).pipe(first(), catchError(() => this.onFail())),
-      of(`/topic/user/collaboration/chat/${route.paramMap.get('id')}`),
-      of(`/app/user/collaboration/chat/${route.paramMap.get('id')}`)
+      of(`/topic/user/collaboration/chat/${route.paramMap.get('threadId')}`),
+      of(`/app/user/collaboration/chat/${route.paramMap.get('threadId')}`)
     ]);
   }
 
