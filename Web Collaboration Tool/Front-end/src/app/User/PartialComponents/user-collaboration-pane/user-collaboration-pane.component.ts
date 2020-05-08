@@ -15,19 +15,20 @@ export class UserCollaborationPaneComponent implements OnInit {
 
   private username: string;
 
-  constructor(private route: ActivatedRoute,
-              private rxStompService: RxStompService) { }
+  public resolverError: string;
+
+  constructor(private route: ActivatedRoute, private rxStompService: RxStompService) {
+    this.resolverError = '';
+  }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { collaborationStatus: any } ) => {
+    this.route.data.subscribe((data: { collaborationStatus: [ boolean, boolean, boolean ] } ) => {
       this.hasSentRequest = data.collaborationStatus[0];
       this.hasReceivedRequest = data.collaborationStatus[1];
       this.isCollaborating = data.collaborationStatus[2];
-    });
+    }, error => this.resolverError = error);
 
     this.username = this.route.snapshot.paramMap.get('username');
-
-    console.log(this.isLoggedIn() && !this.isLoggedInUser());
   }
 
   public onCollaborationRequest(): void {
@@ -36,8 +37,8 @@ export class UserCollaborationPaneComponent implements OnInit {
   }
 
   public onCollaborationRequestResponse(response: boolean): void {
-    if(response) this.onAccept();
-    else this.onReject();
+    response ? this.onAccept() : this.onReject();
+
     this.rxStompService.publish({ destination: `/app/user/collaboration/response/${this.username}`, body: JSON.stringify(this.composeResponseBody(response))})
   }
 
