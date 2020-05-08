@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {UserPageComponent} from './Components/user-page/user-page.component';
+import {UserComponent} from './Components/user/user.component';
 import {UserSettingsComponent} from './Components/user-settings/user-settings.component';
 
-import {PrivateCollaborationStatusResolverService} from '../Utility/Resolvers/UserResolvers/private-collaboration-status-resolver.service';
-import {UserDataResolverService} from '../Utility/Resolvers/UserResolvers/user-data-resolver.service';
+import {PrivateCollaborationStatusResolverService} from './Resolvers/private-collaboration-status-resolver.service';
+import {UserDataResolverService} from './Resolvers/user-data-resolver.service';
 import {UserNotificationsComponent} from './Components/user-notifications/user-notifications.component';
 import {UserNotificationResolverService} from '../Utility/Resolvers/UserNotificationResolvers/user-notification-resolver.service';
 
 const routes: Routes = [
   {
     path: 'user/:username',
-    component: UserPageComponent,
+    component: UserComponent,
     resolve: {
         userData: UserDataResolverService,
         collaborationStatus: PrivateCollaborationStatusResolverService
