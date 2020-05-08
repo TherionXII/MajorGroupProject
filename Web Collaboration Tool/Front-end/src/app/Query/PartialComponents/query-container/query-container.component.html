@@ -2,7 +2,7 @@
   <mat-error>{{ errorMessage }}</mat-error>
 
   <mat-form-field>
-    <textarea matInput disabled>{{ query.contents }}</textarea>
+    <textarea class="query-textarea" matInput disabled>{{ query.contents }}</textarea>
 
     <app-query-vote [query] = "query" (queryVotedEvent) = "onQueryVote($event)"
                     (queryVoteFailedEvent) = "onQueryVoteFailure($event)">
@@ -12,18 +12,19 @@
   <mat-list>
     <mat-list-item *ngFor = "let query of query.children">
       <app-query-container [query] = "query"></app-query-container>
-    </mat-list-item>>
+    </mat-list-item>
   </mat-list>
 </mat-card-content>
 
 <mat-card-footer>
-  <button mat-raised-button (click) = "onRespond()">Respond</button>
+  <button mat-raised-button color="primary" (click) = "onRespond()">Respond</button>
 
   <form [formGroup] = "queryResponseForm" *ngIf = "isReplyVisible" (ngSubmit) = "onSubmit(query.id)">
     <mat-form-field>
-      <textarea matInput placeholder = "Enter your response..." name = "response" formControlName = "contents"></textarea>
+      <textarea class="response-textarea" matInput placeholder = "Enter your response..." name = "response"
+                formControlName = "contents"></textarea>
     </mat-form-field>
-
-    <button mat-raised-button type = "submit" [disabled] = "!queryResponseForm.valid">Respond</button>
+    <br>
+    <button mat-raised-button color="primary" type = "submit" [disabled] = "!queryResponseForm.valid">Respond</button>
   </form>
 </mat-card-footer>

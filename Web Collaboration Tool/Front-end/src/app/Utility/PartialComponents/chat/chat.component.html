@@ -5,10 +5,11 @@
 
 <div style = "clear: both;">
   <form id = "messageForm" (ngSubmit) = "onMessageSend()">
-    <mat-form-field>
+    <mat-form-field class="chat-form">
       <textarea matInput placeholder = "Enter your message" [formControl] = "messageFormControl"></textarea>
     </mat-form-field>
+    <br>
 
-    <button mat-raised-button type = "submit">Send message</button>
+    <button mat-raised-button color="primary" type = "submit">Send message</button>
   </form>
 </div>

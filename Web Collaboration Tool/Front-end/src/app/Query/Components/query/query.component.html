@@ -1,6 +1,10 @@
 <mat-card>
   <mat-error>{{ resolverError ? resolverError : null }}</mat-error>
-  <mat-card-header> Created by: <a [routerLink] = "['/user', query ? query.username : '']"> {{ query ? query.username : null }} </a></mat-card-header>
+  <mat-card-header>
+    <span class="card-header-text">Created by:&nbsp;</span>
+    <button mat-button [routerLink] = "['/user', query ? query.username : '']"> {{ query ?
+    query.username : null }} </button>
+  </mat-card-header>
   <mat-card-title> {{ query ? query.title : null }} </mat-card-title>
   <mat-card-subtitle> {{ query ? query.subtitle : null }} </mat-card-subtitle>
   <app-query-container [query] = "query"></app-query-container>
