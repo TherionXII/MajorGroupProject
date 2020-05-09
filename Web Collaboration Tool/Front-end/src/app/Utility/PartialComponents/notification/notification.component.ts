@@ -5,36 +5,24 @@ import {NotificationsService} from 'angular2-notifications';
 import {INotification} from '../../Interfaces/INotification';
 
 @Component({
-  selector: 'app-notification-module',
+  selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-  private collaborationRequestSubscription: Subscription;
-  private collaborationResponseSubscription: Subscription;
-  private groupCollaborationSubscription: Subscription;
-  private groupSubscription: Subscription;
+  private notificationSubscription: Subscription;
 
-  constructor(private rxStompService: RxStompService,
-              private notificationsService: NotificationsService) {}
+  constructor(private rxStompService: RxStompService, private notificationsService: NotificationsService) {
+    this.notificationSubscription = new Subscription();
+  }
 
   public ngOnInit(): void {
-    this.collaborationRequestSubscription = this.rxStompService.watch(`/topic/user/collaboration/request/${localStorage.getItem('username')}`)
+    this.notificationSubscription = this.rxStompService.watch(`/topic/user/notification/${localStorage.getItem('username')}`)
       .subscribe(request => this.showNotification(JSON.parse(request.body)));
-
-    this.collaborationResponseSubscription = this.rxStompService.watch(`/topic/user/collaboration/response/${localStorage.getItem('username')}`)
-      .subscribe(response => this.showNotification(JSON.parse(response.body)));
-
-    this.groupCollaborationSubscription = this.rxStompService.watch(`/topic/user/collaboration/invitation/${localStorage.getItem('username')}`)
-      .subscribe(request => this.showNotification(JSON.parse(request.body)));
-
-    this.groupSubscription = this.rxStompService.watch(`/topic/user/collaboration/group/${localStorage.getItem('username')}`)
-      .subscribe(notification => this.showNotification(JSON.parse(notification.body)));
   }
 
   public ngOnDestroy(): void {
-    this.collaborationRequestSubscription.unsubscribe();
-    this.collaborationResponseSubscription.unsubscribe();
+    this.notificationSubscription.unsubscribe();
   }
 
   private showNotification(notification: INotification): void {
