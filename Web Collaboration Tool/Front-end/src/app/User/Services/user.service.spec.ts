@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Type} from '@angular/core';
 import {IUserProfile} from '../Interfaces/IUserProfile';
+import {IUser} from '../Interfaces/IUser';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -21,6 +22,30 @@ describe('UserService', () => {
 
   it('should be created', () => {
     expect(userService).toBeTruthy();
+  });
+
+  it('should send a successful request to create a user', () => {
+    userService.createUser({ username: 'username', password: 'password' } as IUser)
+      .subscribe(response => expect(response).toEqual('OK'), () => fail('Should have succeeded!'));
+
+    const request = httpTestingController.expectOne('http://localhost:8080/createUser');
+    expect(request.request.method).toEqual('POST');
+    expect(request.request.body).toEqual({ username: 'username', password: 'password' } as IUser);
+    expect(request.request.url).toEqual('http://localhost:8080/createUser');
+
+    request.flush('OK');
+  });
+
+  it('should send an unsuccessful request to create a user', () => {
+    userService.createUser({ username: 'username', password: 'password' } as IUser)
+      .subscribe(() => fail('Should have failed'), error => expect(error.error).toEqual('error'));
+
+    const request = httpTestingController.expectOne('http://localhost:8080/createUser');
+    expect(request.request.method).toEqual('POST');
+    expect(request.request.body).toEqual({ username: 'username', password: 'password' } as IUser);
+    expect(request.request.url).toEqual('http://localhost:8080/createUser');
+
+    request.flush('error', { status: 401, statusText: 'error' });
   });
 
   it('should send a successful request to get a user profile', () => {
