@@ -29,6 +29,8 @@ export class PaperComponent implements OnInit, OnDestroy {
     this.resolverError = '';
 
     this.questionsToControls = new Map<IPaperQuestion, FormControl>();
+
+    this.updateQuestionChannelSubscription = new Subscription();
   }
 
   public ngOnInit(): void {

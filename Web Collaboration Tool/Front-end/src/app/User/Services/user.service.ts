@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IUserProfile} from '../Interfaces/IUserProfile';
+import {IUser} from '../Interfaces/IUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   constructor(private httpClient: HttpClient) {}
+
+  public createUser(user: IUser): Observable<string> {
+    return this.httpClient.post('http://localhost:8080/createUser', user, { responseType: 'text' });
+  }
 
   public getUserProfile(username: string): Observable<IUserProfile> {
     return this.httpClient.get<IUserProfile>('http://localhost:8080/' + username + '/getUserProfile');

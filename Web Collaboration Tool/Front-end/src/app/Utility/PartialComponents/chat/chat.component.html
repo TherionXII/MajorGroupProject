@@ -1,3 +1,4 @@
+<mat-error>{{ resolverError }}</mat-error>
 <div *ngFor = "let message of messages">
   <p *ngIf = "message.sender === username" class = "loggedInUserMessage">{{ message.message }}</p><br>
   <p *ngIf = "message.sender !== username" class = "otherUserMessage">{{ message.message }}</p><br>

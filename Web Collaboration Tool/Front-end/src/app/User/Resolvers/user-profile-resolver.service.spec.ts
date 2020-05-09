@@ -7,7 +7,7 @@ import {of, throwError} from 'rxjs';
 import {IUserProfile} from '../Interfaces/IUserProfile';
 import {ActivatedRoute, Router} from '@angular/router';
 
-fdescribe('UserProfileResolverService', () => {
+describe('UserProfileResolverService', () => {
   let service: UserProfileResolverService;
 
   const userServiceStub = jasmine.createSpyObj('UserService', [ 'getUserProfile' ]);

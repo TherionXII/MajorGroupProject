@@ -81,6 +81,14 @@ describe('PaperComponent', () => {
         expect(changedQuestion.answer).toEqual('answer ');
         expect(rxStompServiceStub.publish).toHaveBeenCalledWith({ destination: destinationChannel, body: JSON.stringify(changedQuestion) })
       });
+
+      it('should unsubscribe from the channel on destroy', () => {
+        const subscriptionSpy = spyOn((component as any).updateQuestionChannelSubscription, 'unsubscribe');
+
+        component.ngOnDestroy();
+
+        expect(subscriptionSpy).toHaveBeenCalled();
+      })
     })
 
     describe(' testing when receiving updates via the channel', () => {

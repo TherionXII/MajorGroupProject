@@ -13,7 +13,7 @@ export class NotificationService {
     return this.httpClient.get<boolean>(`http://localhost:8080/hasSentRequest/${sender}/${recipient}`);
   }
 
-  public hasReceivedCollaborationRequest(recipient: string, sender: string): Observable<boolean> {
+  public hasReceivedCollaborationRequest(sender: string, recipient: string): Observable<boolean> {
     return this.httpClient.get<boolean>(`http://localhost:8080/hasReceivedRequest/${recipient}/${sender}`);
   }
 
