@@ -1,13 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
-import { SignUpService } from '../../Services/sign-up.service';
-import { UserService } from '../../../User/Services/user.service';
-
-import { IUser } from '../../../User/Interfaces/IUser';
-
-import { ValidatorMethods } from '../../HelperClasses/ValidatorMethods';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatHorizontalStepper} from '@angular/material/stepper';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,47 +7,15 @@ import { ValidatorMethods } from '../../HelperClasses/ValidatorMethods';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  public signUpFormRequiredData: FormGroup;
-  public signUpFormOptionalData: FormGroup;
+  @ViewChild('horizontalStepper')
+  public horizontalStepper: MatHorizontalStepper;
 
-  public isInOptionalPart = false;
+  constructor() {}
 
-  public signUpError: string;
+  public ngOnInit() {}
 
-  constructor(private signUpService: SignUpService,
-              private userService: UserService,
-              private router: Router) { }
-
-  ngOnInit() {
-    this.signUpFormRequiredData = new FormGroup({
-      username: new FormControl('', [ Validators.required, Validators.minLength(4), Validators.maxLength(15) ]),
-      password: new FormControl('', [ Validators.required, Validators.minLength(8) ]),
-      repeatPassword: new FormControl('', [ Validators.required, Validators.minLength(8) ]),
-      email: new FormControl('', [ Validators.required, Validators.email ])
-    }, ValidatorMethods.getPasswordEqualValidator);
-
-    this.signUpFormOptionalData = new FormGroup({
-      name: new FormControl(''),
-      surname: new FormControl(''),
-      gender: new FormControl(''),
-      institution: new FormControl('')
-    });
-  }
-
-  public onRequiredDataSubmit() {
-    this.signUpService.createUser(this.signUpFormRequiredData.value as IUser)
-                      .subscribe(() => this.isInOptionalPart = true, error => this.signUpError = error.error);
-  }
-
-  public async onOptionalDataSubmit(): Promise<void> {
-    try {
-      await this.userService.updateUserProfile(this.signUpFormRequiredData.get('username').value, this.signUpFormOptionalData.getRawValue()).toPromise();
-
-      localStorage.setItem('username', this.signUpFormRequiredData.get('username').value);
-      this.router.navigateByUrl('/user/' + localStorage.getItem('username'));
-    } catch (error) {
-      localStorage.clear();
-      this.signUpError = error.error;
-    }
+  public onUserCreated(username: string): void {
+    localStorage.setItem('username', username);
+    this.horizontalStepper.next();
   }
 }
