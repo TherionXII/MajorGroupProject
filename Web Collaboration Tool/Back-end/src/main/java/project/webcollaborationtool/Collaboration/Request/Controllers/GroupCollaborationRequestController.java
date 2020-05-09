@@ -28,7 +28,7 @@ public class GroupCollaborationRequestController
     private NotificationService notificationService;
 
     @CrossOrigin(origins = "/group/*")
-    @SendTo("/topic/user/collaboration/invitation/{recipient}")
+    @SendTo("/topic/user/notification/{recipient}")
     @MessageMapping("/user/collaboration/invitation/{recipient}")
     public Notification createCollaborationRequest(GroupCollaborationRequest groupCollaborationRequest)
     {

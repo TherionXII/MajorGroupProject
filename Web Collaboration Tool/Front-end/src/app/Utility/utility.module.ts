@@ -17,6 +17,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { NotificationComponent } from './PartialComponents/notification/notification.component';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {ChatComponent} from './PartialComponents/chat/chat.component';
+import { MandatorySignUpComponent } from './PartialComponents/mandatory-sign-up/mandatory-sign-up.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { OptionalSignUpComponent } from './PartialComponents/optional-sign-up/optional-sign-up.component';
 
 @NgModule({
   declarations: [
@@ -24,25 +27,28 @@ import {ChatComponent} from './PartialComponents/chat/chat.component';
     SignUpComponent,
     FooterComponent,
     NotificationComponent,
-    ChatComponent
+    ChatComponent,
+    MandatorySignUpComponent,
+    OptionalSignUpComponent
   ],
-  imports: [
-    HttpClientModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    UtilityRoutingModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule,
-    MatToolbarModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    SimpleNotificationsModule,
-  ],
+    imports: [
+        HttpClientModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        UtilityRoutingModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatToolbarModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        SimpleNotificationsModule,
+        MatStepperModule,
+    ],
   exports: [
     FooterComponent,
     NotificationComponent,
