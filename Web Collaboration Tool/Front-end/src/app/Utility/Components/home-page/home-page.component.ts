@@ -15,7 +15,9 @@ export class HomePageComponent implements OnInit {
   public loginError: string;
 
   constructor(private loginService: LoginService,
-              private router: Router) {}
+              private router: Router) {
+    this.loginError = '';
+  }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
