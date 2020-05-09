@@ -16,23 +16,30 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public messageFormControl: FormControl;
 
+  public resolverError: string;
+
   private chatSubscription: Subscription;
   private watchChannel: string;
   private publishChannel: string;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private rxStompService: RxStompService) { }
+  constructor(private activatedRoute: ActivatedRoute, private rxStompService: RxStompService) {
+    this.messages = new Array<IMessage>();
+    this.resolverError = '';
+
+    this.chatSubscription = new Subscription();
+  }
 
   public ngOnInit(): void {
     this.username = localStorage.getItem('username');
 
-    this.activatedRoute.data.subscribe((data: { chatData: [Array<IMessage>, string, string] }) => {
+    this.activatedRoute.data.subscribe((data: { chatData: [ Array<IMessage>, string, string ] }) => {
       this.messages = data.chatData[0];
       this.watchChannel = data.chatData[1];
       this.publishChannel = data.chatData[2];
 
-      this.chatSubscription = this.rxStompService.watch(this.watchChannel).subscribe(request => this.messages.push(JSON.parse(request.body)));
-    });
+      this.chatSubscription = this.rxStompService.watch(this.watchChannel)
+        .subscribe(request => this.messages.push(JSON.parse(request.body)));
+    }, error => this.resolverError = error);
 
     this.messageFormControl = new FormControl('');
   }
@@ -46,8 +53,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.messageFormControl.reset('');
 
-    this.rxStompService.publish({ destination: this.publishChannel,
-                                             body: JSON.stringify(body) })
+    this.rxStompService.publish({ destination: this.publishChannel, body: JSON.stringify(body) })
   }
 
   private prepareMessageBody(): IMessage {
