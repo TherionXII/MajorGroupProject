@@ -52,7 +52,7 @@ public class GroupCollaborationController
     }
 
     @CrossOrigin(origins = "/group/*")
-    @SendTo("/topic/user/collaboration/group/{username}")
+    @SendTo("/topic/user/notification/{recipient}")
     @MessageMapping("/user/collaboration/makeAdmin/{groupId}/{username}")
     public Notification makeAdmin(@DestinationVariable Integer groupId, @DestinationVariable String username)
     {

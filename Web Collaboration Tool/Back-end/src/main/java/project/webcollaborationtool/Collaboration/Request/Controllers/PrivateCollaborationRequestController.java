@@ -51,7 +51,7 @@ public class PrivateCollaborationRequestController
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @SendTo("/topic/user/collaboration/request/{recipient}")
+    @SendTo("/topic/user/notification/{recipient}")
     @MessageMapping("/user/collaboration/request/{recipient}")
     public Notification createCollaborationRequest(PrivateCollaborationRequest privateCollaborationRequest)
     {
@@ -60,7 +60,7 @@ public class PrivateCollaborationRequestController
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @SendTo("/topic/user/collaboration/request/{recipient}")
+    @SendTo("/topic/user/notification/{recipient}")
     @MessageMapping("/user/collaboration/response/{recipient}")
     public Notification respondToCollaborationRequest(PrivateCollaborationRequest privateCollaborationRequest)
     {
