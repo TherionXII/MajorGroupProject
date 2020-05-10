@@ -1,0 +1,10 @@
+mat-icon.mat-card-avatar {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+}
+
+.card:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}

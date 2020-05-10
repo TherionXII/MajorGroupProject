@@ -1,8 +1,13 @@
 <mat-list>
   <mat-error>{{ resolverError }}</mat-error>
-  <mat-list-item *ngFor = "let query of userQueries">
-    <h3>{{ query.title }}&nbsp;</h3><br>
-    <h3>{{ query.subtitle }}&nbsp;</h3>
-    <h3>Responses: {{ query.children ? query.children.length : 0 }}</h3>
-  </mat-list-item>
+  <mat-card class="card" *ngFor = "let query of userQueries" [routerLink] = "['/query', query.id]">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>contact_support</mat-icon>
+      <mat-card-title> {{ query.title }} </mat-card-title>
+      <mat-card-subtitle> {{ query.subtitle }} </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Responses: {{ query.children ? query.children.length : 0 }}</p>
+    </mat-card-content>
+  </mat-card>
 </mat-list>
