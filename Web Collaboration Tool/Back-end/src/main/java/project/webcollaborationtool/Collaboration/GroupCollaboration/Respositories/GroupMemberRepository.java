@@ -6,10 +6,11 @@ import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.Gr
 import project.webcollaborationtool.User.Entities.User;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMember, Integer>
 {
-    GroupMember findByGroupIdAndMemberUsername(Integer groupId, String memberUsername);
+    Optional<GroupMember> findByGroupIdAndMemberUsername(Integer groupId, String memberUsername);
     void deleteByGroupIdAndMemberUsername(Integer groupId, String memberUsername);
 }
