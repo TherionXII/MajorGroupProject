@@ -12,14 +12,11 @@ export class QueryContainerComponent implements OnInit {
   @Input()
   public query: IQuery;
 
-  public isReplyVisible: boolean;
-
   public queryResponseForm: FormGroup;
 
   public errorMessage: string;
 
   constructor(private queryService: QueryService) {
-    this.isReplyVisible = false;
     this.errorMessage = '';
   }
 
@@ -37,14 +34,8 @@ export class QueryContainerComponent implements OnInit {
     this.errorMessage = error;
   }
 
-  public onRespond(): void {
-    this.isReplyVisible = !this.isReplyVisible;
-  }
-
   public onSubmit(id: number): void {
     this.queryService.createResponse(id, localStorage.getItem('username'), this.queryResponseForm.getRawValue() as IQuery)
       .subscribe(query => this.query = query, error => this.errorMessage = error.message);
-
-    this.onRespond();
   }
 }
