@@ -33,13 +33,11 @@ public class GroupMemberEntityTests
         groupMember.setMemberUsername("username");
         assertThat(groupMember.getMemberUsername()).isEqualTo("username");
 
-        groupMember.setGroupCollaboration(this.getMockGroup());
-        assertThat(groupMember.getGroupCollaboration()).isNotNull();
-        assertThat(groupMember.getGroupCollaboration().getId()).isEqualTo(0);
+        groupMember.setGroupId(this.getMockGroup().getId());
+        assertThat(groupMember.getGroupId()).isEqualTo(0);
 
-        groupMember.setMember(this.getMockUser());
-        assertThat(groupMember.getMember()).isNotNull();
-        assertThat(groupMember.getMember().getUsername()).isEqualTo("username");
+        groupMember.setMemberUsername(this.getMockUser().getUsername());
+        assertThat(groupMember.getMemberUsername()).isEqualTo("username");
 
         groupMember.setIsAdmin(true);
         assertThat(groupMember.getIsAdmin()).isTrue();

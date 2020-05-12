@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupMember;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupDataException;
-import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupMemberDataException;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupCollaborationRepository;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupMemberRepository;
+import project.webcollaborationtool.Collaboration.Thread.Entities.GroupCollaborationThread;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Repositories.UserRepository;
@@ -36,13 +36,17 @@ public class GroupCollaborationService
         if(!this.userRepository.existsById(username))
             throw new InvalidUserDataException();
 
-        this.userRepository.findByUsername(username).getGroups().forEach(groupMember -> groupList.add(groupMember.getGroupCollaboration()));
+        this.userRepository.findByUsername(username).getGroups().forEach(groupMember ->
+        {
+            groupList.add(this.groupCollaborationRepository.findById(groupMember.getGroupId()).orElseThrow(InvalidGroupDataException::new));
+        });
 
         return groupList;
     }
 
     public GroupCollaboration createGroup(GroupCollaboration groupCollaboration, String username)
     {
+        groupCollaboration.setThread(new GroupCollaborationThread());
         groupCollaboration = this.groupCollaborationRepository.save(groupCollaboration);
 
         if(!this.userRepository.existsById(username))
@@ -60,7 +64,7 @@ public class GroupCollaborationService
 
     public void makeAdmin(Integer groupId, String username)
     {
-        var groupMember = this.groupMemberRepository.findByGroupIdAndMemberUsername(groupId, username).orElseThrow(InvalidGroupMemberDataException::new);
+        var groupMember = this.groupMemberRepository.findByGroupIdAndMemberUsername(groupId, username);
         groupMember.setIsAdmin(true);
 
         this.groupMemberRepository.save(groupMember);
@@ -83,9 +87,7 @@ public class GroupCollaborationService
     private void addMember(GroupCollaboration groupCollaboration, User user, Boolean isAdmin)
     {
         var groupMember = new GroupMember();
-        groupMember.setMember(user);
         groupMember.setIsAdmin(isAdmin);
-        groupMember.setGroupCollaboration(groupCollaboration);
 
         groupMember.setGroupId(groupCollaboration.getId());
         groupMember.setMemberUsername(user.getUsername());

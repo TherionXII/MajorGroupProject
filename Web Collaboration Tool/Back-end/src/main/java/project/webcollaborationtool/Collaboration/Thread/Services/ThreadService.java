@@ -21,9 +21,6 @@ public class ThreadService
     private PrivateCollaborationRepository privateCollaborationRepository;
 
     @Autowired
-    private GroupCollaborationRepository groupCollaborationRepository;
-
-    @Autowired
     private ChatThreadRepository chatThreadRepository;
 
     @Autowired
@@ -45,18 +42,6 @@ public class ThreadService
         privateCollaborationRepository.save(privateCollaboration.orElseThrow());
 
         return thread.getId();
-    }
-
-    public GroupCollaboration createGroupThread(Integer groupId)
-    {
-        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow();
-
-        var thread = new GroupCollaborationThread();
-        thread.setGroupCollaboration(groupCollaboration);
-        thread = this.chatThreadRepository.save(thread);
-
-        groupCollaboration.setThread(thread);
-        return groupCollaborationRepository.save(groupCollaboration);
     }
 
     public Collection<Message> getMessagesForThread(Integer threadId)

@@ -33,18 +33,15 @@ public class User
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
 
-    @Nullable
     @JsonIgnore
     @OneToMany(mappedBy = "firstCollaborator")
     private Collection<PrivateCollaboration> collaborators;
 
-    @Nullable
     @JsonIgnore
     @OneToMany(mappedBy = "recipient")
     private Collection<PrivateNotification> notifications;
 
-    @Nullable
     @JsonIgnore
-    @OneToMany(mappedBy = "member")
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<GroupMember> groups;
 }
