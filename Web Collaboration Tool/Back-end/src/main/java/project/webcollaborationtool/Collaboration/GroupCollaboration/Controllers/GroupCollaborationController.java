@@ -1,18 +1,13 @@
 package project.webcollaborationtool.Collaboration.GroupCollaboration.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
+import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupDataException;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Services.GroupCollaborationService;
-import project.webcollaborationtool.Collaboration.Thread.Services.ThreadService;
-import project.webcollaborationtool.Notifications.Entities.Notification;
-import project.webcollaborationtool.Notifications.Services.NotificationService;
-
-import java.util.Collection;
+import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -22,52 +17,45 @@ public class GroupCollaborationController
     @Autowired
     private GroupCollaborationService groupCollaborationService;
 
-    @Autowired
-    private ThreadService threadService;
-
-    @Autowired
-    private NotificationService notificationService;
-
     @PostMapping("/{username}/createGroup")
     @CrossOrigin(origins = "/groups", methods = RequestMethod.POST)
-    public ResponseEntity<GroupCollaboration> createGroup(@RequestBody GroupCollaboration groupCollaboration, @PathVariable String username)
+    public ResponseEntity<?> createGroup(@RequestBody GroupCollaboration groupCollaboration, @PathVariable String username)
     {
-        var group = this.groupCollaborationService.createGroup(groupCollaboration, username);
-        group = this.threadService.createGroupThread(group.getId());
-        return ResponseEntity.ok().body(group);
+        try
+        {
+            return ResponseEntity.ok().body(this.groupCollaborationService.createGroup(groupCollaboration, username));
+        }
+        catch(InvalidUserDataException invalidUserDataException)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(invalidUserDataException.getMessage());
+        }
     }
 
     @GetMapping("/{username}/getGroups")
     @CrossOrigin(origins = "/groups", methods = RequestMethod.GET)
-    public ResponseEntity<Collection<GroupCollaboration>> getGroupsForUser(@PathVariable String username)
+    public ResponseEntity<?> getGroupsForUser(@PathVariable String username)
     {
-        return ResponseEntity.ok().body(this.groupCollaborationService.getGroupsForUser(username));
+        try
+        {
+            return ResponseEntity.ok().body(this.groupCollaborationService.getGroupsForUser(username));
+        }
+        catch(InvalidUserDataException invalidUserDataException)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(invalidUserDataException.getMessage());
+        }
     }
 
     @GetMapping("/{groupId}/getGroup")
     @CrossOrigin(origins = "/group/{groupId}", methods = RequestMethod.GET)
-    public ResponseEntity<GroupCollaboration> getGroupById(@PathVariable Integer groupId)
+    public ResponseEntity<?> getGroupById(@PathVariable Integer groupId)
     {
-        return ResponseEntity.ok().body(this.groupCollaborationService.getGroupById(groupId));
-    }
-
-    @CrossOrigin(origins = "/group/*")
-    @SendTo("/topic/user/notification/{recipient}")
-    @MessageMapping("/user/collaboration/makeAdmin/{groupId}/{username}")
-    public Notification makeAdmin(@DestinationVariable Integer groupId, @DestinationVariable String username)
-    {
-        this.groupCollaborationService.makeAdmin(groupId, username);
-
-        return this.notificationService.addGroupAdminPromotionNotification(groupId, username);
-    }
-
-    @CrossOrigin(origins = "/group/*")
-    @SendTo("/topic/user/collaboration/group/{username}")
-    @MessageMapping("/user/collaboration/removeFromGroup/{groupId}/{username}")
-    public Notification removeFromGroup(@DestinationVariable Integer groupId, @DestinationVariable String username)
-    {
-        this.groupCollaborationService.removeFromGroup(groupId, username);
-
-        return this.notificationService.addGroupRemovalNotification(groupId, username);
+        try
+        {
+            return ResponseEntity.ok().body(this.groupCollaborationService.getGroupById(groupId));
+        }
+        catch(InvalidGroupDataException invalidGroupDataException)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(invalidGroupDataException.getMessage());
+        }
     }
 }
