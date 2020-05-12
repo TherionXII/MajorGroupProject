@@ -1,7 +1,7 @@
 package project.webcollaborationtool.Collaboration.Paper.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 import org.springframework.lang.Nullable;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 
@@ -9,8 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 public class Paper
 {
     @Id

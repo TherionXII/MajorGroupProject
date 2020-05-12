@@ -1,8 +1,10 @@
 package project.webcollaborationtool.Collaboration.Paper.Entities;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 public class Position
 {
     private Integer x1;
