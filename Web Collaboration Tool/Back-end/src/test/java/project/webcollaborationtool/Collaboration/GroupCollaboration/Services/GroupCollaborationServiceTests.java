@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupMember;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupDataException;
-import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupMemberDataException;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupCollaborationRepository;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupMemberRepository;
 import project.webcollaborationtool.User.Entities.User;
@@ -45,6 +44,7 @@ public class GroupCollaborationServiceTests
 
         when(this.userRepository.existsById(user.getUsername())).thenReturn(true);
         when(this.userRepository.findByUsername(user.getUsername())).thenReturn(user);
+        when(this.groupCollaborationRepository.findById(any())).thenReturn(Optional.of(new GroupCollaboration()));
 
         var result = this.groupCollaborationService.getGroupsForUser(user.getUsername());
         assertThat(result.size()).isEqualTo(2);
@@ -58,6 +58,18 @@ public class GroupCollaborationServiceTests
         when(this.userRepository.existsById(user.getUsername())).thenReturn(false);
 
         assertThatThrownBy(() -> this.groupCollaborationService.getGroupsForUser(user.getUsername())).isInstanceOf(InvalidUserDataException.class);
+    }
+
+    @Test
+    public void testGetGroupsWithInvalidSavedGroupData()
+    {
+        var user = this.createMockUser();
+
+        when(this.userRepository.existsById(user.getUsername())).thenReturn(true);
+        when(this.userRepository.findByUsername(user.getUsername())).thenReturn(user);
+        when(this.groupCollaborationRepository.findById(any())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> this.groupCollaborationService.getGroupsForUser(user.getUsername())).isInstanceOf(InvalidGroupDataException.class);
     }
 
     @Test
@@ -114,22 +126,10 @@ public class GroupCollaborationServiceTests
         var user = this.createMockUser();
         var groupMember = this.createMockGroupMember();
 
-        when(this.groupMemberRepository.findByGroupIdAndMemberUsername(group.getId(), user.getUsername())).thenReturn(Optional.of(groupMember));
+        when(this.groupMemberRepository.findByGroupIdAndMemberUsername(group.getId(), user.getUsername())).thenReturn(groupMember);
         when(this.groupMemberRepository.save(any())).thenReturn(groupMember);
 
         assertThatCode(() -> this.groupCollaborationService.makeAdmin(group.getId(), user.getUsername())).doesNotThrowAnyException();
-    }
-
-    @Test
-    public void testMakeAdminWithInvalidGroupMemberData()
-    {
-        var group = this.createSavedMockGroup();
-        var user = this.createMockUser();
-
-        when(this.groupMemberRepository.findByGroupIdAndMemberUsername(group.getId(), user.getUsername())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() ->
-                this.groupCollaborationService.makeAdmin(group.getId(), user.getUsername())).isInstanceOf(InvalidGroupMemberDataException.class);
     }
 
     @Test

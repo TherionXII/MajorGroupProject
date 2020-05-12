@@ -21,7 +21,7 @@ public class GroupCollaboration
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "groupCollaboration", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<GroupMember> groupMembers;
 
     @JsonIgnore
@@ -34,7 +34,7 @@ public class GroupCollaboration
     @NotNull
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference("group_thread")
     private GroupCollaborationThread thread;
 }
