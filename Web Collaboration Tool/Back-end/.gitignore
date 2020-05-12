@@ -4,6 +4,8 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+src/test/coverage
+
 ### STS ###
 .apt_generated
 .classpath
