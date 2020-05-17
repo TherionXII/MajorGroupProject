@@ -1,15 +1,17 @@
 package project.webcollaborationtool.Collaboration.Thread.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 public class Message
 {
     @Id
