@@ -2,6 +2,7 @@ package project.webcollaborationtool.Notifications.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupDataException;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupCollaborationRepository;
 import project.webcollaborationtool.Notifications.Entities.GroupCollaborationNotification;
 import project.webcollaborationtool.Notifications.Entities.Notification;
@@ -46,8 +47,10 @@ public class NotificationService
         var privateCollaborationNotification = new PrivateCollaborationNotification();
         privateCollaborationNotification.setTitle("A user responded to your collaboration request!");
 
-        if(privateCollaborationRequest.getIsAccepted()) privateCollaborationNotification.setContent("User " + privateCollaborationRequest.getSender() + " has accepted your request.");
-        else privateCollaborationNotification.setContent("User " + privateCollaborationRequest.getSender() + " has refused your request.");
+        if(privateCollaborationRequest.getIsAccepted())
+            privateCollaborationNotification.setContent("User " + privateCollaborationRequest.getSender() + " has accepted your request.");
+        else
+            privateCollaborationNotification.setContent("User " + privateCollaborationRequest.getSender() + " has refused your request.");
 
         privateCollaborationNotification.setRecipient(this.userRepository.findByUsername(privateCollaborationRequest.getRecipient()));
         privateCollaborationNotification.setSender(privateCollaborationRequest.getSender());
@@ -62,7 +65,7 @@ public class NotificationService
 
     public Notification addGroupCollaborationRequest(GroupCollaborationRequest groupCollaborationRequest)
     {
-        var groupCollaboration = this.groupCollaborationRepository.findById(groupCollaborationRequest.getGroupId()).orElseThrow();
+        var groupCollaboration = this.groupCollaborationRepository.findById(groupCollaborationRequest.getGroupId()).orElseThrow(InvalidGroupDataException::new);
 
         var groupCollaborationNotification = new GroupCollaborationNotification();
         groupCollaborationNotification.setTitle("You have been invited to a collaboration group!");
@@ -75,7 +78,7 @@ public class NotificationService
 
     public Notification addGroupAdminPromotionNotification(Integer groupId, String username)
     {
-        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow();
+        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow(InvalidGroupDataException::new);
 
         var groupCollaborationNotification = new GroupCollaborationNotification();
         groupCollaborationNotification.setTitle("You have been made an administrator of a group!");
@@ -88,7 +91,7 @@ public class NotificationService
 
     public Notification addGroupRemovalNotification(Integer groupId, String username)
     {
-        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow();
+        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow(InvalidGroupDataException::new);
 
         var groupCollaborationNotification = new GroupCollaborationNotification();
         groupCollaborationNotification.setTitle("You have been removed from a group!");

@@ -7,8 +7,10 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "message_type", discriminatorType = DiscriminatorType.STRING, columnDefinition = "VARCHAR(255)")
 public class Notification
