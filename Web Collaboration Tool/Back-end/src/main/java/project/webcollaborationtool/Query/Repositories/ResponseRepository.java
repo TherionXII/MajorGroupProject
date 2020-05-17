@@ -2,12 +2,11 @@ package project.webcollaborationtool.Query.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import project.webcollaborationtool.Query.Entities.PublicQuery;
-import project.webcollaborationtool.Query.Entities.Query;
-import project.webcollaborationtool.User.Entities.User;
+import project.webcollaborationtool.Query.Entities.Response;
 
 import java.util.Collection;
 
-public interface PublicQueryRepository extends JpaRepository<PublicQuery, Integer>
+public interface ResponseRepository extends JpaRepository<Response, Integer>
 {
     Collection<PublicQuery> findTop10ByUsernameOrderByCreatedAtDesc(String username);
 }
