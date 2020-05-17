@@ -10,14 +10,14 @@ export class NotificationService {
   constructor(private httpClient: HttpClient) {}
 
   public hasSentCollaborationRequest(sender: string, recipient: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(`http://localhost:8080/hasSentRequest/${sender}/${recipient}`);
+    return this.httpClient.get<boolean>(`http://localhost:8080/api/privateRequests/${sender}/${recipient}/hasSentRequest`);
   }
 
   public hasReceivedCollaborationRequest(sender: string, recipient: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(`http://localhost:8080/hasReceivedRequest/${recipient}/${sender}`);
+    return this.httpClient.get<boolean>(`http://localhost:8080/api/privateRequests/${recipient}/${sender}/hasReceivedRequest`);
   }
 
   public getAllNotificationsForUser(username: string): Observable<Array<INotification>> {
-    return this.httpClient.get<Array<INotification>>(`http://localhost:8080/getNotifications/${username}`);
+    return this.httpClient.get<Array<INotification>>(`http://localhost:8080/api/notification/${username}/getNotifications`);
   }
 }

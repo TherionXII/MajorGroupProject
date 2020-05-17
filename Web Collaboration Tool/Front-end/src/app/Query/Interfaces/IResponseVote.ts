@@ -1,4 +1,4 @@
-export interface IQueryVote {
+export interface IResponseVote {
   username: string;
 
   queryId: number;

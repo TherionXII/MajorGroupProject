@@ -19,6 +19,6 @@ export class PrivateCollaborationService {
   }
 
   public getPrivateCollaborationRequestsForUser(username: string): Observable<Array<IPrivateCollaborationRequest>> {
-    return this.httpClient.get<Array<IPrivateCollaborationRequest>>(`http://localhost:8080/getPrivateCollaborationRequests/${username}`);
+    return this.httpClient.get<Array<IPrivateCollaborationRequest>>(`http://localhost:8080/api/privateRequests/${username}/getPrivateCollaborationRequests`);
   }
 }

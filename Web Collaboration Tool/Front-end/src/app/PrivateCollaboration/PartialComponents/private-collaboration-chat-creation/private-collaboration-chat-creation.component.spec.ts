@@ -17,7 +17,7 @@ describe('PrivateCollaborationChatCreationComponent', () => {
   beforeEach(() => spyOn(localStorage, 'getItem').and.returnValue('username'));
 
   describe(' testing when route resolved successfully', () => {
-    const mockPrivateCollaborations = [ { collaboratorOneUsername: 'user1', collaboratorTwoUsername: 'user2' } as IPrivateCollaboration ];
+    const mockPrivateCollaborations = [ { firstCollaborator: 'user1', secondCollaborator: 'user2' } as IPrivateCollaboration ];
     const activatedRouteStub = { data: of({ privateCollaborations: mockPrivateCollaborations } ) };
 
     beforeEach(async(() => {
@@ -57,8 +57,8 @@ describe('PrivateCollaborationChatCreationComponent', () => {
       const navigateByUrlSpy = spyOn(TestBed.inject(Router), 'navigateByUrl');
       component.onNewThread(component.collaborations[0]);
 
-      expect(threadServiceStub.createNewThread).toHaveBeenCalledWith(component.collaborations[0].collaboratorOneUsername,
-                                                                     component.collaborations[0].collaboratorTwoUsername);
+      expect(threadServiceStub.createNewThread).toHaveBeenCalledWith(component.collaborations[0].firstCollaborator,
+                                                                     component.collaborations[0].secondCollaborator);
       expect(navigateByUrlSpy).toHaveBeenCalledWith('/thread/0');
       expect(component.chatError).toEqual('');
     });
@@ -69,8 +69,8 @@ describe('PrivateCollaborationChatCreationComponent', () => {
       const navigateByUrlSpy = spyOn(TestBed.inject(Router), 'navigateByUrl');
       component.onNewThread(component.collaborations[0]);
 
-      expect(threadServiceStub.createNewThread).toHaveBeenCalledWith(component.collaborations[0].collaboratorOneUsername,
-                                                                     component.collaborations[0].collaboratorTwoUsername);
+      expect(threadServiceStub.createNewThread).toHaveBeenCalledWith(component.collaborations[0].firstCollaborator,
+                                                                     component.collaborations[0].secondCollaborator);
       expect(navigateByUrlSpy).not.toHaveBeenCalledWith('/thread/0');
       expect(component.chatError).toEqual('Failed to create new chat; please try again later');
     })

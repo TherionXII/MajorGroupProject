@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IQuery} from '../../Interfaces/IQuery';
 import {QueryService} from '../../Services/query.service';
+import {IResponse} from '../../Interfaces/IResponse';
 
 @Component({
   selector: 'app-query-vote',
@@ -9,16 +10,16 @@ import {QueryService} from '../../Services/query.service';
 })
 export class QueryVoteComponent implements OnInit {
   @Input()
-  public query: IQuery;
+  public response: IResponse;
 
   @Output()
-  public queryVotedEvent: EventEmitter<IQuery>;
+  public queryVotedEvent: EventEmitter<IResponse>;
 
   @Output()
   public queryVoteFailedEvent: EventEmitter<string>;
 
   constructor(private queryService: QueryService) {
-    this.queryVotedEvent = new EventEmitter<IQuery>();
+    this.queryVotedEvent = new EventEmitter<IResponse>();
     this.queryVoteFailedEvent = new EventEmitter<string>();
   }
 
@@ -26,13 +27,13 @@ export class QueryVoteComponent implements OnInit {
   }
 
   public onVote(vote: boolean): void {
-    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), queryId: this.query.id })
+    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), queryId: this.response.id })
       .subscribe(updatedQuery => this.onSuccessfulVote(updatedQuery), () => this.onFailedVote());
   }
 
-  private onSuccessfulVote(updatedQuery: IQuery): void {
-    this.query = updatedQuery;
-    this.queryVotedEvent.emit(this.query);
+  private onSuccessfulVote(updatedQuery: IResponse): void {
+    this.response = updatedQuery;
+    this.queryVotedEvent.emit(this.response);
   }
 
   private onFailedVote(): void {

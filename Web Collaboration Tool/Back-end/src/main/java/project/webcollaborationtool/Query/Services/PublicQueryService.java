@@ -32,7 +32,7 @@ public class PublicQueryService
         return this.publicQueryRepository.findTop10ByUsernameOrderByCreatedAtDesc(username);
     }
 
-    public Collection<PublicQuery> getRecentResponsesForUser(@NotNull String username)
+    public Collection<Response> getRecentResponsesForUser(@NotNull String username)
     {
         return this.responseRepository.findTop10ByUsernameOrderByCreatedAtDesc(username);
     }

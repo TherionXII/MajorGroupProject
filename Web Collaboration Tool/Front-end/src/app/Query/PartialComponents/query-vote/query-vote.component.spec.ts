@@ -29,7 +29,7 @@ describe('QueryVoteComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(() => component.query = { id: 0, rating: 0 } as IQuery);
+  beforeEach(() => component.response = { id: 0, rating: 0 } as IQuery);
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -38,7 +38,7 @@ describe('QueryVoteComponent', () => {
   it('should initialize fields successfully', () => {
     expect(component.queryVotedEvent).not.toBeUndefined();
     expect(component.queryVoteFailedEvent).not.toBeUndefined();
-    expect(component.query.id).toEqual(0);
+    expect(component.response.id).toEqual(0);
   });
 
   it('should emit queryVoted event when voted for the query successfully', () => {
@@ -48,8 +48,8 @@ describe('QueryVoteComponent', () => {
     component.onVote(true);
 
     expect(queryServiceStub.submitVote).toHaveBeenCalledWith({ vote: true, username: 'username', queryId: 0 });
-    expect(component.query.rating).toEqual(1);
-    expect(queryVotedEventSpy).toHaveBeenCalledWith(component.query);
+    expect(component.response.rating).toEqual(1);
+    expect(queryVotedEventSpy).toHaveBeenCalledWith(component.response);
   });
 
   it('should emit queryVoteFailed event when vote submission failed', () => {
@@ -59,7 +59,7 @@ describe('QueryVoteComponent', () => {
     component.onVote(true);
 
     expect(queryServiceStub.submitVote).toHaveBeenCalledWith({ vote: true, username: 'username', queryId: 0 });
-    expect(component.query.rating).toEqual(0);
+    expect(component.response.rating).toEqual(0);
     expect(queryVotedEventSpy).toHaveBeenCalledWith('Failed to vote for the query; please try again later');
   });
 });

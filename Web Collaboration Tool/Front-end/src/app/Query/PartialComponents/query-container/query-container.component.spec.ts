@@ -24,7 +24,7 @@ describe('QueryContainerComponent', () => {
     fixture = TestBed.createComponent(QueryContainerComponent);
     component = fixture.componentInstance;
 
-    component.query = { id: 0, contents: 'Contents', children: [] } as IQuery;
+    component.response = { id: 0, contents: 'Contents', responses: [] } as IQuery;
 
     fixture.detectChanges();
   });
@@ -37,14 +37,14 @@ describe('QueryContainerComponent', () => {
 
   it('should initialize components', () => {
     expect(component.isReplyVisible).toBeFalse();
-    expect(component.query.id).toEqual(0);
+    expect(component.response.id).toEqual(0);
     expect(component.errorMessage).toEqual('');
   });
 
   it('should update query when queryVotedEvent is emitted', () => {
-    expect(component.query.rating).not.toEqual(1);
+    expect(component.response.rating).not.toEqual(1);
     component.onQueryVote({ id: 0, rating: 1 } as IQuery);
-    expect(component.query.rating).toEqual(1);
+    expect(component.response.rating).toEqual(1);
   });
 
   it('should set an error message when queryVoteFailed event is emitted', () => {
@@ -71,7 +71,7 @@ describe('QueryContainerComponent', () => {
     component.onSubmit(query.id);
 
     expect(createResponseSpy).toHaveBeenCalledWith(0, 'username', component.queryResponseForm.getRawValue() as IQuery);
-    expect(component.query).toEqual(query);
+    expect(component.response).toEqual(query);
     expect(onRespondSpy).toHaveBeenCalled();
   });
 
@@ -86,7 +86,7 @@ describe('QueryContainerComponent', () => {
     component.onSubmit(query.id);
 
     expect(createResponseSpy).toHaveBeenCalledWith(0, 'username', component.queryResponseForm.getRawValue() as IQuery);
-    expect(component.query).not.toEqual(query);
+    expect(component.response).not.toEqual(query);
     expect(onRespondSpy).toHaveBeenCalled();
     expect(component.errorMessage).toEqual('error');
   });

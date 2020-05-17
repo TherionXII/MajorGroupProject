@@ -1,11 +1,31 @@
 <mat-card>
-  <mat-error>{{ resolverError ? resolverError : null }}</mat-error>
+  <mat-error>{{ errorMessage ? errorMessage : null }}</mat-error>
   <mat-card-header>
     <span class="card-header-text">Created by:&nbsp;</span>
-    <button mat-button [routerLink] = "['/user', query ? query.username : '']"> {{ query ?
-    query.username : null }} </button>
+    <button mat-button [routerLink] = "['/user', query ? query.username : '']"> {{ query.username }} </button>
   </mat-card-header>
   <mat-card-title> {{ query ? query.title : null }} </mat-card-title>
   <mat-card-subtitle> {{ query ? query.subtitle : null }} </mat-card-subtitle>
-  <app-query-container [query] = "query"></app-query-container>
+
+  <mat-form-field>
+    <textarea class="query-textarea" matInput disabled>{{ query.contents }}</textarea>
+
+  </mat-form-field>
+
+  <mat-list>
+    <mat-list-item *ngFor = "let response of query.responses">
+      <app-query-container [response] = "response"></app-query-container>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-card-footer>
+    <form [formGroup] = "queryResponseForm" (ngSubmit) = "onSubmit()">
+      <mat-form-field>
+      <textarea class="response-textarea" matInput placeholder = "Enter your response..." name = "response"
+                formControlName = "response"></textarea>
+      </mat-form-field>
+      <br>
+      <button mat-raised-button color="primary" type = "submit" [disabled] = "!queryResponseForm.valid">Respond</button>
+    </form>
+  </mat-card-footer>
 </mat-card>

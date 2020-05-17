@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IQuery } from '../Interfaces/IQuery';
-import {IQueryVote} from '../Interfaces/IQueryVote';
+import {IResponseVote} from '../Interfaces/IResponseVote';
+import {IResponse} from '../Interfaces/IResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class QueryService {
     return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentQueries`);
   }
 
-  public getRecentResponsesForUser(username: string): Observable<Array<IQuery>> {
-    return this.httpClient.get<Array<IQuery>>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentResponses`);
+  public getRecentResponsesForUser(username: string): Observable<Array<IResponse>> {
+    return this.httpClient.get<Array<IResponse>>(`http://localhost:8080/api/queries/publicQueries/${username}/getRecentResponses`);
   }
 
   public getQueryById(queryId: string): Observable<IQuery> {
@@ -38,11 +39,11 @@ export class QueryService {
       return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/groupQueries/${query.username}/${groupId}/createQuery`, query);
   }
 
-  public createResponse(queryId: number, username: string, response: IQuery): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/publicQueries/${username}/${queryId}/createResponse`, response);
+  public createResponse(responseId: number, username: string, response: IResponse): Observable<IQuery> {
+    return this.httpClient.post<IQuery>(`http://localhost:8080/api/queries/${username}/${responseId}/createResponse`, response);
   }
 
-  public submitVote(vote: IQueryVote): Observable<IQuery> {
-    return this.httpClient.post<IQuery>(`http://localhost:8080/${vote.queryId}/vote`, vote);
+  public submitVote(vote: IResponseVote): Observable<IResponse> {
+    return this.httpClient.post<IResponse>(`http://localhost:8080/${vote.queryId}/vote`, vote);
   }
 }

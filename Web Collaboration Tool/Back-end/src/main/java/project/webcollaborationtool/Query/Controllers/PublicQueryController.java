@@ -34,7 +34,7 @@ public class PublicQueryController
 
     @GetMapping(path = "/{username}/getRecentResponses")
     @CrossOrigin(methods = RequestMethod.GET, origins = "/user/*")
-    public ResponseEntity<Collection<PublicQuery>> getRecentResponsesForUser(@PathVariable String username)
+    public ResponseEntity<Collection<Response>> getRecentResponsesForUser(@PathVariable String username)
     {
         return ResponseEntity.ok().body(this.publicQueryService.getRecentResponsesForUser(username));
     }

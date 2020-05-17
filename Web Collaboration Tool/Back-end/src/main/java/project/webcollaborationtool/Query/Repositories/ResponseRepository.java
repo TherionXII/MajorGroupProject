@@ -8,5 +8,5 @@ import java.util.Collection;
 
 public interface ResponseRepository extends JpaRepository<Response, Integer>
 {
-    Collection<PublicQuery> findTop10ByUsernameOrderByCreatedAtDesc(String username);
+    Collection<Response> findTop10ByUsernameOrderByCreatedAtDesc(String username);
 }

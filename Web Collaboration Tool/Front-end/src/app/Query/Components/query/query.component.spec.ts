@@ -37,7 +37,7 @@ describe('QueryComponent', () => {
 
     it('should initialize fields successfully', () => {
       expect(component.query.id).toEqual(0);
-      expect(component.resolverError).toEqual('');
+      expect(component.errorMessage).toEqual('');
     });
   });
 
@@ -63,7 +63,7 @@ describe('QueryComponent', () => {
 
     it('should set error message when route failed to resolve', () => {
       expect(component.query).toEqual({} as IQuery);
-      expect(component.resolverError).toEqual('Error');
+      expect(component.errorMessage).toEqual('Error');
     });
   });
 });

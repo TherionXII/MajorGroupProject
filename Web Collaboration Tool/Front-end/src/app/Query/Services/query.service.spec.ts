@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { QueryService } from './query.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {IQuery} from '../Interfaces/IQuery';
-import {IQueryVote} from '../Interfaces/IQueryVote';
+import {IResponseVote} from '../Interfaces/IResponseVote';
 
 describe('QueryService', () => {
   let queryService: QueryService;
@@ -206,24 +206,24 @@ describe('QueryService', () => {
   });
 
   it('should send a successful request to submit a vote', () => {
-    queryService.submitVote({ queryId: 1 } as IQueryVote)
+    queryService.submitVote({ queryId: 1 } as IResponseVote)
                 .subscribe(response => expect(response.id).toEqual(1), () => fail('Should not have failed!'));
 
     const request = httpTestingController.expectOne('http://localhost:8080/1/vote');
     expect(request.request.method).toEqual('POST');
-    expect(request.request.body).toEqual({ queryId: 1 } as IQueryVote);
+    expect(request.request.body).toEqual({ queryId: 1 } as IResponseVote);
     expect(request.request.url).toEqual('http://localhost:8080/1/vote');
 
     request.flush({ id: 1 } as IQuery);
   });
 
   it('should send an unsuccessful request to submit a vote', () => {
-    queryService.submitVote({ queryId: 1 } as IQueryVote)
+    queryService.submitVote({ queryId: 1 } as IResponseVote)
                 .subscribe(() => fail('Should have failed'), error => expect(error.error).toEqual('error'));
 
     const request = httpTestingController.expectOne('http://localhost:8080/1/vote');
     expect(request.request.method).toEqual('POST');
-    expect(request.request.body).toEqual({ queryId: 1 } as IQueryVote);
+    expect(request.request.body).toEqual({ queryId: 1 } as IResponseVote);
     expect(request.request.url).toEqual('http://localhost:8080/1/vote');
 
     request.flush('error', { status: 401, statusText: 'error' });

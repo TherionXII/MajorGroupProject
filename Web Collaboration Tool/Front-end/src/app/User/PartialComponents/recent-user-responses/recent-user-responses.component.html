@@ -1,9 +1,8 @@
 <mat-list>
   <mat-error>{{ resolverError }}</mat-error>
   <mat-list-item *ngFor = "let response of userResponses">
-    <h3>{{ getOwnerUsername(response) }}&nbsp;</h3>
-    <h3>Created by: {{ getOwnerUsername(response) }}&nbsp;</h3>
-    <h3>{{ response.contents }}&nbsp;</h3>
+    <h3>Created by: {{ response.username }}&nbsp;</h3>
+    <h3>{{ response.response }}&nbsp;</h3>
     <h3>{{ response.rating }}&nbsp;</h3>
   </mat-list-item>
 </mat-list>

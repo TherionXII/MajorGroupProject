@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IQuery} from '../../../Query/Interfaces/IQuery';
 import {ActivatedRoute} from '@angular/router';
+import {IResponse} from '../../../Query/Interfaces/IResponse';
 
 @Component({
   selector: 'app-recent-user-responses',
@@ -8,26 +9,18 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./recent-user-responses.component.css']
 })
 export class RecentUserResponsesComponent implements OnInit {
-  public userResponses: Array<IQuery>;
+  public userResponses: Array<IResponse>;
 
   public resolverError: string;
 
   constructor(private activatedRoute: ActivatedRoute) {
-    this.userResponses = new Array<IQuery>();
+    this.userResponses = new Array<IResponse>();
     this.resolverError = '';
   }
 
   public ngOnInit(): void {
     this.activatedRoute.data
-      .subscribe((data: { userData: [ any, Array<IQuery> ] }) => this.userResponses = data.userData[1],
+      .subscribe((data: { userData: [ any, Array<IResponse> ] }) => this.userResponses = data.userData[1],
                  error => this.resolverError = error);
-  }
-
-  public getOwnerUsername(response: IQuery): string {
-    while (response.parent != null) {
-      response = response.parent;
-    }
-
-    return response.username;
   }
 }

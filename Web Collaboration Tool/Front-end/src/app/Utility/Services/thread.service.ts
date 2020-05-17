@@ -10,10 +10,10 @@ export class ThreadService {
   constructor(private httpClient: HttpClient) { }
 
   public createNewThread(collaboratorOne: string, collaboratorTwo: string): Observable<number> {
-    return this.httpClient.get<number>(`http://localhost:8080/api/chatThreads/createPrivateThread/${collaboratorOne}/${collaboratorTwo}`);
+    return this.httpClient.get<number>(`http://localhost:8080/api/chatThreads/${collaboratorOne}/${collaboratorTwo}/createPrivateThread`);
   }
 
   public getMessagesForThread(id: string): Observable<Array<IMessage>> {
-    return this.httpClient.get<Array<IMessage>>(`http://localhost:8080/api/chatThreads/getMessagesForThread/${id}`);
+    return this.httpClient.get<Array<IMessage>>(`http://localhost:8080/api/chatThreads/${id}/getMessagesForThread`);
   }
 }

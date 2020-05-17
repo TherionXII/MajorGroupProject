@@ -47,9 +47,9 @@ export class GroupManagementComponent implements OnInit {
   }
 
   public getCollaboratorUsername(collaboration: IPrivateCollaboration): string {
-    return collaboration.collaboratorOneUsername === localStorage.getItem('username') ?
-           collaboration.collaboratorTwoUsername :
-           collaboration.collaboratorOneUsername;
+    return collaboration.firstCollaborator === localStorage.getItem('username') ?
+           collaboration.secondCollaborator :
+           collaboration.firstCollaborator;
   }
 
   public onInviteToGroup(username: string): void {

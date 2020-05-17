@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IQuery} from '../../Interfaces/IQuery';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../../Services/query.service';
+import {IResponse} from '../../Interfaces/IResponse';
 
 @Component({
   selector: 'app-query-container',
@@ -10,41 +11,22 @@ import {QueryService} from '../../Services/query.service';
 })
 export class QueryContainerComponent implements OnInit {
   @Input()
-  public query: IQuery;
-
-  public isReplyVisible: boolean;
-
-  public queryResponseForm: FormGroup;
+  public response: IResponse;
 
   public errorMessage: string;
 
-  constructor(private queryService: QueryService) {
-    this.isReplyVisible = false;
+  constructor() {
     this.errorMessage = '';
   }
 
   public ngOnInit() {
-    this.queryResponseForm = new FormGroup({
-      contents: new FormControl('', Validators.required)
-    });
   }
 
-  public onQueryVote(query: IQuery): void {
-    this.query = query;
+  public onQueryVote(response: IResponse): void {
+    this.response = response;
   }
 
   public onQueryVoteFailure(error: string): void {
     this.errorMessage = error;
-  }
-
-  public onRespond(): void {
-    this.isReplyVisible = !this.isReplyVisible;
-  }
-
-  public onSubmit(id: number): void {
-    this.queryService.createResponse(id, localStorage.getItem('username'), this.queryResponseForm.getRawValue() as IQuery)
-      .subscribe(query => this.query = query, error => this.errorMessage = error.message);
-
-    this.onRespond();
   }
 }

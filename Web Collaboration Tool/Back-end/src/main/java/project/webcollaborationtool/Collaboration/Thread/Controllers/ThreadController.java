@@ -27,7 +27,7 @@ public class ThreadController
     }
 
     @GetMapping("/{threadId}/getMessagesForThread")
-    @CrossOrigin(origins = { "/thread/*", "/group/*" }, methods = RequestMethod.GET)
+    @CrossOrigin(origins = { "/thread/*", "/group/*/*" }, methods = RequestMethod.GET)
     public ResponseEntity<Collection<Message>> getMessagesForThread(@PathVariable Integer threadId)
     {
         return ResponseEntity.ok().body(this.threadService.getMessagesForThread(threadId));

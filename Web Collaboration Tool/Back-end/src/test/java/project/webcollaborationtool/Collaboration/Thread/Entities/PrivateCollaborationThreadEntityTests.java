@@ -6,6 +6,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import project.webcollaborationtool.Collaboration.PrivateCollaboration.Entities.PrivateCollaboration;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -24,7 +26,7 @@ public class PrivateCollaborationThreadEntityTests
     {
         var chat = new PrivateCollaborationThread();
 
-        chat.setPrivateCollaboration(new PrivateCollaboration());
+        chat.setPrivateCollaboration(new ArrayList<>());
         assertThat(chat.getPrivateCollaboration()).isNotNull();
     }
 

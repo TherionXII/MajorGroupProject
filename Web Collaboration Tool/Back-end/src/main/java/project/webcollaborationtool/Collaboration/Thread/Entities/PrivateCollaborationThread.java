@@ -6,7 +6,9 @@ import project.webcollaborationtool.Collaboration.PrivateCollaboration.Entities.
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.Collection;
 
 @Entity
 @ToString
@@ -15,7 +17,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("private_collaboration_thread")
 public class PrivateCollaborationThread extends ChatThread
 {
-    @OneToOne
+    @OneToMany
     @JsonBackReference("private_thread")
-    private PrivateCollaboration privateCollaboration;
+    private Collection<PrivateCollaboration> privateCollaboration;
 }

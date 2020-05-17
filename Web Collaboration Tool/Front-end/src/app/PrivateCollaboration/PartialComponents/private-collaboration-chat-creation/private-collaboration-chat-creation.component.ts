@@ -30,7 +30,7 @@ export class PrivateCollaborationChatCreationComponent implements OnInit {
   }
 
   public onNewThread(collaboration: IPrivateCollaboration): void {
-    this.threadService.createNewThread(collaboration.collaboratorOneUsername, collaboration.collaboratorTwoUsername)
+    this.threadService.createNewThread(collaboration.firstCollaborator, collaboration.secondCollaborator)
       .subscribe(threadId => this.router.navigateByUrl(`/thread/${threadId}`),
                 () => this.chatError = 'Failed to create new chat; please try again later');
   }

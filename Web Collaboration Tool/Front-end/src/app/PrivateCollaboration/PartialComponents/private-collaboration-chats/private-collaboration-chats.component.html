@@ -2,7 +2,7 @@
   <mat-error>{{ resolverError }}</mat-error>
   <mat-list-item *ngFor = "let collaboration of collaborations">
     <a *ngIf = "collaboration.thread" [routerLink] = "[ '/thread', collaboration.thread.id ]">
-      <p>{{ collaboration.collaboratorOneUsername === loggedInUser ? collaboration.collaboratorTwoUsername : collaboration.collaboratorOneUsername }}</p>
+      <p>{{ collaboration.firstCollaborator === loggedInUser ? collaboration.secondCollaborator : collaboration.firstCollaborator }}</p>
       <p>{{ collaboration.thread.lastMessage ? collaboration.thread.lastMessage.message : 'Send a message' }}</p>
     </a>
   </mat-list-item>

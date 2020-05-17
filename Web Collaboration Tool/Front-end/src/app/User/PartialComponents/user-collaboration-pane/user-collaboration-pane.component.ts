@@ -26,6 +26,8 @@ export class UserCollaborationPaneComponent implements OnInit {
       this.hasSentRequest = data.collaborationStatus[0];
       this.hasReceivedRequest = data.collaborationStatus[1];
       this.isCollaborating = data.collaborationStatus[2];
+
+      console.log(this.hasSentRequest + ' ' + this.hasReceivedRequest);
     }, error => this.resolverError = error);
 
     this.username = this.route.snapshot.paramMap.get('username');

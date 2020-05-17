@@ -33,6 +33,11 @@ public class ThreadService
         privateCollaboration.setThread(new PrivateCollaborationThread());
         privateCollaboration.getThread().setMessages(new ArrayList<>());
 
+        var privateCollaborationInverse = this.privateCollaborationRepository.findByFirstCollaboratorAndSecondCollaborator(secondCollaborator, firstCollaborator);
+        privateCollaborationInverse.setThread(privateCollaboration.getThread());
+
+        this.privateCollaborationRepository.save(privateCollaborationInverse);
+
         return this.privateCollaborationRepository.save(privateCollaboration).getThread().getId();
     }
 
@@ -46,6 +51,8 @@ public class ThreadService
         var thread = this.chatThreadRepository.findById(threadId).orElseThrow(InvalidThreadDataException::new);
         thread.setLastMessage(message);
         thread.getMessages().add(message);
+
+        message.setThread(thread);
 
         this.chatThreadRepository.save(thread);
     }

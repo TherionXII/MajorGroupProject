@@ -34,7 +34,7 @@ public class PrivateCollaborationRequestController
         return ResponseEntity.ok().body(this.privateCollaborationRequestService.existsBySenderAndRecipient(sender, recipient));
     }
 
-    @GetMapping("/{recipient}/{sender}/hasReceivedRequest")
+    @GetMapping("/{sender}/{recipient}/hasReceivedRequest")
     @CrossOrigin(origins = "/user/*", methods = RequestMethod.GET)
     public ResponseEntity<Boolean> hasReceivedRequest(@PathVariable String recipient, @PathVariable String sender)
     {

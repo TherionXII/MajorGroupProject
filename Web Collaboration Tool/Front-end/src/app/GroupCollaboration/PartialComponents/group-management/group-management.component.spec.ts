@@ -37,8 +37,8 @@ describe('GroupManagementComponent', () => {
       ]
     } as IGroup;
     const privateCollaborations = [
-      { collaboratorOneUsername: 'memberUser1', collaboratorTwoUsername: 'invitedUser1' } as IPrivateCollaboration,
-      { collaboratorOneUsername: 'nonInvitedUser1', collaboratorTwoUsername: 'memberUser1' } as IPrivateCollaboration,
+      { firstCollaborator: 'memberUser1', secondCollaborator: 'invitedUser1' } as IPrivateCollaboration,
+      { firstCollaborator: 'nonInvitedUser1', secondCollaborator: 'memberUser1' } as IPrivateCollaboration,
     ];
 
     const activatedRouteStub = { data: of({ groupData: [ group, groupInvitations ], privateCollaborations } )};
@@ -91,14 +91,14 @@ describe('GroupManagementComponent', () => {
     });
 
     it('should return the name of the collaborator who is not currently logged in', () => {
-      expect(component.getCollaboratorUsername(component.privateCollaborations[0])).toEqual(privateCollaborations[0].collaboratorTwoUsername);
-      expect(component.getCollaboratorUsername(component.privateCollaborations[1])).toEqual(privateCollaborations[1].collaboratorOneUsername);
+      expect(component.getCollaboratorUsername(component.privateCollaborations[0])).toEqual(privateCollaborations[0].secondCollaborator);
+      expect(component.getCollaboratorUsername(component.privateCollaborations[1])).toEqual(privateCollaborations[1].firstCollaborator);
     });
 
     it('should publish a message on a web socket channel when user is invited to the group', () => {
       rxStompServiceStub.publish.and.returnValue('');
 
-      const expectedUsername = component.privateCollaborations[1].collaboratorOneUsername;
+      const expectedUsername = component.privateCollaborations[1].firstCollaborator;
       const expectedBody = JSON.stringify({ groupId: component.group.id, recipient: expectedUsername, isAccepted: false } as IGroupCollaborationRequest);
 
       component.onInviteToGroup(expectedUsername);

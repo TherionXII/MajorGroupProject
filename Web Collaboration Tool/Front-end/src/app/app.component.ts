@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   public title = 'Front-end';
   public username: string;
 
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
   }
 
   public logout(): void {
-    localStorage.clear();
+    localStorage.removeItem('username');
 
     this.router.navigateByUrl('/');
   }
