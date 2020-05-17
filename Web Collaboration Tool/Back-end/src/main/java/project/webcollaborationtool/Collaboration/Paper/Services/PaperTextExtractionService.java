@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.webcollaborationtool.Collaboration.Paper.Entities.PaperPage;
 import project.webcollaborationtool.Collaboration.Paper.Entities.PaperQuestion;
+import project.webcollaborationtool.Collaboration.Paper.Exceptions.InvalidPaperDataException;
 import project.webcollaborationtool.Collaboration.Paper.Repositories.PaperPageRepository;
 import project.webcollaborationtool.Collaboration.Paper.Repositories.PaperQuestionRepository;
 import project.webcollaborationtool.Collaboration.Paper.Repositories.PaperRepository;
@@ -34,28 +35,20 @@ public class PaperTextExtractionService
 
     public PaperQuestion extractQuestion(PaperQuestion question, Integer paperId, Integer pageNumber) throws IOException, TesseractException
     {
-        var paper = this.paperRepository.findById(paperId).orElseThrow();
-        var document = PDDocument.load(paper.getOriginalPaper());
-        var position = new Rectangle(question.getQuestionPosition().getX1(), question.getQuestionPosition().getY1(),
-                               question.getQuestionPosition().getX2() - question.getQuestionPosition().getX1(),
-                               question.getQuestionPosition().getY2() - question.getQuestionPosition().getY1());
+        var paper = this.paperRepository.findById(paperId).orElseThrow(InvalidPaperDataException::new);
 
-        String extractedText = extractTextByArea(document, pageNumber, position);
+        var position = this.extractPosition(question);
 
-        if(extractedText.trim().isEmpty())
-            extractedText = extractTextFromScannedImageByArea(this.paperPageRepository.findByExamPaperAndPageNumber(paper, pageNumber), position);
+        var extractedText = extractTextFromScannedImageByArea(this.paperPageRepository.findByExamPaperAndPageNumber(paper, pageNumber), position);
 
         question.setExamPaper(paper);
         question.setText(extractedText);
-
-        document.close();
 
         return this.paperQuestionRepository.save(question);
     }
 
     private String extractTextFromScannedImageByArea(PaperPage paperPage, Rectangle rectangle) throws IOException, TesseractException
     {
-        // set up tesseract for OCR
         ITesseract tesseract = new Tesseract();
         tesseract.setDatapath("C:/Users/theri/OneDrive/College/Semester Five/Year Project/Web Collaboration Tool/Back-end/tessdata");
         tesseract.setLanguage("eng");
@@ -63,18 +56,24 @@ public class PaperTextExtractionService
 
         var image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(paperPage.getPageOriginal())));
 
-
         return tesseract.doOCR(image, rectangle);
     }
 
-    private String extractTextByArea(PDDocument document, int pageNumber, Rectangle rectangle) throws IOException
+    private Rectangle extractPosition(PaperQuestion question)
     {
-        PDPage page = document.getPage(pageNumber);
-        PDFTextStripperByArea stripperByArea = new PDFTextStripperByArea();
-
-        stripperByArea.setSortByPosition(true);
-        stripperByArea.addRegion("Area1", rectangle);
-        stripperByArea.extractRegions(page);
-        return stripperByArea.getTextForRegion("Area1");
+        return new Rectangle(question.getQuestionPosition().getX1(), question.getQuestionPosition().getY1(),
+                       question.getQuestionPosition().getX2() - question.getQuestionPosition().getX1(),
+                      question.getQuestionPosition().getY2() - question.getQuestionPosition().getY1());
     }
+//
+//    private String extractTextByArea(PDDocument document, int pageNumber, Rectangle rectangle) throws IOException
+//    {
+//        PDPage page = document.getPage(pageNumber);
+//        PDFTextStripperByArea stripperByArea = new PDFTextStripperByArea();
+//
+//        stripperByArea.setSortByPosition(true);
+//        stripperByArea.addRegion("Area1", rectangle);
+//        stripperByArea.extractRegions(page);
+//        return stripperByArea.getTextForRegion("Area1");
+//    }
 }

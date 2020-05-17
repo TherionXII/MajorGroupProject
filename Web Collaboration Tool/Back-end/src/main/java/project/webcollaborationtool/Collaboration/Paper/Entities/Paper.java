@@ -25,7 +25,7 @@ public class Paper
     @NotNull
     private String paperDescription;
 
-    @Nullable
+    @NotNull
     @JsonIgnore
     @OneToMany(mappedBy = "examPaper", cascade = CascadeType.ALL)
     private Collection<PaperPage> pages;
