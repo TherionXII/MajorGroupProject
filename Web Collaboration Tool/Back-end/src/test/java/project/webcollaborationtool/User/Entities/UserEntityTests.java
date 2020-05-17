@@ -9,7 +9,6 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import project.webcollaborationtool.User.Repositories.UserRepository;
-import project.webcollaborationtool.User.Entities.User;
 
 import javax.validation.ConstraintViolationException;
 
@@ -27,9 +26,6 @@ public class UserEntityTests
     public void testUserModelConstructors()
     {
         var user = new User();
-        assertThat(user).isNotEqualTo(null);
-
-        user = new User("username", "password", "email", null, null, null, null);
         assertThat(user).isNotEqualTo(null);
     }
 
@@ -49,29 +45,9 @@ public class UserEntityTests
     }
 
     @Test
-    public void testUserModelPersistenceWithValidData()
+    public void testToString()
     {
-        var user = new User("username", "password", "email", null, null, null, null);
-        this.userRepository.save(user);
-
-        var databaseQueryResult = this.userRepository.findByUsername("username");
-        assertThat(databaseQueryResult.getUsername()).isEqualTo(user.getUsername());
-        assertThat(databaseQueryResult.getPassword()).isEqualTo(user.getPassword());
-        assertThat(databaseQueryResult.getEmail()).isEqualTo(user.getEmail());
-
-    }
-
-    @Test
-    public void testUserModelPersistenceWithInvalidData()
-    {
-        var user = new User(null, null, null, null, null, null, null);
-
-        var usernameException = Assertions.assertThrows(JpaSystemException.class, () -> this.userRepository.save(user));
-        assertThat(usernameException.getMessage()).contains("ids for this class must be manually assigned before calling save()");
-
-        user.setUsername("username");
-
-        var passwordException = Assertions.assertThrows(ConstraintViolationException.class, () -> this.userRepository.saveAndFlush(user));
-        assertThat(passwordException.getMessage()).contains("interpolatedMessage='must not be null', propertyPath=password");
+        var user = new User();
+        assertThat(user.toString().contains("User")).isTrue();
     }
 }

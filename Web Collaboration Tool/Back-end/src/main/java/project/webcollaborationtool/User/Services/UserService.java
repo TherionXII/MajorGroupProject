@@ -55,11 +55,4 @@ public class UserService
 
         this.userRepository.save(user);
     }
-
-    public void addPrivateNotification(@NotNull PrivateNotification notification, String username)
-    {
-        var user = this.userRepository.findByUsername(username);
-        user.getNotifications().add(notification);
-        this.userRepository.save(user);
-    }
 }

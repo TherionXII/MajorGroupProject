@@ -11,6 +11,7 @@ import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,10 +26,12 @@ public class LoginServiceTests
     @Test
     public void testLoginUserWithValidData()
     {
-        var user = new User("username", "password", "email", null, null, null, null);
+        var user = new User();
+        user.setUsername("user");
+        user.setPassword("password");
 
-        when(this.userRepository.existsById(user.getUsername())).thenReturn(true);
-        when(this.userRepository.findByUsername(user.getUsername())).thenReturn(user);
+        when(this.userRepository.existsById(any())).thenReturn(true);
+        when(this.userRepository.findByUsername(any())).thenReturn(user);
 
         assertThatCode(() -> this.loginService.login(user)).doesNotThrowAnyException();
     }
@@ -36,28 +39,25 @@ public class LoginServiceTests
     @Test
     public void testLoginUserWithNonExistentUser()
     {
-        var user = new User("username", "password", "email", null, null, null, null);
+        when(this.userRepository.existsById(any())).thenReturn(false);
 
-        when(this.userRepository.existsById(user.getUsername())).thenReturn(false);
-
-        assertThatThrownBy(() -> this.loginService.login(user)).isInstanceOf(InvalidCredentialsException.class);
+        assertThatThrownBy(() -> this.loginService.login(new User())).isInstanceOf(InvalidCredentialsException.class);
     }
 
     @Test
     public void testLoginUserWithInvalidPassword()
     {
-        var user = new User("username", "password", "email", null, null, null, null);
-        var userWithInvalidPassword = new User("username", "pass", "email", null, null, null, null);
+        var user = new User();
+        user.setUsername("username");
+        user.setPassword("password");
+
+        var userWithInvalidPassword = new User();
+        userWithInvalidPassword.setUsername("username");
+        userWithInvalidPassword.setPassword("pass");
 
         when(this.userRepository.existsById(userWithInvalidPassword.getUsername())).thenReturn(true);
         when(this.userRepository.findByUsername(userWithInvalidPassword.getUsername())).thenReturn(user);
 
         assertThatThrownBy(() -> this.loginService.login(userWithInvalidPassword)).isInstanceOf(InvalidCredentialsException.class);
-    }
-
-    @Test
-    public void testLoginUserWithInvalidUser()
-    {
-        assertThatThrownBy(() -> this.loginService.login(null)).isInstanceOf(NullPointerException.class);
     }
 }

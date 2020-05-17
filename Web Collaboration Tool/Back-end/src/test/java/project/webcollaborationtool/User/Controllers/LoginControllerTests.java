@@ -41,9 +41,9 @@ public class LoginControllerTests
     @BeforeEach
     public void setUp()
     {
-        this.validUser = this.userRepository.save(new User("username", "password", "email", null, null, null, null));
-        this.nonExistentUser = new User("user", "password", "e", null, null, null, null);
-        this.userWithInvalidPassword = new User("username", "pass", "email", null, null, null, null);
+        this.validUser = this.userRepository.save(this.createValidUser());
+        this.nonExistentUser = this.createNonExistentUser();
+        this.userWithInvalidPassword = this.createUserWithInvalidPassword();
     }
 
     @Test
@@ -61,8 +61,7 @@ public class LoginControllerTests
         this.mockMvc.perform(post("/login")
                              .content(this.objectMapper.writeValueAsString(this.nonExistentUser))
                              .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().is(401))
-                    .andExpect(content().string("Could not find user with the specified credentials"));
+                    .andExpect(status().is(401));
     }
 
     @Test
@@ -71,20 +70,34 @@ public class LoginControllerTests
         this.mockMvc.perform(post("/login")
                              .content(this.objectMapper.writeValueAsString(this.userWithInvalidPassword))
                              .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().is(401))
-                    .andExpect(content().string("Could not find user with the specified credentials"));
+                    .andExpect(status().is(401));
     }
 
-    @Test
-    public void testLoginUserWithInvalidUser()
+    private User createValidUser()
     {
-        try
-        {
-            this.mockMvc.perform(post("/login").content(""));
-        }
-        catch(Exception exception)
-        {
-            assertThat(exception).isNot(null);
-        }
+        var user = new User();
+        user.setUsername("username");
+        user.setPassword("password");
+
+        return user;
     }
+
+    private User createNonExistentUser()
+    {
+        var user = new User();
+        user.setUsername("user");
+        user.setPassword("pass");
+
+        return user;
+    }
+
+    private User createUserWithInvalidPassword()
+    {
+        var user = new User();
+        user.setUsername("username");
+        user.setPassword("pass");
+
+        return user;
+    }
+
 }
