@@ -24,23 +24,27 @@ public class PrivateCollaborationService
     public void createPrivateCollaboration(PrivateCollaborationRequest privateCollaborationRequest)
     {
         var collaboration = new PrivateCollaboration();
-        collaboration.setCollaboratorOneUsername(privateCollaborationRequest.getRecipient());
-        collaboration.setCollaboratorTwoUsername(privateCollaborationRequest.getSender());
-
-        collaboration.setFirstCollaborator(this.userRepository.findByUsername(privateCollaborationRequest.getRecipient()));
-        collaboration.setSecondCollaborator(this.userRepository.findByUsername(privateCollaborationRequest.getSender()));
+        collaboration.setFirstCollaborator(privateCollaborationRequest.getRecipient());
+        collaboration.setSecondCollaborator(privateCollaborationRequest.getSender());
+        collaboration.setUser(this.userRepository.findByUsername(privateCollaborationRequest.getRecipient()));
 
         this.privateCollaborationRepository.save(collaboration);
+
+        var collaborationInverse = new PrivateCollaboration();
+        collaborationInverse.setFirstCollaborator(privateCollaborationRequest.getSender());
+        collaborationInverse.setSecondCollaborator(privateCollaborationRequest.getRecipient());
+        collaboration.setUser(this.userRepository.findByUsername(privateCollaborationRequest.getSender()));
+
+        this.privateCollaborationRepository.save(collaborationInverse);
     }
 
     public boolean isCollaborating(String firstUsername, String secondUsername)
     {
-        return this.privateCollaborationRepository.existsById(new PrivateCollaborationId(firstUsername, secondUsername)) ||
-               this.privateCollaborationRepository.existsById(new PrivateCollaborationId(secondUsername, firstUsername));
+        return this.privateCollaborationRepository.existsById(new PrivateCollaborationId(firstUsername, secondUsername));
     }
 
     public Collection<PrivateCollaboration> getAllPrivateCollaborationsForUser(String username)
     {
-        return this.privateCollaborationRepository.findAllByCollaboratorOneUsernameOrCollaboratorTwoUsername(username, username);
+        return this.privateCollaborationRepository.findAllByFirstCollaborator(username);
     }
 }

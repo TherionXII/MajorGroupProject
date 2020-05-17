@@ -9,30 +9,26 @@ import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @IdClass(PrivateCollaborationId.class)
 public class PrivateCollaboration
 {
     @Id
-    private String collaboratorOneUsername;
+    private String firstCollaborator;
 
     @Id
-    private String collaboratorTwoUsername;
+    private String secondCollaborator;
 
     @ManyToOne
     @JsonIgnore
-    @MapsId("collaboratorOneUsername")
-    @JoinColumn(name = "collaboratorOneUsername", referencedColumnName = "username")
-    private User firstCollaborator;
+    @MapsId("firstCollaborator")
+    @JoinColumn(name = "firstCollaborator", referencedColumnName = "username")
+    private User user;
 
-    @ManyToOne
-    @JsonIgnore
-    @MapsId("collaboratorTwoUsername")
-    @JoinColumn(name = "collaboratorTwoUsername", referencedColumnName = "username")
-    private User secondCollaborator;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference("private_thread")
     private PrivateCollaborationThread thread;
 }
