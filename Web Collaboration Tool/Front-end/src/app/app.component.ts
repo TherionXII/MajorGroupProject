@@ -8,15 +8,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{
   public title = 'Front-end';
+  public username: string;
 
   constructor(private router: Router) {}
 
   public ngOnInit(): void {
-    // this.logout();
-  }
-
-  public getUsername(): string {
-    return localStorage.getItem('username');
+    this.username = localStorage.getItem('username');
   }
 
   public logout(): void {

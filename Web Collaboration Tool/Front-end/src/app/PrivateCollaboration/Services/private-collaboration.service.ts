@@ -11,11 +11,11 @@ export class PrivateCollaborationService {
   constructor(private httpClient: HttpClient) {}
 
   public isCollaborating(firstUsername: string, secondUsername: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(`http://localhost:8080/isCollaborating/${firstUsername}/${secondUsername}`);
+    return this.httpClient.get<boolean>(`http://localhost:8080/api/privateCollaboration/${firstUsername}/${secondUsername}/isCollaborating`);
   }
 
   public getPrivateCollaborationsForUser(username: string): Observable<Array<IPrivateCollaboration>> {
-    return this.httpClient.get<Array<IPrivateCollaboration>>(`http://localhost:8080/privateCollaborations/${username}`);
+    return this.httpClient.get<Array<IPrivateCollaboration>>(`http://localhost:8080/api/privateCollaboration/${username}/privateCollaborations`);
   }
 
   public getPrivateCollaborationRequestsForUser(username: string): Observable<Array<IPrivateCollaborationRequest>> {
