@@ -13,4 +13,6 @@ public interface PrivateCollaborationRequestRepository extends JpaRepository<Pri
 
     Boolean existsBySenderAndRecipient(String sender, String recipient);
     PrivateCollaborationRequest findBySenderAndRecipient(String sender, String recipient);
+
+    void deleteBySenderAndRecipient(String sender, String recipient);
 }

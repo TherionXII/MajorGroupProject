@@ -1,13 +1,15 @@
 package project.webcollaborationtool.Collaboration.Request.Entities;
 
-import lombok.Data;
+import lombok.*;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 public class GroupCollaborationRequest
 {
     @Id
@@ -16,11 +18,6 @@ public class GroupCollaborationRequest
 
     @NotNull
     private Integer groupId;
-
-    @ManyToOne
-    @MapsId("groupId")
-    @JoinColumn(name = "groupId", referencedColumnName = "id")
-    private GroupCollaboration group;
 
     @NotNull
     private String recipient;

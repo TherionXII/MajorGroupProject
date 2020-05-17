@@ -2,14 +2,10 @@ package project.webcollaborationtool.Collaboration.Request.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Services.GroupCollaborationService;
 import project.webcollaborationtool.Collaboration.Request.Entities.GroupCollaborationRequest;
 import project.webcollaborationtool.Collaboration.Request.Services.GroupCollaborationRequestService;
-import project.webcollaborationtool.Notifications.Entities.Notification;
-import project.webcollaborationtool.Notifications.Services.NotificationService;
 
 import java.util.Collection;
 
@@ -24,27 +20,15 @@ public class GroupCollaborationRequestController
     @Autowired
     private GroupCollaborationRequestService groupCollaborationRequestService;
 
-    @Autowired
-    private NotificationService notificationService;
-
-    @CrossOrigin(origins = "/group/*")
-    @SendTo("/topic/user/notification/{recipient}")
-    @MessageMapping("/user/collaboration/invitation/{recipient}")
-    public Notification createCollaborationRequest(GroupCollaborationRequest groupCollaborationRequest)
-    {
-        this.groupCollaborationRequestService.createRequest(groupCollaborationRequest);
-        return this.notificationService.addGroupCollaborationRequest(groupCollaborationRequest);
-    }
-
-    @CrossOrigin(origins = "/groups")
     @GetMapping("/{recipient}/getGroupInvitationsForUser")
+    @CrossOrigin(origins = "/groups", methods = RequestMethod.GET)
     public ResponseEntity<Collection<GroupCollaborationRequest>> getGroupInvitationsForUser(@PathVariable String recipient)
     {
         return ResponseEntity.ok().body(this.groupCollaborationRequestService.getGroupInvitationsForUser(recipient));
     }
 
     @PostMapping("/respond")
-    @CrossOrigin(origins = "/groups")
+    @CrossOrigin(origins = "/groups", methods = RequestMethod.POST)
     public ResponseEntity<Integer> respondToInvitation(@RequestBody GroupCollaborationRequest groupCollaborationRequest)
     {
         if(groupCollaborationRequest.getIsAccepted())
@@ -54,8 +38,8 @@ public class GroupCollaborationRequestController
         return ResponseEntity.ok().body(groupCollaborationRequest.getGroupId());
     }
 
-    @CrossOrigin("/group/*")
     @GetMapping("/{groupId}/getGroupInvitationsForGroup")
+    @CrossOrigin(origins = "/group/*", methods = RequestMethod.GET)
     public ResponseEntity<Collection<GroupCollaborationRequest>> getGroupInvitationsForGroup(@PathVariable Integer groupId)
     {
         return ResponseEntity.ok().body(this.groupCollaborationRequestService.getGroupInvitationsForGroup(groupId));

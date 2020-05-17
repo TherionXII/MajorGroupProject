@@ -13,7 +13,7 @@ public class GroupCollaborationRequestService
     @Autowired
     private GroupCollaborationRequestRepository groupCollaborationRequestRepository;
 
-    public void createRequest(GroupCollaborationRequest groupCollaborationRequest)
+    public void createGroupCollaborationRequest(GroupCollaborationRequest groupCollaborationRequest)
     {
         this.groupCollaborationRequestRepository.save(groupCollaborationRequest);
     }
