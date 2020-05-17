@@ -22,6 +22,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ForumQueriesComponent } from './PartialComponents/forum-queries/forum-queries.component';
 import { QueryCreationComponent } from './PartialComponents/query-creation/query-creation.component';
 import { QueryVoteComponent } from './PartialComponents/query-vote/query-vote.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
@@ -36,23 +37,24 @@ import { QueryVoteComponent } from './PartialComponents/query-vote/query-vote.co
   exports: [
     ForumComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    QueryRoutingModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatTabsModule,
-    ReactiveFormsModule,
-  ]
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        QueryRoutingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatCardModule,
+        MatTabsModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+    ]
 })
 export class QueryModule { }

@@ -1,31 +1,42 @@
 <mat-card>
   <mat-error>{{ errorMessage ? errorMessage : null }}</mat-error>
   <mat-card-header>
-    <span class="card-header-text">Created by:&nbsp;</span>
-    <button mat-button [routerLink] = "['/user', query ? query.username : '']"> {{ query.username }} </button>
+    <mat-card-title> {{ query ? query.title : null }} </mat-card-title>
+    <mat-card-subtitle> {{ query ? query.subtitle : null }} </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-title> {{ query ? query.title : null }} </mat-card-title>
-  <mat-card-subtitle> {{ query ? query.subtitle : null }} </mat-card-subtitle>
 
-  <mat-form-field>
-    <textarea class="query-textarea" matInput disabled>{{ query.contents }}</textarea>
+  <mat-card-content>
+    <p class="query-text">{{ query.contents }}</p>
+    <span class="mat-caption">Asked by:&nbsp;</span>
+    <a [routerLink] = "['/user', query ? query.username : '']"> {{ query.username }} </a>
+  </mat-card-content>
 
-  </mat-form-field>
-
-  <mat-list>
-    <mat-list-item *ngFor = "let response of query.responses">
-      <app-query-container [response] = "response"></app-query-container>
-    </mat-list-item>
-  </mat-list>
+  <mat-card-content *ngFor = "let response of query.responses">
+    <app-query-container [response] = "response"></app-query-container>
+    <span class="mat-caption">Posted by:&nbsp;</span>
+    <a [routerLink] = "['/user', response ? response.username : '']"> {{ response.username }} </a>
+  </mat-card-content>
 
   <mat-card-footer>
-    <form [formGroup] = "queryResponseForm" (ngSubmit) = "onSubmit()">
-      <mat-form-field>
-      <textarea class="response-textarea" matInput placeholder = "Enter your response..." name = "response"
-                formControlName = "response"></textarea>
-      </mat-form-field>
-      <br>
-      <button mat-raised-button color="primary" type = "submit" [disabled] = "!queryResponseForm.valid">Respond</button>
-    </form>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>reply</mat-icon>
+          &nbsp;Enter your response...
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <form [formGroup] = "queryResponseForm" (ngSubmit) = "onSubmit()">
+        <mat-form-field>
+          <mat-label>Response text</mat-label>
+          <textarea class="response-textarea" matInput placeholder = "Enter your response..." name = "response"
+                    formControlName = "response"></textarea>
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-raised-button color="primary" type = "submit" [disabled] = "!queryResponseForm.valid">Respond</button>
+        </mat-action-row>
+      </form>
+
+    </mat-expansion-panel>
   </mat-card-footer>
 </mat-card>

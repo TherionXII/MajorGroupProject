@@ -1,9 +1,5 @@
-<mat-card-content>
-  <mat-error>{{ errorMessage }}</mat-error>
-      <textarea class="query-textarea" matInput disabled>{{ response.response }}</textarea>
-      <app-query-vote [response]="response" (queryVotedEvent) = "onQueryVote($event)"
-                      (queryVoteFailedEvent) = "onQueryVoteFailure($event)">
-      </app-query-vote>
-</mat-card-content>
-
-
+<mat-error>{{ errorMessage }}</mat-error>
+<p class="query-text">{{ response.response }}</p>
+<app-query-vote [response]="response" (queryVotedEvent) = "onQueryVote($event)"
+                (queryVoteFailedEvent) = "onQueryVoteFailure($event)">
+</app-query-vote>
