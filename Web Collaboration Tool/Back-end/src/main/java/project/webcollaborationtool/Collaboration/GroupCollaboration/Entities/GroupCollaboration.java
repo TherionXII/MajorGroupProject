@@ -21,7 +21,7 @@ public class GroupCollaboration
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupCollaboration")
     private Collection<GroupMember> groupMembers;
 
     @JsonIgnore

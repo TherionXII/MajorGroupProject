@@ -28,7 +28,6 @@ import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -135,7 +134,6 @@ public class GroupCollaborationMessagingControllerTests
 
     private class DefaultFrameHandler implements StompFrameHandler
     {
-
         @Override
         public Type getPayloadType(StompHeaders stompHeaders)
         {

@@ -47,14 +47,15 @@ public class GroupCollaborationService
     public GroupCollaboration createGroup(GroupCollaboration groupCollaboration, String username)
     {
         groupCollaboration.setThread(new GroupCollaborationThread());
+        groupCollaboration.setGroupMembers(new ArrayList<>());
         groupCollaboration = this.groupCollaborationRepository.save(groupCollaboration);
 
         if(!this.userRepository.existsById(username))
             throw new InvalidUserDataException();
 
-        this.addMember(groupCollaboration, this.userRepository.findByUsername(username), true);
+        groupCollaboration.getGroupMembers().add(this.addMember(groupCollaboration, this.userRepository.findByUsername(username), true));
 
-        return groupCollaboration;
+        return this.groupCollaborationRepository.save(groupCollaboration);
     }
 
     public GroupCollaboration getGroupById(Integer groupId)
@@ -80,11 +81,13 @@ public class GroupCollaborationService
         if(!this.userRepository.existsById(username))
             throw new InvalidUserDataException();
 
-        this.addMember(this.groupCollaborationRepository.findById(groupId).orElseThrow(InvalidGroupDataException::new),
-                       this.userRepository.findByUsername(username), false);
+        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow(InvalidGroupDataException::new);
+        groupCollaboration.getGroupMembers().add(this.addMember(groupCollaboration, this.userRepository.findByUsername(username), false));
+
+        this.groupCollaborationRepository.save(groupCollaboration);
     }
 
-    private void addMember(GroupCollaboration groupCollaboration, User user, Boolean isAdmin)
+    private GroupMember addMember(GroupCollaboration groupCollaboration, User user, Boolean isAdmin)
     {
         var groupMember = new GroupMember();
         groupMember.setIsAdmin(isAdmin);
@@ -92,6 +95,6 @@ public class GroupCollaborationService
         groupMember.setGroupId(groupCollaboration.getId());
         groupMember.setMemberUsername(user.getUsername());
 
-        this.groupMemberRepository.save(groupMember);
+        return groupMember;
     }
 }

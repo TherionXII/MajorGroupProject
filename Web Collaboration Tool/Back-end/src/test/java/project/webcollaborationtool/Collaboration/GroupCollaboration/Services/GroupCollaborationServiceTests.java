@@ -78,10 +78,9 @@ public class GroupCollaborationServiceTests
         var user = this.createMockUser();
         var group = new GroupCollaboration();
 
-        when(this.groupCollaborationRepository.save(group)).thenReturn(this.createSavedMockGroup());
+        when(this.groupCollaborationRepository.save(any())).thenReturn(this.createSavedMockGroup());
         when(this.userRepository.existsById(user.getUsername())).thenReturn(true);
         when(this.userRepository.findByUsername(user.getUsername())).thenReturn(user);
-        when(this.groupMemberRepository.save(any())).thenReturn(new GroupMember());
 
         var result = this.groupCollaborationService.createGroup(group, user.getUsername());
         assertThat(result.getId()).isEqualTo(0);
@@ -154,8 +153,6 @@ public class GroupCollaborationServiceTests
         when(this.groupCollaborationRepository.findById(group.getId())).thenReturn(Optional.of(group));
         when(this.userRepository.findByUsername(user.getUsername())).thenReturn(user);
 
-        when(this.groupMemberRepository.save(any())).thenReturn(new GroupMember());
-
         assertThatCode(() -> this.groupCollaborationService.addMember(group.getId(), user.getUsername())).doesNotThrowAnyException();
     }
 
@@ -198,6 +195,7 @@ public class GroupCollaborationServiceTests
     {
         var groupCollaboration = new GroupCollaboration();
         groupCollaboration.setId(0);
+        groupCollaboration.setGroupMembers(new ArrayList<>());
 
         return groupCollaboration;
     }
