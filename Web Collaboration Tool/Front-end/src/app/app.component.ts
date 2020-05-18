@@ -19,6 +19,12 @@ export class AppComponent implements OnInit {
   public logout(): void {
     localStorage.removeItem('username');
 
+    this.username = null;
+
     this.router.navigateByUrl('/');
+  }
+
+  public getUsername(): string {
+    return localStorage.getItem('username');
   }
 }

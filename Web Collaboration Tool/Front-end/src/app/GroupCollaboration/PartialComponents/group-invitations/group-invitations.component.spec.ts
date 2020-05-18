@@ -17,8 +17,8 @@ describe('GroupInvitationsComponent', () => {
   const groupServiceStub = jasmine.createSpyObj('GroupService', [ 'respondToInvitation' ]);
 
   describe(' testing when route has resolved', () => {
-    const firstGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
-    const secondGroupInvitation = { group: { title: 'title1' } } as IGroupCollaborationRequest;
+    const firstGroupInvitation = { groupCollaboration: { title: 'title1' } } as IGroupCollaborationRequest;
+    const secondGroupInvitation = { groupCollaboration: { title: 'title1' } } as IGroupCollaborationRequest;
     const activatedRouteStub = { data: of({ userGroups:  ['', [ firstGroupInvitation, secondGroupInvitation ] ] } )};
 
 

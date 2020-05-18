@@ -1,8 +1,8 @@
 <mat-list>
   <mat-error>{{ requestError }}</mat-error>
   <mat-list-item *ngFor = "let invitation of groupInvitations">
-    <p>Invitation from group {{ invitation.group.title }}</p><br>
-    <p>Group described as {{ invitation.group.description }}</p><br>
+    <p>Invitation from group {{ invitation.groupCollaboration.title }}</p><br>
+    <p>Group described as {{ invitation.groupCollaboration.description }}</p><br>
     <button mat-raised-button (click) = "onInvitationResponse(invitation, true)">Accept invitation</button>
     <button mat-raised-button (click) = "onInvitationResponse(invitation, false)">Reject invitation</button>
   </mat-list-item>

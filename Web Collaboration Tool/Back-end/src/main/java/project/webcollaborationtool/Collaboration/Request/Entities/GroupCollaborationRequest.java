@@ -24,4 +24,9 @@ public class GroupCollaborationRequest
 
     @NotNull
     private Boolean isAccepted;
+
+    @ManyToOne
+    @MapsId("groupId")
+    @JoinColumn(name = "groupId", referencedColumnName = "id")
+    private GroupCollaboration groupCollaboration;
 }

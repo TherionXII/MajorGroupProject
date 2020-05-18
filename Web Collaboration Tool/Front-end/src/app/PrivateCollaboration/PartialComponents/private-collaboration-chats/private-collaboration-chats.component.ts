@@ -25,8 +25,6 @@ export class PrivateCollaborationChatsComponent implements OnInit {
       .subscribe((data: { privateCollaborations: Array<IPrivateCollaboration> }) => this.collaborations = data.privateCollaborations,
                  error => this.resolverError = error);
 
-    console.log(this.collaborations);
-
     this.loggedInUser = localStorage.getItem('username');
   }
 }

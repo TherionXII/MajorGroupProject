@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {IPrivateCollaborationRequest} from '../../../Utility/Interfaces/IPrivateCollaborationRequest';
@@ -8,7 +8,7 @@ import {IPrivateCollaborationRequest} from '../../../Utility/Interfaces/IPrivate
   templateUrl: './user-collaboration-pane.component.html',
   styleUrls: ['./user-collaboration-pane.component.css']
 })
-export class UserCollaborationPaneComponent implements OnInit {
+export class UserCollaborationPaneComponent implements OnInit, OnChanges {
   public hasSentRequest: boolean;
   public hasReceivedRequest: boolean;
   public isCollaborating: boolean;
@@ -21,16 +21,18 @@ export class UserCollaborationPaneComponent implements OnInit {
     this.resolverError = '';
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.route.data.subscribe((data: { collaborationStatus: [ boolean, boolean, boolean ] } ) => {
       this.hasSentRequest = data.collaborationStatus[0];
       this.hasReceivedRequest = data.collaborationStatus[1];
       this.isCollaborating = data.collaborationStatus[2];
-
-      console.log(this.hasSentRequest + ' ' + this.hasReceivedRequest);
     }, error => this.resolverError = error);
 
     this.username = this.route.snapshot.paramMap.get('username');
+  }
+
+  public ngOnChanges(): void {
+    this.ngOnInit();
   }
 
   public onCollaborationRequest(): void {

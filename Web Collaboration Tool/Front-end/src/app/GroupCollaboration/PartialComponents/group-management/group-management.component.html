@@ -13,10 +13,12 @@
   <mat-tab label = "Invite collaborators">
     <mat-list>
       <mat-list-item *ngFor = "let collaboration of privateCollaborations">
-        <div *ngIf = "!isInGroup(getCollaboratorUsername(collaboration)) && !hasBeenInvited(getCollaboratorUsername(collaboration))">
-          <p> {{ getCollaboratorUsername(collaboration) }} </p>
-          <button mat-raised-button (click) = "onInviteToGroup(getCollaboratorUsername(collaboration))">Invite to group</button>
-        </div>
+        <mat-card *ngIf = "!isInGroup(getCollaboratorUsername(collaboration)) && !hasBeenInvited(getCollaboratorUsername(collaboration))">
+          <mat-card-content>
+            {{ getCollaboratorUsername(collaboration) }}
+            <button mat-raised-button (click) = "onInviteToGroup(getCollaboratorUsername(collaboration))">Invite to group</button>
+          </mat-card-content>
+        </mat-card>
       </mat-list-item>
     </mat-list>
   </mat-tab>
