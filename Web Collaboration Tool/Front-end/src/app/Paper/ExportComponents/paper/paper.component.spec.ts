@@ -18,7 +18,7 @@ describe('PaperComponent', () => {
   const rxStompServiceStub = jasmine.createSpyObj('RxStompService', [ 'watch', 'publish' ]);
 
   describe('testing when route resolved successfully', () => {
-    const mockPaper = { id: 0, questions: [ { id: 0, text: 'question text'} as IPaperQuestion ] } as IPaper;
+    const mockPaper = { id: 0, questions: [ { id: 0, text: 'question text', questionImage: {} } as IPaperQuestion ] } as IPaper;
     const activatedRouteStub = { data: of({ paper: mockPaper } )};
 
     beforeEach(async(() => {

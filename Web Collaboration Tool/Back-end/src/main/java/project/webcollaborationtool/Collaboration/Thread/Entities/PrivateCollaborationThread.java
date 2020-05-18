@@ -17,7 +17,7 @@ import java.util.Collection;
 @DiscriminatorValue("private_collaboration_thread")
 public class PrivateCollaborationThread extends ChatThread
 {
-    @OneToMany
+    @OneToMany(mappedBy = "thread")
     @JsonBackReference("private_thread")
     private Collection<PrivateCollaboration> privateCollaboration;
 }

@@ -28,7 +28,7 @@ public class PrivateCollaboration
     @JoinColumn(name = "firstCollaborator", referencedColumnName = "username")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonManagedReference("private_thread")
     private PrivateCollaborationThread thread;
 }
