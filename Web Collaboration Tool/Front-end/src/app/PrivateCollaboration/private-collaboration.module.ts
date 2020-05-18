@@ -17,7 +17,13 @@ import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
-  declarations: [PrivateCollaborationsHomeComponent, PrivateCollaborationChatsComponent, PrivateCollaborationChatCreationComponent, PrivateCollaborationRequestsComponent, UserSearchComponent],
+  declarations: [
+    PrivateCollaborationsHomeComponent,
+    PrivateCollaborationChatsComponent,
+    PrivateCollaborationChatCreationComponent,
+    PrivateCollaborationRequestsComponent,
+    UserSearchComponent
+  ],
   imports: [
     CommonModule,
     PrivateCollaborationRoutingModule,
