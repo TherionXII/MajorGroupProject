@@ -11,6 +11,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PrivateCollaborationChatsComponent } from './PartialComponents/private-collaboration-chats/private-collaboration-chats.component';
 import { PrivateCollaborationChatCreationComponent } from './PartialComponents/private-collaboration-chat-creation/private-collaboration-chat-creation.component';
 import { PrivateCollaborationRequestsComponent } from './PartialComponents/private-collaboration-requests/private-collaboration-requests.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { PrivateCollaborationRequestsComponent } from './PartialComponents/priva
     MatButtonModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class PrivateCollaborationModule { }
