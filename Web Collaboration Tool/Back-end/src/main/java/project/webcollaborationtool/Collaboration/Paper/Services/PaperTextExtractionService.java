@@ -50,7 +50,8 @@ public class PaperTextExtractionService
     private String extractTextFromScannedImageByArea(PaperPage paperPage, Rectangle rectangle) throws IOException, TesseractException
     {
         ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath("C:/Users/theri/OneDrive/College/Semester Five/Year Project/Web Collaboration Tool/Back-end/tessdata");
+        tesseract.setDatapath("C:/Users/colmd/OneDrive - Technological University Dublin/Year3/Group " +
+                "Project/MajorGroupProject/Web Collaboration Tool/Back-end/tessdata");
         tesseract.setLanguage("eng");
         tesseract.setTessVariable("user_defined_dpi", "300");
 

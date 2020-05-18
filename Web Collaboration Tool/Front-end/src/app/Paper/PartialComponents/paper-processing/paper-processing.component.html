@@ -10,9 +10,11 @@
   <mat-step label = "Choose text and images to extract: ">
     <mat-card >
       <mat-card-header>
-        <mat-card-title>Select only the text you need</mat-card-title>
-        <mat-card-subtitle>When you are ready click next</mat-card-subtitle>
-        <mat-card-subtitle>Please note that an image, if any, can be selected ONLY after text has been selected</mat-card-subtitle>
+        <mat-card-title>Select only the text you need, one question at a time.</mat-card-title>
+        <mat-card-subtitle>If an image is required, select the text first, and then tick the
+          "Selecting Image" checkbox before selecting the image.</mat-card-subtitle>
+        <mat-card-subtitle>After each question, click "Next Question".</mat-card-subtitle>
+        <mat-card-subtitle>When all selections are complete, click "Next"</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <mat-tab-group (selectedTabChange) = onPageChange($event)>
@@ -24,22 +26,23 @@
           <image-cropper *ngIf = "currentPage" [imageBase64] = "'data:image/png;base64,' + currentPage.pageOriginal" [maintainAspectRatio]="false" [aspectRatio] = "1"
                          [resizeToWidth]="0" format="png" (imageCropped) = "onCrop($event, paper.pages.indexOf(currentPage))">
           </image-cropper>
-
-          <mat-checkbox (change) = "onSelectionTypeChange()">Selecting Image</mat-checkbox>
-          <button mat-button matStepperPrevious color="accent">Back</button>
-          <button mat-button color = "accent" (click) = "onNextQuestion()">Next question</button>
-          <button mat-button matStepperNext color="primary">Next</button>
         </div>
       </mat-card-content>
+      <mat-card-actions>
+        <mat-checkbox (change) = "onSelectionTypeChange()">Selecting Image</mat-checkbox>
+        <button mat-button matStepperPrevious color="accent">Back</button>
+        <button mat-button color = "accent" (click) = "onNextQuestion()">Next Question</button>
+        <button mat-button matStepperNext color="primary">Next</button>
+      </mat-card-actions>
     </mat-card>
   </mat-step>
 
   <mat-step label = "Preview results">
     <mat-form-field *ngFor = "let question of processedPaperQuestions">
-        <textarea matInput class = "amend-width" value = "{{question.text}}"></textarea>
-        <img *ngIf = "question.questionImage" [src]="question.questionImage.image">
-        <button>Update</button>
+      <textarea matInput class = "amend-width" rows="5" value = "{{question.text}}"></textarea>
+      <button mat-raised-button color="primary">Update</button>
+      <img class="question-image" *ngIf = "question.questionImage" [src]="question.questionImage.image" alt="Selected image">
     </mat-form-field>
-    <button mat-raised-button matStepperNext (click)="onSubmit()">Submit</button>
+    <button mat-raised-button matStepperNext color="primary" (click)="onSubmit()">Submit</button>
   </mat-step>
 </mat-horizontal-stepper>

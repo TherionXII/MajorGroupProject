@@ -1,5 +1,21 @@
+<!--<mat-error>{{ resolverError }}</mat-error>-->
+<!--<mat-form-field *ngFor="let question of questionsForm.controls; index as questionIndex">-->
+<!--  <p> {{ paper.questions[questionIndex].text }} </p>-->
+<!--  <textarea matInput [value] = "question.value" (keyup) = "onChange(question.value, questionIndex)" [formControl]="question"></textarea>-->
+<!--</mat-form-field>-->
+
 <mat-error>{{ resolverError }}</mat-error>
-<mat-form-field *ngFor="let question of questionsForm.controls; index as questionIndex">
-  <p>{{ paper.questions[questionIndex].text }}</p>
-  <textarea matInput [value] = "question.value" (keyup) = "onChange(question.value, questionIndex)" [formControl]="question"></textarea>
-</mat-form-field>
+<mat-card *ngFor="let question of questionsForm.controls; index as questionIndex">
+  <mat-card-content>
+    <p> {{ paper.questions[questionIndex].text }} </p>
+    <img mat-card-image class="question-image" src="{{paper.questions[questionIndex].questionImage.image}}"
+         alt="Image for question">
+  </mat-card-content>
+  <mat-card-content>
+    <mat-form-field *ngFor="let question of questionsForm.controls; index as questionIndex">
+      <mat-label>Answer here...</mat-label>
+        <textarea matInput [value] = "question.value" (keyup) = "onChange(question.value, questionIndex)" [formControl]="question"></textarea>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+
