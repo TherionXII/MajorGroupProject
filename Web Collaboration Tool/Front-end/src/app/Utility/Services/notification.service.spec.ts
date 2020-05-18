@@ -26,8 +26,8 @@ describe('NotificationService', () => {
     service.hasSentCollaborationRequest('user1', 'user2')
       .subscribe(response => expect(response).toBeTrue(), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/hasSentRequest/user1/user2');
-    expect(request.request.url).toEqual('http://localhost:8080/hasSentRequest/user1/user2');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateRequests/user1/user2/hasSentRequest');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateRequests/user1/user2/hasSentRequest');
     expect(request.request.method).toEqual('GET');
 
     request.event(new HttpResponse<boolean>({ body: true }));
@@ -37,8 +37,8 @@ describe('NotificationService', () => {
     service.hasSentCollaborationRequest('user1', 'user2')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/hasSentRequest/user1/user2');
-    expect(request.request.url).toEqual('http://localhost:8080/hasSentRequest/user1/user2');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateRequests/user1/user2/hasSentRequest');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateRequests/user1/user2/hasSentRequest');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });
@@ -48,8 +48,8 @@ describe('NotificationService', () => {
     service.hasReceivedCollaborationRequest('user1', 'user2')
       .subscribe(response => expect(response).toBeTrue(), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/hasReceivedRequest/user2/user1');
-    expect(request.request.url).toEqual('http://localhost:8080/hasReceivedRequest/user2/user1');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateRequests/user2/user1/hasReceivedRequest');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateRequests/user2/user1/hasReceivedRequest');
     expect(request.request.method).toEqual('GET');
 
     request.event(new HttpResponse<boolean>({ body: true }));
@@ -59,8 +59,8 @@ describe('NotificationService', () => {
     service.hasReceivedCollaborationRequest('user1', 'user2')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/hasReceivedRequest/user2/user1');
-    expect(request.request.url).toEqual('http://localhost:8080/hasReceivedRequest/user2/user1');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateRequests/user2/user1/hasReceivedRequest');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateRequests/user2/user1/hasReceivedRequest');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });
@@ -70,8 +70,8 @@ describe('NotificationService', () => {
     service.getAllNotificationsForUser('username')
       .subscribe(response => expect(response.length).toEqual(1), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/getNotifications/username');
-    expect(request.request.url).toEqual('http://localhost:8080/getNotifications/username');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/notification/username/getNotifications');
+    expect(request.request.url).toEqual('http://localhost:8080/api/notification/username/getNotifications');
     expect(request.request.method).toEqual('GET');
 
     request.flush([ {} as INotification ]);
@@ -81,8 +81,8 @@ describe('NotificationService', () => {
     service.getAllNotificationsForUser('username')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/getNotifications/username');
-    expect(request.request.url).toEqual('http://localhost:8080/getNotifications/username');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/notification/username/getNotifications');
+    expect(request.request.url).toEqual('http://localhost:8080/api/notification/username/getNotifications');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });

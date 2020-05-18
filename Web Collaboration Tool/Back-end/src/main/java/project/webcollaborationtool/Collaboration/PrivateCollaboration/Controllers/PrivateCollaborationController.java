@@ -29,4 +29,11 @@ public class PrivateCollaborationController
     {
         return ResponseEntity.ok().body(this.privateCollaborationService.getAllPrivateCollaborationsForUser(username));
     }
+
+    @GetMapping("/{username}/userSearch")
+    @CrossOrigin(origins = "/collaborations", methods = RequestMethod.GET)
+    public ResponseEntity<Collection<String>> searchForUsers(@PathVariable String username)
+    {
+        return ResponseEntity.ok().body(this.privateCollaborationService.searchForUsers(username));
+    }
 }

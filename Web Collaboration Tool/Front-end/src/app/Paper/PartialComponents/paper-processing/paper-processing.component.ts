@@ -7,6 +7,7 @@ import {MatHorizontalStepper} from '@angular/material/stepper';
 import {IPosition} from '../../Interfaces/IPosition';
 import {IPage} from '../../Interfaces/IPage';
 import {MatTabChangeEvent} from '@angular/material/tabs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-pdf-processing',
@@ -27,7 +28,7 @@ export class PaperProcessingComponent implements OnInit {
 
   @ViewChild(ImageCropperComponent, { static: false }) imageCropper: ImageCropperComponent;
 
-  constructor(private paperService: PaperService) {
+  constructor(private paperService: PaperService, private router: Router) {
     this.processedPaperQuestions = new Array<IPaperQuestion>();
     this.currentQuestion = {} as IPaperQuestion;
     this.paper = {} as IPaper;
@@ -72,6 +73,10 @@ export class PaperProcessingComponent implements OnInit {
                 () => this.processingError = 'Failed to process your question; please try again later');
 
     this.currentQuestion = {} as IPaperQuestion;
+  }
+
+  public onSubmit(): void {
+    this.router.navigateByUrl(`/paper/${this.paper.id}`);
   }
 
   private cropText(imagePosition: CropperPosition, pageNumber: number): void {

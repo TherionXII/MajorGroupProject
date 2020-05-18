@@ -5,6 +5,7 @@ import {QueryModule} from '../../query.module';
 import {QueryService} from '../../Services/query.service';
 import {IQuery} from '../../Interfaces/IQuery';
 import {of, throwError} from 'rxjs';
+import {IResponse} from '../../Interfaces/IResponse';
 
 describe('QueryVoteComponent', () => {
   let component: QueryVoteComponent;
@@ -29,7 +30,7 @@ describe('QueryVoteComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(() => component.response = { id: 0, rating: 0 } as IQuery);
+  beforeEach(() => component.response = { id: 0, rating: 0 } as IResponse);
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -42,7 +43,7 @@ describe('QueryVoteComponent', () => {
   });
 
   it('should emit queryVoted event when voted for the query successfully', () => {
-    queryServiceStub.submitVote.and.returnValue(of({ id: 0, rating: 1 } as IQuery));
+    queryServiceStub.submitVote.and.returnValue(of({ id: 0, rating: 1 } as IResponse));
     const queryVotedEventSpy = spyOn(component.queryVotedEvent, 'emit');
 
     component.onVote(true);

@@ -9,6 +9,7 @@ import project.webcollaborationtool.Collaboration.Request.Entities.PrivateCollab
 import project.webcollaborationtool.User.Repositories.UserRepository;
 import project.webcollaborationtool.Utility.CompositeKeys.PrivateCollaborationId;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -46,5 +47,16 @@ public class PrivateCollaborationService
     public Collection<PrivateCollaboration> getAllPrivateCollaborationsForUser(String username)
     {
         return this.privateCollaborationRepository.findAllByFirstCollaborator(username);
+    }
+
+    public Collection<String> searchForUsers(String username)
+    {
+        var result = new ArrayList<String>();
+
+        for(var user : this.userRepository.findAll())
+            if(user.getUsername().matches(".*" + username + ".*"))
+                result.add(user.getUsername());
+
+        return result;
     }
 }

@@ -26,8 +26,8 @@ describe('PrivateCollaborationService', () => {
     service.isCollaborating('user1', 'user2')
       .subscribe(isCollaborating => expect(isCollaborating).toBeTrue(), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/isCollaborating/user1/user2');
-    expect(request.request.url).toEqual('http://localhost:8080/isCollaborating/user1/user2');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateCollaboration/user1/user2/isCollaborating');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateCollaboration/user1/user2/isCollaborating');
     expect(request.request.method).toEqual('GET');
 
     request.event(new HttpResponse<boolean>({ body: true }));
@@ -37,8 +37,8 @@ describe('PrivateCollaborationService', () => {
     service.isCollaborating('user1', 'user2')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/isCollaborating/user1/user2');
-    expect(request.request.url).toEqual('http://localhost:8080/isCollaborating/user1/user2');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateCollaboration/user1/user2/isCollaborating');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateCollaboration/user1/user2/isCollaborating');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });
@@ -48,8 +48,8 @@ describe('PrivateCollaborationService', () => {
     service.getPrivateCollaborationsForUser('user')
       .subscribe(collaborations => expect(collaborations.length).toEqual(1), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/privateCollaborations/user');
-    expect(request.request.url).toEqual('http://localhost:8080/privateCollaborations/user');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateCollaboration/user/privateCollaborations');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateCollaboration/user/privateCollaborations');
     expect(request.request.method).toEqual('GET');
 
     request.flush([ {} as IPrivateCollaboration ])
@@ -59,8 +59,8 @@ describe('PrivateCollaborationService', () => {
     service.getPrivateCollaborationsForUser('user')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/privateCollaborations/user');
-    expect(request.request.url).toEqual('http://localhost:8080/privateCollaborations/user');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateCollaboration/user/privateCollaborations');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateCollaboration/user/privateCollaborations');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });
@@ -70,8 +70,8 @@ describe('PrivateCollaborationService', () => {
     service.getPrivateCollaborationRequestsForUser('user')
       .subscribe(collaborations => expect(collaborations.length).toEqual(1), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/getPrivateCollaborationRequests/user');
-    expect(request.request.url).toEqual('http://localhost:8080/getPrivateCollaborationRequests/user');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateRequests/user/getPrivateCollaborationRequests');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateRequests/user/getPrivateCollaborationRequests');
     expect(request.request.method).toEqual('GET');
 
     request.flush([ {} as IPrivateCollaborationRequest ])
@@ -81,8 +81,8 @@ describe('PrivateCollaborationService', () => {
     service.getPrivateCollaborationRequestsForUser('user')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/getPrivateCollaborationRequests/user');
-    expect(request.request.url).toEqual('http://localhost:8080/getPrivateCollaborationRequests/user');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/privateRequests/user/getPrivateCollaborationRequests');
+    expect(request.request.url).toEqual('http://localhost:8080/api/privateRequests/user/getPrivateCollaborationRequests');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });

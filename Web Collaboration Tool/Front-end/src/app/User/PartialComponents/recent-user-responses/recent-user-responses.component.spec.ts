@@ -6,6 +6,7 @@ import {of, throwError} from 'rxjs';
 import {UserModule} from '../../user.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ActivatedRoute} from '@angular/router';
+import {IResponse} from '../../../Query/Interfaces/IResponse';
 
 describe('RecentUserResponsesComponent', () => {
   let component: RecentUserResponsesComponent;
@@ -40,12 +41,6 @@ describe('RecentUserResponsesComponent', () => {
     it('should initialize fields successfully', () => {
       expect(component.userResponses.length).toEqual(2);
       expect(component.resolverError).toEqual('');
-    });
-
-    it('should return the username of the root query owner', () => {
-      const mockQuery = { username: 'not-owner', parent: { username: 'owner' } } as IQuery;
-
-      expect(component.getOwnerUsername(mockQuery)).toEqual('owner');
     });
   });
 

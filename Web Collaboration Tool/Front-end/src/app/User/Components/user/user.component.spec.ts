@@ -4,21 +4,23 @@ import { UserComponent } from './user.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ActivatedRoute} from '@angular/router';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {of} from 'rxjs';
 
 describe('UserPageComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
 
+  const activatedRouteStub = { paramMap: of( { get: (key: string) => 'username'} )};
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ UserComponent ],
       imports: [ RouterTestingModule ],
+      providers: [ { provide: ActivatedRoute, useValue: activatedRouteStub } ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   });
-
-  beforeEach(() => spyOn(TestBed.inject(ActivatedRoute).snapshot.paramMap, 'get').and.returnValue('username'));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);

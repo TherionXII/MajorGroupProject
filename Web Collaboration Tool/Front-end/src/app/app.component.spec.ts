@@ -30,6 +30,7 @@ describe('componentComponent', () => {
     spyOn(localStorage, 'getItem').and.callFake((key) => store[key]);
     spyOn(localStorage, 'setItem').and.callFake( (key, value) => store[key] = value + '');
     spyOn(localStorage, 'clear').and.callFake(() => store = {});
+    spyOn(localStorage, 'removeItem').and.callFake(() => store = {});
 
     localStorage.setItem('username', 'username');
   });

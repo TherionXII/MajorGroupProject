@@ -8,18 +8,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public title = 'Front-end';
-  public username: string;
 
   constructor(private router: Router) {}
 
-  public ngOnInit(): void {
-    this.username = localStorage.getItem('username');
-  }
+  public ngOnInit(): void {}
 
   public logout(): void {
     localStorage.removeItem('username');
-
-    this.username = null;
 
     this.router.navigateByUrl('/');
   }

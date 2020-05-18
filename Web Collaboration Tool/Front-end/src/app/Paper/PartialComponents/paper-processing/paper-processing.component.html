@@ -40,6 +40,6 @@
         <img *ngIf = "question.questionImage" [src]="question.questionImage.image">
         <button>Update</button>
     </mat-form-field>
-    <button mat-raised-button matStepperNext>Submit</button>
+    <button mat-raised-button matStepperNext (click)="onSubmit()">Submit</button>
   </mat-step>
 </mat-horizontal-stepper>

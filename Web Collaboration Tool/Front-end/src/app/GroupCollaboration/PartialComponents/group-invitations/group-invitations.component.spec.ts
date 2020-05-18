@@ -17,8 +17,8 @@ describe('GroupInvitationsComponent', () => {
   const groupServiceStub = jasmine.createSpyObj('GroupService', [ 'respondToInvitation' ]);
 
   describe(' testing when route has resolved', () => {
-    const firstGroupInvitation = { groupCollaboration: { title: 'title1' } } as IGroupCollaborationRequest;
-    const secondGroupInvitation = { groupCollaboration: { title: 'title1' } } as IGroupCollaborationRequest;
+    const firstGroupInvitation = { id: 0, groupCollaboration: { id: 0, title: 'title1' } } as IGroupCollaborationRequest;
+    const secondGroupInvitation = { id: 1, groupCollaboration: { id: 1, title: 'title1' } } as IGroupCollaborationRequest;
     const activatedRouteStub = { data: of({ userGroups:  ['', [ firstGroupInvitation, secondGroupInvitation ] ] } )};
 
 
@@ -54,20 +54,12 @@ describe('GroupInvitationsComponent', () => {
     });
 
     describe(' invitations logic', () => {
-      let routerNavigateByUrl: Spy;
-
-      beforeEach(() => {
-        const router = TestBed.inject(Router as Type<Router>);
-        routerNavigateByUrl = spyOn(router, 'navigateByUrl');
-      });
-
       it('should redirect to group page when responded to invitation positively and request succeeded', () => {
         groupServiceStub.respondToInvitation.and.returnValue(of(1));
 
         component.onInvitationResponse(firstGroupInvitation, true);
 
         expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-        expect(routerNavigateByUrl).toHaveBeenCalledWith('/group/1');
         expect(component.requestError).toEqual('');
       });
 
@@ -75,9 +67,10 @@ describe('GroupInvitationsComponent', () => {
         groupServiceStub.respondToInvitation.and.returnValue(throwError('Error'));
 
         component.onInvitationResponse(firstGroupInvitation, true);
+        const spy = spyOn(TestBed.inject(Router), 'navigateByUrl');
 
         expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-        expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
+        expect(spy).not.toHaveBeenCalledWith('/group/1/1');
         expect(component.requestError).toEqual('Something went wrong; please try again later');
       });
 
@@ -85,9 +78,10 @@ describe('GroupInvitationsComponent', () => {
         groupServiceStub.respondToInvitation.and.returnValue(of(1));
 
         component.onInvitationResponse(firstGroupInvitation, false);
+        const spy = spyOn(TestBed.inject(Router), 'navigateByUrl');
 
         expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-        expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
+        expect(spy).not.toHaveBeenCalledWith('/group/1/1');
         expect(component.groupInvitations.includes(firstGroupInvitation)).toBeFalse();
         expect(component.requestError).toEqual('');
       });
@@ -96,9 +90,10 @@ describe('GroupInvitationsComponent', () => {
         groupServiceStub.respondToInvitation.and.returnValue(throwError('Error'));
 
         component.onInvitationResponse(firstGroupInvitation, false);
+        const spy = spyOn(TestBed.inject(Router), 'navigateByUrl');
 
         expect(groupServiceStub.respondToInvitation).toHaveBeenCalledWith(firstGroupInvitation);
-        expect(routerNavigateByUrl).not.toHaveBeenCalledWith('/group/1');
+        expect(spy).not.toHaveBeenCalledWith('/group/1/1');
         expect(component.groupInvitations.includes(firstGroupInvitation)).toBeTrue();
         expect(component.requestError).toEqual('Something went wrong; please try again later');
       });

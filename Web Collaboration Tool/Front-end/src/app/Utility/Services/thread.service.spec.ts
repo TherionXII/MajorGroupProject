@@ -26,8 +26,8 @@ describe('ThreadService', () => {
     service.createNewThread('user1', 'user2')
       .subscribe(response => expect(response).toEqual(0), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/createPrivateThread/user1/user2');
-    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/createPrivateThread/user1/user2');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/user1/user2/createPrivateThread');
+    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/user1/user2/createPrivateThread');
     expect(request.request.method).toEqual('GET');
 
     request.flush(0);
@@ -37,8 +37,8 @@ describe('ThreadService', () => {
     service.createNewThread('user1', 'user2')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/createPrivateThread/user1/user2');
-    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/createPrivateThread/user1/user2');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/user1/user2/createPrivateThread');
+    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/user1/user2/createPrivateThread');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });
@@ -48,8 +48,8 @@ describe('ThreadService', () => {
     service.getMessagesForThread('0')
       .subscribe(response => expect(response.length).toEqual(1), () => fail('Should have succeeded!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/getMessagesForThread/0');
-    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/getMessagesForThread/0');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/0/getMessagesForThread');
+    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/0/getMessagesForThread');
     expect(request.request.method).toEqual('GET');
 
     request.flush([ {} as IMessage ]);
@@ -59,8 +59,8 @@ describe('ThreadService', () => {
     service.getMessagesForThread('0')
       .subscribe(() => fail('Should have failed!'), error => expect(error.error).toEqual('Error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/getMessagesForThread/0');
-    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/getMessagesForThread/0');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/chatThreads/0/getMessagesForThread');
+    expect(request.request.url).toEqual('http://localhost:8080/api/chatThreads/0/getMessagesForThread');
     expect(request.request.method).toEqual('GET');
 
     request.flush('Error', { status: 401, statusText: 'Error' });

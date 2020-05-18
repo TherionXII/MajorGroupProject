@@ -21,4 +21,8 @@ export class PrivateCollaborationService {
   public getPrivateCollaborationRequestsForUser(username: string): Observable<Array<IPrivateCollaborationRequest>> {
     return this.httpClient.get<Array<IPrivateCollaborationRequest>>(`http://localhost:8080/api/privateRequests/${username}/getPrivateCollaborationRequests`);
   }
+
+  public searchForUser(username: string): Observable<Array<string>> {
+    return this.httpClient.get<Array<string>>(`http://localhost:8080/api/privateCollaboration/${username}/userSearch`);
+  }
 }

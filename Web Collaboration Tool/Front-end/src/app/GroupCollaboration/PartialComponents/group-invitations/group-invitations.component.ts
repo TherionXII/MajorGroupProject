@@ -31,9 +31,9 @@ export class GroupInvitationsComponent implements OnInit {
   }
 
   private onSuccess(id: number, isAccepted: boolean, invitation: IGroupCollaborationRequest): void {
-    this.groupInvitations = this.groupInvitations.filter(item => item !== invitation);
+    this.groupInvitations = this.groupInvitations.filter(item => item.id !== invitation.id);
 
     if(isAccepted)
-      this.router.navigateByUrl(`/group/${id}/${invitation.groupCollaboration.thread.id}`);
+      this.router.navigateByUrl(`/group/${id}`);
   }
 }

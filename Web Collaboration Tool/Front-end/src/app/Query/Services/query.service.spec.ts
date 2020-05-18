@@ -4,6 +4,7 @@ import { QueryService } from './query.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {IQuery} from '../Interfaces/IQuery';
 import {IResponseVote} from '../Interfaces/IResponseVote';
+import {IResponse} from '../Interfaces/IResponse';
 
 describe('QueryService', () => {
   let queryService: QueryService;
@@ -182,25 +183,25 @@ describe('QueryService', () => {
   });
 
   it('should send a successful request to create a response', () => {
-    queryService.createResponse(0, 'username', {} as IQuery)
+    queryService.createResponse(0, 'username', {} as IResponse)
                 .subscribe(response => expect(response.id).toEqual(1), () => fail('Should not have failed!'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/api/queries/publicQueries/username/0/createResponse');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/queries/username/0/createResponse');
+    expect(request.request.url).toEqual('http://localhost:8080/api/queries/username/0/createResponse');
     expect(request.request.method).toEqual('POST');
     expect(request.request.body).toEqual({});
-    expect(request.request.url).toEqual('http://localhost:8080/api/queries/publicQueries/username/0/createResponse');
 
     request.flush({ id: 1 } as IQuery);
   });
 
   it('should send an unsuccessful request to create a response', () => {
-    queryService.createResponse(0, 'username', {} as IQuery)
+    queryService.createResponse(0, 'username', {} as IResponse)
                 .subscribe(() => fail('Should have failed'), error => expect(error.error).toEqual('error'));
 
-    const request = httpTestingController.expectOne('http://localhost:8080/api/queries/publicQueries/username/0/createResponse');
+    const request = httpTestingController.expectOne('http://localhost:8080/api/queries/username/0/createResponse');
+    expect(request.request.url).toEqual('http://localhost:8080/api/queries/username/0/createResponse');
     expect(request.request.method).toEqual('POST');
     expect(request.request.body).toEqual({});
-    expect(request.request.url).toEqual('http://localhost:8080/api/queries/publicQueries/username/0/createResponse');
 
     request.flush('error', { status: 401, statusText: 'error' });
   });
