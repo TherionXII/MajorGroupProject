@@ -1,5 +1,5 @@
 <mat-error>{{ resolverError }}</mat-error>
-<div *ngFor = "let message of messages">
+<div class="chat-container" *ngFor = "let message of messages">
   <div *ngIf = "message.sender === username" class = "loggedInUserMessage"> {{ message.message }} </div>
   <div class="reset"></div>
   <div *ngIf = "message.sender !== username" class = "otherUserMessage"> {{ message.message }} </div>
