@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,14 +35,13 @@ public class LoginControllerTests
     @Autowired
     private UserRepository userRepository;
 
-    private User validUser;
     private User nonExistentUser;
     private User userWithInvalidPassword;
 
     @BeforeEach
     public void setUp()
     {
-        this.validUser = this.userRepository.save(this.createValidUser());
+        this.userRepository.save(this.createValidUser());
         this.nonExistentUser = this.createNonExistentUser();
         this.userWithInvalidPassword = this.createUserWithInvalidPassword();
     }
@@ -49,8 +49,11 @@ public class LoginControllerTests
     @Test
     public void testLoginUserWithValidData() throws Exception
     {
+        var user = new User();
+        user.setUsername("username");
+        user.setPassword("password");
         this.mockMvc.perform(post("/login")
-                             .content(this.objectMapper.writeValueAsString(this.validUser))
+                             .content(this.objectMapper.writeValueAsString(user))
                              .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
     }
@@ -77,7 +80,7 @@ public class LoginControllerTests
     {
         var user = new User();
         user.setUsername("username");
-        user.setPassword("password");
+        user.setPassword(new BCryptPasswordEncoder().encode("password"));
 
         return user;
     }

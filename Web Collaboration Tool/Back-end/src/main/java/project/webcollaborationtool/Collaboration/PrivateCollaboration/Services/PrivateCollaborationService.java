@@ -54,7 +54,7 @@ public class PrivateCollaborationService
         var result = new ArrayList<String>();
 
         for(var user : this.userRepository.findAll())
-            if(user.getUsername().matches(".*" + username + ".*"))
+            if(user.getUsername().toLowerCase().matches(".*" + username.toLowerCase() + ".*"))
                 result.add(user.getUsername());
 
         return result;

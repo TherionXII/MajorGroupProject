@@ -65,15 +65,4 @@ public class PaperTextExtractionService
                        question.getQuestionPosition().getX2() - question.getQuestionPosition().getX1(),
                       question.getQuestionPosition().getY2() - question.getQuestionPosition().getY1());
     }
-//
-//    private String extractTextByArea(PDDocument document, int pageNumber, Rectangle rectangle) throws IOException
-//    {
-//        PDPage page = document.getPage(pageNumber);
-//        PDFTextStripperByArea stripperByArea = new PDFTextStripperByArea();
-//
-//        stripperByArea.setSortByPosition(true);
-//        stripperByArea.addRegion("Area1", rectangle);
-//        stripperByArea.extractRegions(page);
-//        return stripperByArea.getTextForRegion("Area1");
-//    }
 }

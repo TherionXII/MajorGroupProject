@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.User.Exceptions.InvalidCredentialsException;
 import project.webcollaborationtool.User.Repositories.UserRepository;
@@ -28,12 +29,16 @@ public class LoginServiceTests
     {
         var user = new User();
         user.setUsername("user");
-        user.setPassword("password");
+        user.setPassword(new BCryptPasswordEncoder().encode("password"));
 
         when(this.userRepository.existsById(any())).thenReturn(true);
         when(this.userRepository.findByUsername(any())).thenReturn(user);
 
-        assertThatCode(() -> this.loginService.login(user)).doesNotThrowAnyException();
+        var secondUser = new User();
+        secondUser.setUsername("user");
+        secondUser.setPassword("password");
+
+        assertThatCode(() -> this.loginService.login(secondUser)).doesNotThrowAnyException();
     }
 
     @Test
