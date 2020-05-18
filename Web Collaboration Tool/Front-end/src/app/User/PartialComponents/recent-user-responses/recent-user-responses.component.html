@@ -1,8 +1,12 @@
-<mat-list>
-  <mat-error>{{ resolverError }}</mat-error>
-  <mat-list-item *ngFor = "let response of userResponses">
-    <h3>Created by: {{ response.username }}&nbsp;</h3>
-    <h3>{{ response.response }}&nbsp;</h3>
-    <h3>{{ response.rating }}&nbsp;</h3>
-  </mat-list-item>
-</mat-list>
+<mat-card *ngFor = "let response of userResponses">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>forum</mat-icon>
+    <mat-card-title>Posted by: {{ response.username }} </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ response.response }}</p>
+  </mat-card-content>
+  <mat-card-footer>
+    <p>Rating: {{ response.rating }}</p>
+  </mat-card-footer>
+</mat-card>
