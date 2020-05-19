@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IQuery} from '../../Interfaces/IQuery';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {QueryService} from '../../Services/query.service';
-import {IQueryVote} from '../../Interfaces/IQueryVote';
+import {IResponse} from '../../Interfaces/IResponse';
 
 @Component({
   selector: 'app-query-container',
@@ -11,35 +11,22 @@ import {IQueryVote} from '../../Interfaces/IQueryVote';
 })
 export class QueryContainerComponent implements OnInit {
   @Input()
-  public query: IQuery;
+  public response: IResponse;
 
-  public isReplyVisible = false;
+  public errorMessage: string;
 
-  public queryResponseForm: FormGroup;
-
-  public submissionError: string;
-
-  constructor(private queryService: QueryService) {}
-
-  ngOnInit() {
-    this.queryResponseForm = new FormGroup({
-      contents: new FormControl('', Validators.required)
-    });
+  constructor() {
+    this.errorMessage = '';
   }
 
-  public onRespond(): void {
-    this.isReplyVisible = !this.isReplyVisible;
+  public ngOnInit() {
   }
 
-  public onSubmit(id: number): void {
-    this.queryService.createResponse(this.queryResponseForm.getRawValue() as IQuery, localStorage.getItem('username'), id)
-      .subscribe(query => this.query = query, error => this.submissionError = error.message);
-
-    this.onRespond();
+  public onQueryVote(response: IResponse): void {
+    this.response = response;
   }
 
-  public onVote(query: IQuery, vote: boolean): void {
-    this.queryService.submitVote({ vote, username: localStorage.getItem('username'), queryId: query.id }, query.id)
-      .subscribe(updatedQuery => this.query = updatedQuery, error => this.submissionError = error.message);
+  public onQueryVoteFailure(error: string): void {
+    this.errorMessage = error;
   }
 }

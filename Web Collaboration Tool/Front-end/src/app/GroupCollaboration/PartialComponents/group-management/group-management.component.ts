@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IGroup} from '../../Interfaces/IGroup';
 import {IPrivateCollaboration} from '../../../PrivateCollaboration/Interfaces/IPrivateCollaboration';
 import {IGroupMember} from '../../Interfaces/IGroupMember';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {IGroupCollaborationRequest} from '../../../Utility/Interfaces/IGroupCollaborationRequest';
-import {GroupService} from '../../Services/group.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-group-management',
@@ -12,24 +12,30 @@ import {GroupService} from '../../Services/group.service';
   styleUrls: ['./group-management.component.css']
 })
 export class GroupManagementComponent implements OnInit {
-  @Input()
   public group: IGroup;
-
-  @Input()
   public privateCollaborations: Array<IPrivateCollaboration>;
-
-  @Input()
-  public username: string;
-
-  @Input()
   public groupInvitations: Array<IGroupCollaborationRequest>;
 
-  public userMember: IGroupMember;
+  public loggedInGroupMember: IGroupMember;
 
-  constructor(private rxStompService: RxStompService) {}
+  public resolverError: string;
+
+  constructor(private rxStompService: RxStompService, private activatedRoute: ActivatedRoute) {
+    this.resolverError = '';
+    this.group = {} as IGroup;
+    this.privateCollaborations = new Array<IPrivateCollaboration>();
+    this.groupInvitations = new Array<IGroupCollaborationRequest>();
+    this.loggedInGroupMember = {} as IGroupMember;
+  }
 
   public ngOnInit(): void {
-    this.userMember = this.group.groupMembers.find(member => member.memberUsername === this.username);
+    this.activatedRoute.data.subscribe((data: { groupData: IGroup, privateCollaborations: Array<IPrivateCollaboration> }) => {
+      this.group = data.groupData[0];
+      this.groupInvitations = data.groupData[1];
+      this.privateCollaborations = data.privateCollaborations;
+
+      this.loggedInGroupMember = this.group.groupMembers.find(member => member.memberUsername === localStorage.getItem('username'));
+    }, error => this.resolverError = error);
   }
 
   public onMakeAdmin(username: string): void {
@@ -41,11 +47,16 @@ export class GroupManagementComponent implements OnInit {
   }
 
   public getCollaboratorUsername(collaboration: IPrivateCollaboration): string {
-    return collaboration.collaboratorOneUsername === this.username ? collaboration.collaboratorTwoUsername : collaboration.collaboratorOneUsername;
+    return collaboration.firstCollaborator === localStorage.getItem('username') ?
+           collaboration.secondCollaborator :
+           collaboration.firstCollaborator;
   }
 
   public onInviteToGroup(username: string): void {
-    this.rxStompService.publish({ destination: `/app/user/collaboration/invitation/${username}`, body: JSON.stringify(this.prepareRequestBody(username))});
+    this.rxStompService.publish({
+      destination: `/app/user/collaboration/invitation/${username}`,
+      body: JSON.stringify(this.prepareRequestBody(username))
+    });
   }
 
   public isInGroup(username: string): boolean {

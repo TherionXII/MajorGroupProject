@@ -1,16 +1,32 @@
 .loggedInUserMessage
 {
   float: right;
-  color: blue;
+  background-color: blue;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 5px;
 }
 
 .otherUserMessage
 {
   float: left;
-  color: red;
+  background-color: red;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 5px;
+}
+
+.reset {
+  clear: both;
 }
 
 #messageForm
 {
   margin-top: 20%;
+}
+
+.chat-form, .chat-container {
+  min-width: 300px;
+  max-width: 500px;
+  width: 100%;
 }

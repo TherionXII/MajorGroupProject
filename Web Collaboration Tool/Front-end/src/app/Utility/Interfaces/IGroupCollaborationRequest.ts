@@ -7,5 +7,5 @@ export interface IGroupCollaborationRequest {
   recipient: string;
   isAccepted: boolean;
 
-  group?: IGroup;
+  groupCollaboration?: IGroup;
 }

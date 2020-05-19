@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.webcollaborationtool.Query.Entities.PublicQuery;
 import project.webcollaborationtool.Query.Entities.Query;
+import project.webcollaborationtool.Query.Entities.Response;
 import project.webcollaborationtool.Query.Services.PublicQueryService;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public class PublicQueryController
 
     @GetMapping(path = "/{username}/getRecentResponses")
     @CrossOrigin(methods = RequestMethod.GET, origins = "/user/*")
-    public ResponseEntity<Collection<PublicQuery>> getRecentResponsesForUser(@PathVariable String username)
+    public ResponseEntity<Collection<Response>> getRecentResponsesForUser(@PathVariable String username)
     {
         return ResponseEntity.ok().body(this.publicQueryService.getRecentResponsesForUser(username));
     }
@@ -43,12 +44,5 @@ public class PublicQueryController
     public ResponseEntity<Query> createQuery(@RequestBody PublicQuery query, @PathVariable String username)
     {
         return ResponseEntity.ok().body(this.publicQueryService.createQuery(query, username));
-    }
-
-    @PostMapping(path = "{username}/{queryId}/createResponse")
-    @CrossOrigin(methods = RequestMethod.POST, origins = "/query/*")
-    public ResponseEntity<Query> createResponse(@RequestBody PublicQuery response, @PathVariable String username, @PathVariable Integer queryId)
-    {
-        return ResponseEntity.ok().body(this.publicQueryService.createResponse(response, username, queryId));
     }
 }

@@ -15,7 +15,6 @@ import java.util.Collection;
 @ToString
 @Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 public class User
 {
@@ -33,18 +32,15 @@ public class User
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
 
-    @Nullable
     @JsonIgnore
-    @OneToMany(mappedBy = "firstCollaborator")
+    @OneToMany(mappedBy = "user")
     private Collection<PrivateCollaboration> collaborators;
 
-    @Nullable
     @JsonIgnore
     @OneToMany(mappedBy = "recipient")
     private Collection<PrivateNotification> notifications;
 
-    @Nullable
     @JsonIgnore
-    @OneToMany(mappedBy = "member")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private Collection<GroupMember> groups;
 }

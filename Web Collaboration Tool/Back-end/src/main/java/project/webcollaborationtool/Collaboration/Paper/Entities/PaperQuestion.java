@@ -2,14 +2,16 @@ package project.webcollaborationtool.Collaboration.Paper.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 public class PaperQuestion
 {
     @Id

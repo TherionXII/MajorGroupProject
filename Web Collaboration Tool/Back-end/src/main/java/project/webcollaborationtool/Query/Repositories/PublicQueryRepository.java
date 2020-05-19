@@ -9,7 +9,5 @@ import java.util.Collection;
 
 public interface PublicQueryRepository extends JpaRepository<PublicQuery, Integer>
 {
-    Collection<PublicQuery> findTop10ByParentOrderByCreatedAtDesc(Query parent);
-    Collection<PublicQuery> findTop10ByUsernameAndParentOrderByCreatedAtDesc(String username, Query parent);
-    Collection<PublicQuery> findTop10ByUsernameAndParentIsNotNullOrderByCreatedAtDesc(String username);
+    Collection<PublicQuery> findTop10ByUsernameOrderByCreatedAtDesc(String username);
 }

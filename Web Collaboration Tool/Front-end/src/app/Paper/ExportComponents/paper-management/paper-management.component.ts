@@ -9,12 +9,14 @@ import {IPaper} from '../../Interfaces/IPaper';
 })
 export class PaperManagementComponent implements OnInit {
   public papers: Array<IPaper>;
-  public groupId: string;
+  public resolverError: string;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.papers = new Array<IPaper>();
+    this.resolverError = '';
+  }
 
   public ngOnInit(): void {
-    this.activatedRoute.data.subscribe((data: { papers: Array<IPaper>} ) => this.papers = data.papers);
-    this.groupId = this.activatedRoute.snapshot.paramMap.get('groupId');
+    this.activatedRoute.data.subscribe((data: { papers: Array<IPaper>} ) => this.papers = data.papers, error => this.resolverError = error);
   }
 }

@@ -6,6 +6,7 @@ import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.Gr
 import project.webcollaborationtool.User.Entities.User;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMember, Integer>

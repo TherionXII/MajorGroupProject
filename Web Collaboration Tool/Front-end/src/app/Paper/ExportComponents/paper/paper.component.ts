@@ -1,38 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IPaper} from '../../Interfaces/IPaper';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {IPaperQuestion} from '../../Interfaces/IPaperQuestion';
 import {FormArray, FormControl} from '@angular/forms';
-import {timer} from 'rxjs';
+import {EMPTY, Subscription} from 'rxjs';
+import {defaultIfEmpty, first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-paper',
   templateUrl: './paper.component.html',
   styleUrls: ['./paper.component.css']
 })
-export class PaperComponent implements OnInit {
+export class PaperComponent implements OnInit, OnDestroy {
   public paper: IPaper;
   public questionsForm: FormArray;
 
+  public resolverError: string;
+
   private questionsToControls: Map<IPaperQuestion, FormControl>;
 
+  private updateQuestionChannelSubscription: Subscription;
+
   constructor(private activatedRoute: ActivatedRoute, private rxStompService: RxStompService) {
+    this.paper = {} as IPaper;
     this.questionsForm = new FormArray([]);
+
+    this.resolverError = '';
+
     this.questionsToControls = new Map<IPaperQuestion, FormControl>();
+
+    this.updateQuestionChannelSubscription = new Subscription();
   }
 
   public ngOnInit(): void {
-    this.activatedRoute.data.subscribe((data: { paper: IPaper} ) => this.paper = data.paper);
+    this.activatedRoute.data.subscribe((data: { paper: IPaper} ) => {
+      this.paper = data.paper;
 
-    for(const question of this.paper.questions) {
-      const questionControl = new FormControl(question.answer);
-      this.questionsToControls.set(question, questionControl);
-      this.questionsForm.push(questionControl);
-    }
+      this.prepareFormControls();
 
-    this.rxStompService.watch(`/topic/papers/updateAnswer/${this.paper.id}`)
-      .subscribe(update => this.onUpdate(JSON.parse(update.body)));
+      this.updateQuestionChannelSubscription = this.rxStompService.watch(`/topic/papers/updateAnswer/${this.paper.id}`)
+        .subscribe(update => this.onUpdate(JSON.parse(update.body)));
+    }, error => this.resolverError = error);
+  }
+
+  public ngOnDestroy(): void {
+    this.updateQuestionChannelSubscription.unsubscribe();
   }
 
   public onChange(answer: string, questionIndex: number): void {
@@ -43,10 +56,18 @@ export class PaperComponent implements OnInit {
     this.rxStompService.publish({ destination: `/app/papers/updateAnswer/${this.paper.id}`, body: JSON.stringify(changedQuestion) });
   }
 
-  public onUpdate(updatedQuestion: IPaperQuestion): void {
+  private onUpdate(updatedQuestion: IPaperQuestion): void {
     const questionToUpdate = this.paper.questions.find(question => question.id === updatedQuestion.id);
     questionToUpdate.answer = updatedQuestion.answer;
 
     this.questionsToControls.get(questionToUpdate).patchValue(updatedQuestion.answer);
+  }
+
+  private prepareFormControls(): void {
+    for (const question of this.paper.questions) {
+      const questionControl = new FormControl(question.answer);
+      this.questionsToControls.set(question, questionControl);
+      this.questionsForm.push(questionControl);
+    }
   }
 }

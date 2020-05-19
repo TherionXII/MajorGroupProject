@@ -11,6 +11,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PrivateCollaborationId implements Serializable
 {
-    private String collaboratorOneUsername;
-    private String collaboratorTwoUsername;
+    private String firstCollaborator;
+    private String secondCollaborator;
 }

@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupMember;
+import project.webcollaborationtool.Collaboration.GroupCollaboration.Exceptions.InvalidGroupDataException;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupCollaborationRepository;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Respositories.GroupMemberRepository;
+import project.webcollaborationtool.Collaboration.Thread.Entities.GroupCollaborationThread;
 import project.webcollaborationtool.User.Entities.User;
+import project.webcollaborationtool.User.Exceptions.InvalidUserDataException;
 import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -30,43 +33,35 @@ public class GroupCollaborationService
     {
         var groupList = new ArrayList<GroupCollaboration>();
 
-        this.userRepository.findByUsername(username).getGroups().forEach(groupMember -> groupList.add(groupMember.getGroupCollaboration()));
+        if(!this.userRepository.existsById(username))
+            throw new InvalidUserDataException();
+
+        this.userRepository.findByUsername(username).getGroups().forEach(groupMember ->
+        {
+            groupList.add(this.groupCollaborationRepository.findById(groupMember.getGroupId()).orElseThrow(InvalidGroupDataException::new));
+        });
 
         return groupList;
     }
 
     public GroupCollaboration createGroup(GroupCollaboration groupCollaboration, String username)
     {
+        groupCollaboration.setThread(new GroupCollaborationThread());
+        groupCollaboration.setGroupMembers(new ArrayList<>());
         groupCollaboration = this.groupCollaborationRepository.save(groupCollaboration);
 
-        this.addMember(groupCollaboration, this.userRepository.findByUsername(username), true);
+        if(!this.userRepository.existsById(username))
+            throw new InvalidUserDataException();
 
-        return groupCollaboration;
+        groupCollaboration.getGroupMembers().add(this.addMember(groupCollaboration, this.userRepository.findByUsername(username), true));
+
+        return this.groupCollaborationRepository.save(groupCollaboration);
     }
 
     public GroupCollaboration getGroupById(Integer groupId)
     {
-        return this.groupCollaborationRepository.findById(groupId).orElseThrow();
+        return this.groupCollaborationRepository.findById(groupId).orElseThrow(InvalidGroupDataException::new);
     }
-
-    public void addMember(Integer groupId, String username)
-    {
-        this.addMember(this.groupCollaborationRepository.findById(groupId).orElseThrow(), this.userRepository.findByUsername(username), false);
-    }
-
-    private void addMember(GroupCollaboration groupCollaboration, User user, Boolean isAdmin)
-    {
-        var groupMember = new GroupMember();
-        groupMember.setMember(user);
-        groupMember.setIsAdmin(isAdmin);
-        groupMember.setGroupCollaboration(groupCollaboration);
-
-        groupMember.setGroupId(groupCollaboration.getId());
-        groupMember.setMemberUsername(user.getUsername());
-
-        this.groupMemberRepository.save(groupMember);
-    }
-
 
     public void makeAdmin(Integer groupId, String username)
     {
@@ -79,5 +74,27 @@ public class GroupCollaborationService
     public void removeFromGroup(Integer groupId, String username)
     {
         this.groupMemberRepository.deleteByGroupIdAndMemberUsername(groupId, username);
+    }
+
+    public void addMember(Integer groupId, String username)
+    {
+        if(!this.userRepository.existsById(username))
+            throw new InvalidUserDataException();
+
+        var groupCollaboration = this.groupCollaborationRepository.findById(groupId).orElseThrow(InvalidGroupDataException::new);
+        groupCollaboration.getGroupMembers().add(this.addMember(groupCollaboration, this.userRepository.findByUsername(username), false));
+
+        this.groupCollaborationRepository.save(groupCollaboration);
+    }
+
+    private GroupMember addMember(GroupCollaboration groupCollaboration, User user, Boolean isAdmin)
+    {
+        var groupMember = new GroupMember();
+        groupMember.setIsAdmin(isAdmin);
+
+        groupMember.setGroupId(groupCollaboration.getId());
+        groupMember.setMemberUsername(user.getUsername());
+
+        return groupMember;
     }
 }

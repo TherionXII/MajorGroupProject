@@ -1,13 +1,15 @@
 package project.webcollaborationtool.Collaboration.Paper.Entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 public class PaperImage
 {
     @Id

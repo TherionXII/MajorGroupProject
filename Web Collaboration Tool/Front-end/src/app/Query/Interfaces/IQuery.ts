@@ -1,15 +1,13 @@
-export interface IQuery {
-  id?: number;
+import {IResponse} from './IResponse';
 
-  title?: string;
-  subtitle?: string;
+export interface IQuery {
+  id: number;
+
+  title: string;
+  subtitle: string;
 
   contents: string;
-  rating: number;
 
   username: string;
-  parent?: IQuery;
-  children?: Array<IQuery>;
-
-  createdAt?: any;
+  responses?: Array<IResponse>;
 }

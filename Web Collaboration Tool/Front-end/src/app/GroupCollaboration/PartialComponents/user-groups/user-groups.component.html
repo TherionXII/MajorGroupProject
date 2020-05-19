@@ -1,0 +1,9 @@
+<mat-action-list>
+  <mat-error>{{ resolverError }}</mat-error>
+  <mat-list-item *ngFor = "let userGroup of userGroups">
+    <mat-icon>group</mat-icon>
+    <button [routerLink] = "['/group', userGroup.id, userGroup.thread.id]">
+      {{ userGroup.title }} : {{ userGroup.description }}
+    </button>
+  </mat-list-item>
+</mat-action-list>

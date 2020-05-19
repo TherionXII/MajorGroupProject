@@ -13,6 +13,7 @@ import project.webcollaborationtool.User.Repositories.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,15 +31,12 @@ public class ProfileServiceTests
     @Test
     public void testUpdateProfileWithValidData()
     {
-        var profile = new Profile();
-        var user = new User("username", "password", "email", null, null, null, null);
-
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.profileRepository.existsById("username")).thenReturn(true);
-        when(this.profileRepository.findByUsername(user.getUsername())).thenReturn(profile);
-        when(this.profileRepository.save(profile)).thenReturn(profile);
+        when(this.profileRepository.findByUsername(any())).thenReturn(new Profile());
+        when(this.profileRepository.save(any())).thenReturn(new Profile());
 
-        assertThatCode(() -> this.profileService.updateProfile("username", profile)).doesNotThrowAnyException();
+        assertThatCode(() -> this.profileService.updateProfile("username", new Profile())).doesNotThrowAnyException();
     }
 
     @Test
@@ -61,11 +59,9 @@ public class ProfileServiceTests
     @Test
     public void testGetProfileWithValidData()
     {
-        var user = new User("username", "password", "email", new Profile(), null, null, null);
-
         when(this.userRepository.existsById("username")).thenReturn(true);
         when(this.profileRepository.existsById("username")).thenReturn(true);
-        when(this.profileRepository.findByUsername(user.getUsername())).thenReturn(new Profile());
+        when(this.profileRepository.findByUsername(any())).thenReturn(new Profile());
 
         assertThatCode(() -> this.profileService.getProfile("username")).doesNotThrowAnyException();
     }

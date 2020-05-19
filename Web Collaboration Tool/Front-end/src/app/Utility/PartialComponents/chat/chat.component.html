@@ -1,14 +1,18 @@
-<div *ngFor = "let message of messages">
-  <p *ngIf = "message.sender === username" class = "loggedInUserMessage">{{ message.message }}</p><br>
-  <p *ngIf = "message.sender !== username" class = "otherUserMessage">{{ message.message }}</p><br>
+<mat-error>{{ resolverError }}</mat-error>
+<div class="chat-container" *ngFor = "let message of messages">
+  <div *ngIf = "message.sender === username" class = "loggedInUserMessage"> {{ message.message }} </div>
+  <div class="reset"></div>
+  <div *ngIf = "message.sender !== username" class = "otherUserMessage"> {{ message.message }} </div>
+  <div class="reset"></div>
 </div>
 
 <div style = "clear: both;">
   <form id = "messageForm" (ngSubmit) = "onMessageSend()">
-    <mat-form-field>
+    <mat-form-field class="chat-form">
       <textarea matInput placeholder = "Enter your message" [formControl] = "messageFormControl"></textarea>
     </mat-form-field>
+    <br>
 
-    <button mat-raised-button type = "submit">Send message</button>
+    <button mat-raised-button color="primary" type = "submit">Send message</button>
   </form>
 </div>

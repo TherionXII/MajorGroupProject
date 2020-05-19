@@ -1,5 +1,6 @@
 <mat-tab-group>
   <mat-tab label = "Group Papers">
+    <mat-error>{{ resolverError }}</mat-error>
     <a *ngFor = "let paper of papers" [routerLink] = "['/paper', paper.id]">
       <p>{{paper.paperName}}</p>
     </a>

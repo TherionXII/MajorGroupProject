@@ -1,21 +1,23 @@
 package project.webcollaborationtool.Collaboration.Thread.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import project.webcollaborationtool.Collaboration.PrivateCollaboration.Entities.PrivateCollaboration;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.Collection;
 
-@Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @DiscriminatorValue("private_collaboration_thread")
 public class PrivateCollaborationThread extends ChatThread
 {
-    @OneToOne
+    @OneToMany(mappedBy = "thread")
     @JsonBackReference("private_thread")
-    private PrivateCollaboration privateCollaboration;
+    private Collection<PrivateCollaboration> privateCollaboration;
 }

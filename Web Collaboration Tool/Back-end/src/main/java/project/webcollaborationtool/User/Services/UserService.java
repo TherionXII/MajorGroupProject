@@ -2,6 +2,7 @@ package project.webcollaborationtool.User.Services;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -31,6 +32,8 @@ public class UserService
         if(this.userRepository.existsById(user.getUsername()))
             throw new UserExistsException(user.getUsername());
 
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
         return this.userRepository.save(user);
     }
 
@@ -53,13 +56,6 @@ public class UserService
         var user = this.userRepository.findByUsername(username);
         user.setEmail(email);
 
-        this.userRepository.save(user);
-    }
-
-    public void addPrivateNotification(@NotNull PrivateNotification notification, String username)
-    {
-        var user = this.userRepository.findByUsername(username);
-        user.getNotifications().add(notification);
         this.userRepository.save(user);
     }
 }

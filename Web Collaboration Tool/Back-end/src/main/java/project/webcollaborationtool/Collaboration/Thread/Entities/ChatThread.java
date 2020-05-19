@@ -1,13 +1,15 @@
 package project.webcollaborationtool.Collaboration.Thread.Entities;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Collection;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "chat_type", discriminatorType = DiscriminatorType.STRING)
 public class ChatThread
@@ -17,7 +19,7 @@ public class ChatThread
     private Integer id;
 
     @Nullable
-    @OneToMany(mappedBy = "thread")
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     private Collection<Message> messages;
 
     @Nullable

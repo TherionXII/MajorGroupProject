@@ -1,0 +1,10 @@
+<section id = "ratingSection">
+  <span>Vote:&nbsp;</span>
+  <button mat-raised-button (click) = "onVote(true)">
+    <mat-icon>thumb_up</mat-icon>
+  </button>
+    {{ response ? response.rating : null }}
+  <button mat-raised-button (click) = "onVote(false)">
+    <mat-icon>thumb_down</mat-icon>
+  </button>
+</section>

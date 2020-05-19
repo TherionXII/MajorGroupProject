@@ -1,18 +1,18 @@
 package project.webcollaborationtool.Query.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import project.webcollaborationtool.Collaboration.GroupCollaboration.Entities.GroupCollaboration;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @DiscriminatorValue("group_query")
-@EqualsAndHashCode(callSuper = true)
 public class GroupQuery extends Query
 {
     @ManyToOne

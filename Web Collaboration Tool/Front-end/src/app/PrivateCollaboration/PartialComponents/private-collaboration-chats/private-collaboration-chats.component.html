@@ -1,0 +1,17 @@
+<mat-list>
+  <mat-error>{{ resolverError }}</mat-error>
+  <mat-card class="conversation" *ngFor = "let collaboration of collaborations">
+    <div *ngIf = "collaboration.thread" [routerLink] = "[ '/thread', collaboration.thread.id ]">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>chat</mat-icon>
+        <mat-card-title>
+          {{ collaboration.firstCollaborator === loggedInUser ? collaboration.secondCollaborator :
+          collaboration.firstCollaborator }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{ collaboration.thread.lastMessage ? collaboration.thread.lastMessage.message : 'Send a message' }}
+      </mat-card-content>
+    </div>
+  </mat-card>
+</mat-list>

@@ -19,26 +19,17 @@ public class ThreadController
     @Autowired
     private ThreadService threadService;
 
-    @GetMapping("/createPrivateThread/{collaboratorOne}/{collaboratorTwo}")
+    @GetMapping("/{collaboratorOne}/{collaboratorTwo}/createPrivateThread")
     @CrossOrigin(origins = "/collaborations", methods = RequestMethod.GET)
     public ResponseEntity<Integer> createPrivateThread(@PathVariable String collaboratorOne, @PathVariable String collaboratorTwo)
     {
         return ResponseEntity.ok().body(this.threadService.createPrivateThread(collaboratorOne, collaboratorTwo));
     }
 
-    @GetMapping("/getMessagesForThread/{threadId}")
-    @CrossOrigin(origins = { "/thread/*", "/group/*" }, methods = RequestMethod.GET)
+    @GetMapping("/{threadId}/getMessagesForThread")
+    @CrossOrigin(origins = { "/thread/*", "/group/*/*" }, methods = RequestMethod.GET)
     public ResponseEntity<Collection<Message>> getMessagesForThread(@PathVariable Integer threadId)
     {
         return ResponseEntity.ok().body(this.threadService.getMessagesForThread(threadId));
-    }
-
-    @MessageMapping("/user/collaboration/chat/{threadId}")
-    @SendTo("/topic/user/collaboration/chat/{threadId}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public Message sendMessage(Message message, @DestinationVariable("threadId") Integer threadId)
-    {
-        this.threadService.addMessage(message, threadId);
-        return message;
     }
 }

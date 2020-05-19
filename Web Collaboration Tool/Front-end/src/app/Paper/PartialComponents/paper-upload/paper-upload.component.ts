@@ -15,11 +15,15 @@ export class PaperUploadComponent implements OnInit {
   public paperUploadedEvent: EventEmitter<Array<IPage>>;
 
   public fileData: File;
-  public uploading: boolean;
+  public isUploading: boolean;
+
+  public fileUploadError: string;
 
   public constructor(private paperService: PaperService) {
-    this.uploading = false;
+    this.isUploading = false;
     this.paperUploadedEvent = new EventEmitter<Array<IPage>>();
+
+    this.fileUploadError = '';
   }
 
   public ngOnInit(): void {
@@ -30,8 +34,18 @@ export class PaperUploadComponent implements OnInit {
   }
 
   public onUpload(): void {
-    this.uploading = true;
-    this.paperService.uploadFile(this.fileData, this.paperId)
-      .subscribe(pages => this.paperUploadedEvent.emit(pages), error => console.log(error));
+    this.isUploading = true;
+    this.paperService.uploadFile(this.paperId, this.fileData)
+      .subscribe(pages => this.onUploadSuccess(pages), () => this.onUploadingFailure('Failed to upload file; please try again later'));
+  }
+
+  private onUploadSuccess(pages: Array<IPage>): void {
+    this.paperUploadedEvent.emit(pages);
+    this.isUploading = false;
+  }
+
+  private onUploadingFailure(error: string): void {
+    this.fileUploadError = error;
+    this.isUploading = false;
   }
 }

@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-title>{{ username }}</mat-card-title>
+  <mat-card-content>
+    <app-user-collaboration-pane></app-user-collaboration-pane>
+    <mat-tab-group>
+      <mat-tab label = "Recent queries">
+        <app-recent-user-queries></app-recent-user-queries>
+      </mat-tab>
+      <mat-tab label = "Most recent responses">
+        <app-recent-user-responses></app-recent-user-responses>
+      </mat-tab>
+      <mat-tab label = "Most up-voted responses">
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

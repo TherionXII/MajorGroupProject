@@ -1,15 +1,17 @@
 package project.webcollaborationtool.Collaboration.GroupCollaboration.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 import project.webcollaborationtool.User.Entities.User;
 import project.webcollaborationtool.Utility.CompositeKeys.GroupMemberId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @IdClass(GroupMemberId.class)
 public class GroupMember
 {
@@ -18,6 +20,9 @@ public class GroupMember
 
     @Id
     private String memberUsername;
+
+    @NotNull
+    private Boolean isAdmin;
 
     @ManyToOne
     @JsonIgnore
@@ -30,7 +35,4 @@ public class GroupMember
     @MapsId("memberUsername")
     @JoinColumn(name = "memberUsername", referencedColumnName = "username")
     private User member;
-
-    @NotNull
-    private Boolean isAdmin;
 }

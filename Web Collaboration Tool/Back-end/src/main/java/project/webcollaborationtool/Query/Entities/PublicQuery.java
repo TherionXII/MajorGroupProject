@@ -1,15 +1,15 @@
 package project.webcollaborationtool.Query.Entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Data
 @Entity
+@ToString
+@Getter @Setter
+@NoArgsConstructor
 @DiscriminatorValue("public_query")
-@EqualsAndHashCode(callSuper = true)
 public class PublicQuery extends Query
 {
 }

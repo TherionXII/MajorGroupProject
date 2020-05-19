@@ -4,6 +4,8 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+src/test/coverage
+
 ### STS ###
 .apt_generated
 .classpath
@@ -34,3 +36,4 @@ build/
 /.mvn/wrapper/maven-wrapper.jar
 /.mvn/wrapper/maven-wrapper.properties
 /.mvn/wrapper/MavenWrapperDownloader.java
+/src/test/resources/MOCK PDF.pdf

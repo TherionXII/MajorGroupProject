@@ -8,5 +8,7 @@ import java.util.Collection;
 
 public interface PrivateCollaborationRepository extends JpaRepository<PrivateCollaboration, PrivateCollaborationId>
 {
-    Collection<PrivateCollaboration> findAllByCollaboratorOneUsernameOrCollaboratorTwoUsername(String collaboratorOneUsername, String collaboratorTwoUsername);
+    Collection<PrivateCollaboration> findAllByFirstCollaborator(String firstCollaborator);
+
+    PrivateCollaboration findByFirstCollaboratorAndSecondCollaborator(String firstCollaborator, String secondCollaborator);
 }

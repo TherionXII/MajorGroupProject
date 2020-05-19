@@ -2,3 +2,19 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-form-field
+{
+  min-width: 400px;
+  width: auto;
+}
+
+mat-sidenav-container
+{
+  min-height: 50%;
+}
+
+.Icon
+{
+  font-feature-settings: "liga";
+}
