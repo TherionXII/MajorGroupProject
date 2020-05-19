@@ -8,7 +8,7 @@
 <mat-card *ngFor="let question of questionsForm.controls; index as questionIndex">
   <mat-card-content>
     <p> {{ paper.questions[questionIndex].text }} </p>
-    <img mat-card-image class="question-image" src="{{paper.questions[questionIndex].questionImage.image}}"
+    <img *ngIf="paper.questions[questionIndex].questionImage.image" mat-card-image class="question-image" src="{{ paper.questions[questionIndex].questionImage.image }}"
          alt="Image for question">
   </mat-card-content>
   <mat-card-content>
